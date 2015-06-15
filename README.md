@@ -174,6 +174,17 @@ python classify.py --raw_scale 255 https://raw.githubusercontent.com/Nishida-Lab
 python show_result.py ../data/ilsvrc12/synset_words.txt result.npy
 ```
 
+もしも，
+```bash
+...
+...
+ImportError: No module named skimage.io
+```
+のようなエラーが出た場合には以下のコマンドを実行してみてください．
+```bash
+sudo apt-get install python-skimage
+```
+
 これをすべて実行すると，以下のように結果が出力される．
 
 ```bash
