@@ -128,7 +128,7 @@ ValueError: Mean shape incompatible with input shape.
 >http://qiita.com/Bonnnou_108/items/41e6dadeff1310b4eb5d#classifypy%E3%82%92%E4%BD%BF%E7%94%A8%E3%81%97%E3%81%A6%E7%94%BB%E5%83%8F%E5%88%86%E9%A1%9E
 
 
-ここにあるように`caffe/python/caffe/io.py`の255行目を編集する．
+ここにあるように`python/caffe/io.py`の255行目を編集する．
 
 ```python
 if ms != self.inputs[in_][1:]:
@@ -146,7 +146,8 @@ if ms != self.inputs[in_][1:]:
 ```
 
 ##サンプルを実行するための準備
-以下のコードを`show_result.py`として`caffe/python/`に保存．ファイルはこのレポジトリにある[show_result.py](https://github.com/Nishida-Lab/lec_caffe/blob/master/show_result.py)でもいいです．
+以下のコードを`show_result.py`として`caffe/python/`に保存．ファイルはこのレポジトリにある[show_result.py](https://github.com/Nishida-Lab/lec_caffe/blob/master/show_result.py)でもいいです．  
+このソースコードは[http://techblog.yahoo.co.jp/programming/caffe-intro/](http://techblog.yahoo.co.jp/programming/caffe-intro/)から拝借しました．
 
 ```python
 #! /usr/bin/env python
@@ -175,12 +176,15 @@ python show_result.py ../data/ilsvrc12/synset_words.txt result.npy
 ```
 
 もしも，
+
 ```bash
 ...
 ...
 ImportError: No module named skimage.io
 ```
+
 のようなエラーが出た場合には以下のコマンドを実行してみてください．
+
 ```bash
 sudo apt-get install python-skimage
 ```
