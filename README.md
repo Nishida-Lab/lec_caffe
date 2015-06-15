@@ -146,7 +146,7 @@ if ms != self.inputs[in_][1:]:
 ```
 
 ##サンプルを実行するための準備
-以下のコードを`show_result.py`として`caffe/python/`に保存．
+以下のコードを`show_result.py`として`caffe/python/`に保存．ファイルはこのレポジトリにある[show_result.py](https://github.com/Nishida-Lab/lec_caffe/blob/master/show_result.py)でもいいです．
 
 ```python
 #! /usr/bin/env python
@@ -163,14 +163,14 @@ for rank, (score, name) in enumerate(prediction[:top_k], start=1):
 ```
 
 ##いよいよ実行
-かわいいわんちゃんをcaffeにかけてみます．
+かわいいわんちゃんをcaffeにかけてみます．この写真を保存するか，以下のコマンドのようにネット上にある画像を指定してもよい．
 
 ![golden.jpg](golden.jpg)  
 
 
 ```bash
 cd python
-python classify.py --raw_scale 255 golden.jpg ./result.npy
+python classify.py --raw_scale 255 https://raw.githubusercontent.com/Nishida-Lab/lec_caffe/master/golden.jpg ./result.npy
 python show_result.py ../data/ilsvrc12/synset_words.txt result.npy
 ```
 
@@ -182,4 +182,5 @@ python show_result.py ../data/ilsvrc12/synset_words.txt result.npy
 #3 | n02111500 Great Pyrenees |  1.0%
 ```
 
-ゴールデンレトリバーが93.5%，ラブラドールレトリバーが4.5%と高い割合でcaffeは判断してます！
+ゴールデンレトリバーが93.5%，ラブラドールレトリバーが4.5%と高い割合でcaffeは判断してます！  
+おわりです！
