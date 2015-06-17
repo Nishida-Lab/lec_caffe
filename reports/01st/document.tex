@@ -61,7 +61,21 @@
 
 \section{進行状況}
 \subsection{課題設定}
-DeepLearningを使って何をするか.宇宙ゴミの検出
+\subsubsection{宮本の研究について}
+\label{subs:宮本の研究について}
+現在までに数多くの衛星やロケットが宇宙空間に投入されている．
+そして役割を終えたり故障したりした宇宙機や，運用上放出された部品，破片など多数のゴミが発生しており，これをスペースデブリと言う.
+さらにスペースデブリ同士が衝突して生じる二次デブリ（Ejecta）も近年大きな問題である．
+そこで当研究室では，二次デブリの大きさや分布を検討するために，デブリ同士の衝突を模擬した実験を行っている．
+この実験の衝突で生じた二次デブリを受け止めるために銅板を設置しており，ここに破片がぶつかるとクレーターが出来る．
+このクレーターの大きさ，数，位置を検出するためにdeep learningを用いる．
+従来のクレーターの検出方法では，実験の前後で銅板をスキャンしその差分をとり検出を行う手法を採用していたが，
+この1回のスキャンにおおよそ6時間かかってしまう問題点がある．
+したがってdeep learningの画像認識技術を用いることで実験後のスキャンだけでクレーターを見つけ出すことを目的とする．
+
+\subsubsection{本グループ研究の目的}
+\ref{subs:宮本の研究について}節で説明した目的を達成するためにCaffeを用いたdeep learningの手法を確立する必要がある．
+そのためにこの最終目標を見据え，Caffeを用いて自分の目的に応じたデータセットの作成，そして画像の分類をおこなうことが目的である．
 
 \subsection{プログラミング}
 \begin{itemize}
@@ -101,7 +115,7 @@ sudo ln -s /usr/include/python2.7/ /usr/local/include/python2.7
 sudo ln -s /usr/local/lib/python2.7/dist-packages/numpy/core/include/numpy/
 /usr/local/include/python2.7/numpy
 \end{lstlisting}
-Makefile.configを作成し，Geditで編集する．
+Makefile.configを作成し，geditで編集する．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 cp Makefile.config.example Makefile.config
 gedit Makefile.config
