@@ -20,7 +20,8 @@
 *.mtc
 *.mtc1
 *.out
-*.synctex.gz 
+*.synctex.gz
+*.pdf
 /wget-log
 /GEN_FONT.BAT
 
