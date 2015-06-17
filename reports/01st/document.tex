@@ -50,20 +50,19 @@
 
 % ドキュメントの開始
 \begin{document}
-% 表紙
-\maketitle
-\section{出席者：}
-\begin{list}%
- {} %default label
- {} %formatting parameter
- \item 15344203 有田 裕太
- \item 15344206 緒方 裕太
- \item 15344209 株丹 亮
- \item 12104125 宮本 和
+
+\section{報告者}
+\begin{list}{}{}
+ \item 15344203\hspace{0.5cm} 有田 裕太
+ \item 15344206\hspace{0.5cm} 緒形 裕太
+ \item 15344209\hspace{0.5cm} 株丹 亮
+ \item 12104125\hspace{0.5cm} 宮本 和
+>>>>>>> Stashed changes
 \end{list}
+
 \section{進行状況}
-\subsection{理論調査}
-DeeoLearningを使って何をするか.宇宙ゴミの検出．おがT何をするの
+\subsection{課題設定}
+DeeoLearningを使って何をするか.宇宙ゴミの検出
 
 \subsection{プログラミング}
 \begin{itemize}
@@ -71,14 +70,11 @@ DeeoLearningを使って何をするか.宇宙ゴミの検出．おがT何をす
  \item サンプルの実行方法がまだわからない．
 \end{itemize}
 
-\section{その他}
 \subsection{インストール方法}
-
 ビルドに必要な最初のパッケージ群をインストールする．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 sudo apt-get install build-essential
 \end{lstlisting}
-
 依存関係で必要なパッケージをインストールする．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 sudo apt-get install -y libprotobuf-dev libleveldb-dev libsnappy-dev
@@ -87,36 +83,30 @@ libfreeimage-dev libatlas-base-dev git python-dev python-pip
 libgoogle-glog-dev libbz2-dev libxml2-dev libxslt-dev libffi-dev
 libssl-dev libgflags-dev liblmdb-dev python-yaml
 \end{lstlisting}
-
 画像処理ライブラリPillow(PIL)のインストールする．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 sudo easy_install pillow
 \end{lstlisting}
-
 caffe本体をカレントディレクトリにダウンロードする．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 git clone https://github.com/BVLC/caffe.git
 cd caffe
 \end{lstlisting}
-
 Python caffeを実行するために必要なパッケージをインストールする．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 cat python/requirements.txt | xargs -L 1 sudo pip install
 \end{lstlisting}
-
 シンボリックリンクを作成する．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 sudo ln -s /usr/include/python2.7/ /usr/local/include/python2.7
 sudo ln -s /usr/local/lib/python2.7/dist-packages/numpy/core/include/numpy/
 /usr/local/include/python2.7/numpy
 \end{lstlisting}
-
 Makefile.configを作成し，Geditで編集する．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 cp Makefile.config.example Makefile.config
 gedit Makefile.config
 \end{lstlisting}
-
 8行目の\#(コメントアウト)を外して
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, numbers=left]
 ## Refer to http://caffe.berkeleyvision.org/installation.html
@@ -128,12 +118,10 @@ gedit Makefile.config
 # CPU-only switch (uncomment to build without GPU support).
 # CPU_ONLY := 1
 \end{lstlisting}
-
 以下のようにする．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,  firstnumber=8, numbers=left]
 CPU_ONLY := 1
 \end{lstlisting}
-
 また，52行目の
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=49, numbers=left]
 # NOTE: this is required only if you will compile the python interface.
@@ -148,13 +136,11 @@ PYTHON_INCLUDE := /usr/include/python2.7 \
 PYTHON_INCLUDE := /usr/include/python2.7 \
     /usr/local/lib/python2.7/dist-packages/numpy/core/include
 \end{lstlisting}
-
 caffeをコンパイルする．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 make pycaffe
 make all
 make test
 \end{lstlisting}
-
 以上でcaffeのコンパイルができた．
 \end{document}
