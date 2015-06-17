@@ -20,9 +20,10 @@
 \usepackage{type1cm}
 \usepackage{cancel}
 \usepackage{url}
+\usepackage{listings,jlisting}
 \usepackage[version=3]{mhchem}
 % 大きな中括弧
-\usepackage{cases} 
+\usepackage{cases}
 
 
 % カウンタの設定
@@ -63,10 +64,123 @@
 \section{進行状況}
 \subsection{理論調査}
 DeeoLearningを使って何をするか.宇宙ゴミの検出
+
 \subsection{プログラミング}
 \begin{itemize}
  \item ソフトウェアのダウンロードとコンパイルはできた．
  \item サンプルの実行方法がまだわからない．
 \end{itemize}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+sudo apt-get install build-essential
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+sudo apt-get install -y libprotobuf-dev libleveldb-dev libsnappy-dev
+libopencv-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62
+libfreeimage-dev libatlas-base-dev git python-dev python-pip
+libgoogle-glog-dev libbz2-dev libxml2-dev libxslt-dev libffi-dev
+libssl-dev libgflags-dev liblmdb-dev python-yaml
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+sudo easy_install pillow
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+git clone https://github.com/BVLC/caffe.git
+cd caffe
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+cat python/requirements.txt | xargs -L 1 sudo pip install
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+sudo ln -s /usr/include/python2.7/ /usr/local/include/python2.7
+sudo ln -s /usr/local/lib/python2.7/dist-packages/numpy/core/include/numpy/
+/usr/local/include/python2.7/numpy
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+cp Makefile.config.example Makefile.config
+gedit Makefile.config
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+## Refer to http://caffe.berkeleyvision.org/installation.html
+# Contributions simplifying and improving our build system are welcome!
+
+# cuDNN acceleration switch (uncomment to build with cuDNN).
+# USE_CUDNN := 1
+
+# CPU-only switch (uncomment to build without GPU support).
+# CPU_ONLY := 1
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+CPU_ONLY := 1
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+# NOTE: this is required only if you will compile the python interface.
+# We need to be able to find Python.h and numpy/arrayobject.h.
+PYTHON_INCLUDE := /usr/include/python2.7 \
+    /usr/lib/python2.7/dist-packages/numpy/core/include
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+make pycaffe
+make all
+make test
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+./scripts/download_model_binary.py models/bvlc_reference_caffenet
+./data/ilsvrc12/get_ilsvrc_aux.sh
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+I0615 15:54:24.737364 17294 upgrade_proto.cpp:626] Successfully upgraded file specified
+using deprecated V1LayerParameter
+Traceback (most recent call last):
+  File "python/classify.py", line 138, in <module>
+    main(sys.argv)
+  File "python/classify.py", line 110, in main
+    channel_swap=channel_swap)
+  File "/home/ry0/caffe/python/caffe/classifier.py", line 34, in __init__
+    self.transformer.set_mean(in_, mean)
+  File "/home/ry0/caffe/python/caffe/io.py", line 255, in set_mean
+    raise ValueError('Mean shape incompatible with input shape.')
+ValueError: Mean shape incompatible with input shape.
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+if ms != self.inputs[in_][1:]:
+    raise ValueError('Mean shape incompatible with input shape.')
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+if ms != self.inputs[in_][1:]:
+    print(self.inputs[in_])
+    in_shape = self.inputs[in_][1:]
+    m_min, m_max = mean.min(), mean.max()
+    normal_mean = (mean - m_min) / (m_max - m_min)
+    mean = resize_image(normal_mean.transpose((1,2,0)),in_shape[1:]).transpose((2,0,1))
+    * (m_max - m_min) + m_min
+\end{lstlisting}
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+import sys, numpy
+
+categories = numpy.loadtxt(sys.argv[1], str, delimiter="\t")
+scores = numpy.load(sys.argv[2])
+top_k = 3
+prediction = zip(scores[0].tolist(), categories)
+prediction.sort(cmp=lambda x, y: cmp(x[0], y[0]), reverse=True)
+for rank, (score, name) in enumerate(prediction[:top_k], start=1):
+    print('#%d | %s | %4.1f%%' % (rank, name, score * 100))
+\end{lstlisting}
+
 
 \end{document}
