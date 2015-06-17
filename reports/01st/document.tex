@@ -1,0 +1,71 @@
+\documentclass[a4paper,10pt]{jsarticle}
+
+% レイアウト
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{39\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.5in}
+\setlength{\headsep}{0.3in}
+\pagestyle{myheadings}
+
+% パッケージ
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{amsmath,amssymb,epsfig}
+\usepackage{bm}
+\usepackage{ascmac}
+\usepackage{pifont}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{cases}
+\usepackage{type1cm}
+\usepackage{cancel}
+\usepackage{url}
+\usepackage[version=3]{mhchem}
+% 大きな中括弧
+\usepackage{cases} 
+
+
+% カウンタの設定
+\setcounter{section}{0}
+\setcounter{subsection}{0}
+\setcounter{subsubsection}{0}
+\setcounter{equation}{0}
+
+% キャプションの図をFigに変更
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Tab.}
+
+% 式番号を式(章番号.番号)に
+\makeatletter
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+\@addtoreset{equation}{section}
+\makeatother
+
+% 表紙
+\title{知能システム学特論レポート}
+\author{
+（DL2班）Caffe on Ubuntu\\
+}
+\date{平成27年\ 4月\ 30日}
+
+% ドキュメントの開始
+\begin{document}
+% 表紙
+\maketitle
+\section{出席者：}
+\begin{list}%
+ {} %default label
+ {} %formatting parameter
+ \item 15344203 有田裕太
+ \item 15344206 緒方裕太
+ \item 15344209 株丹亮
+\end{list}
+\section{進行状況}
+\subsection{理論調査}
+DeeoLearningを使って何をするか.宇宙ゴミの検出
+\subsection{プログラミング}
+\begin{itemize}
+ \item ソフトウェアのダウンロードとコンパイルはできた．
+\end{itemize}
+
+\end{document}
