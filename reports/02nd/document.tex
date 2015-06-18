@@ -46,7 +46,7 @@
 \author{
 （DL2班）Caffe on Ubuntu\\
 }
-\date{2015年\ 6月\ 18日}
+\date{2015年\ 6月\ 22日}
 
 % ドキュメントの開始
 \begin{document}
@@ -60,100 +60,63 @@
 \end{list}
 
 \section{進行状況}
-\subsection{課題設定}
-\subsubsection{宮本の研究について}
-\label{subs:宮本の研究について}
-現在までに数多くの衛星やロケットが宇宙空間に投入されている．
-そして役割を終えたり故障したりした宇宙機や，運用上放出された部品，破片など多数のゴミが発生しており，これをスペースデブリと言う.
-さらにスペースデブリ同士が衝突して生じる二次デブリ（Ejecta）も近年大きな問題である．
-そこで当研究室では，二次デブリの大きさや分布を検討するために，デブリ同士の衝突を模擬した実験を行っている．
-この実験の衝突で生じた二次デブリを受け止めるために銅板を設置しており，ここに破片がぶつかるとクレーターが出来る．
-このクレーターの大きさ，数，位置を検出するためにdeep learningを用いる．
-従来のクレーターの検出方法では，実験の前後で銅板をスキャンしその差分をとり検出を行う手法を採用していたが，
-この1回のスキャンにおおよそ6時間かかってしまう問題点がある．
-したがってdeep learningの画像認識技術を用いることで実験後のスキャンだけでクレーターを見つけ出すことを目的とする．
+サンプル実行を実行することができた．
 
-\subsubsection{本グループ研究の目的}
-\ref{subs:宮本の研究について}節で説明した目的を達成するためにCaffeを用いたdeep learningの手法を確立する必要がある．
-そのためにこの最終目標を見据え，Caffeを用いて自分の目的に応じたデータセットの作成，そして画像の分類をおこなうことが目的である．
+\subsection{サンプルの実行}
 
-\subsection{プログラミング}
-\begin{itemize}
- \item ソフトウェアのダウンロードとコンパイルはできた．
- \item サンプルの実行方法がまだわからない．
-\end{itemize}
+分類する画像を指定
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+python classify.py --raw_scale 255 ../examples/images/cat.jpg ./result.npy
+\end{lstlisting}
 
-\subsection{インストール方法}
-ビルドに必要な最初のパッケージ群をインストールする．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-sudo apt-get install build-essential
-\end{lstlisting}
-依存関係で必要なパッケージをインストールする．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-sudo apt-get install -y libprotobuf-dev libleveldb-dev libsnappy-dev
-libopencv-dev libboost-all-dev libhdf5-serial-dev protobuf-compiler gfortran libjpeg62
-libfreeimage-dev libatlas-base-dev git python-dev python-pip
-libgoogle-glog-dev libbz2-dev libxml2-dev libxslt-dev libffi-dev
-libssl-dev libgflags-dev liblmdb-dev python-yaml
-\end{lstlisting}
-画像処理ライブラリPillow(PIL)のインストールする．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-sudo easy_install pillow
-\end{lstlisting}
-caffe本体をカレントディレクトリにダウンロードする．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-git clone https://github.com/BVLC/caffe.git
-cd caffe
-\end{lstlisting}
-Python caffeを実行するために必要なパッケージをインストールする．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-cat python/requirements.txt | xargs -L 1 sudo pip install
-\end{lstlisting}
-シンボリックリンクを作成する．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-sudo ln -s /usr/include/python2.7/ /usr/local/include/python2.7
-sudo ln -s /usr/local/lib/python2.7/dist-packages/numpy/core/include/numpy/
-/usr/local/include/python2.7/numpy
-\end{lstlisting}
-Makefile.configを作成し，geditで編集する．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-cp Makefile.config.example Makefile.config
-gedit Makefile.config
-\end{lstlisting}
-8行目の\#(コメントアウト)を外して
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, numbers=left]
-## Refer to http://caffe.berkeleyvision.org/installation.html
-# Contributions simplifying and improving our build system are welcome!
+サンプル画像をFig.\ref{cat}〜\ref{fish_bike}に示す．
 
-# cuDNN acceleration switch (uncomment to build with cuDNN).
-# USE_CUDNN := 1
+\begin{figure}[b]
+ \centering
+    \includegraphics[width=70mm]{../02nd/fig/cat.eps}
+   \caption{sample1}
+	 \label{cat}
+\end{figure}
+\begin{figure}[b]
+ \centering
+    \includegraphics[width=70mm]{../02nd/fig/cat_gray.eps}
+ \caption{sample2}	 
+ \label{cat_gray}
+\end{figure}
+\begin{figure}[b]
+ \centering
+    \includegraphics[width=70mm]{../02nd/fig/fish-bike.eps}
+ \caption{sample3}
+ \label{fish_bike}
+\end{figure}
 
-# CPU-only switch (uncomment to build without GPU support).
-# CPU_ONLY := 1
-\end{lstlisting}
-以下のようにする．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,  firstnumber=8, numbers=left]
-CPU_ONLY := 1
-\end{lstlisting}
-また，52行目の
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=49, numbers=left]
-# NOTE: this is required only if you will compile the python interface.
-# We need to be able to find Python.h and numpy/arrayobject.h.
-PYTHON_INCLUDE := /usr/include/python2.7 \
-    /usr/lib/python2.7/dist-packages/numpy/core/include
-\end{lstlisting}
-を以下のようにする(localを追加)．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=49, numbers=left]
-# NOTE: this is required only if you will compile the python interface.
-# We need to be able to find Python.h and numpy/arrayobject.h.
-PYTHON_INCLUDE := /usr/include/python2.7 \
-    /usr/local/lib/python2.7/dist-packages/numpy/core/include
-\end{lstlisting}
-caffeをコンパイルする．
+分類の実行
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-make pycaffe
-make all
-make test
+python show_result.py ../data/ilsvrc12/synset_words.txt result.npy
 \end{lstlisting}
-以上でcaffeのコンパイルができた．
+
+Fig.\ref{cat}の実行結果
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+#1 | n02123045 tabby, tabby cat | 27.9%
+#2 | n02123159 tiger cat | 21.9%
+#3 | n02124075 Egyptian cat | 16.1%
+\end{lstlisting}
+
+Fig.\ref{cat_gray}の実行結果
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+#1 | n02342885 hamster | 54.7%
+#2 | n02325366 wood rabbit, cottontail, cottontail rabbit | 17.2%
+#3 | n02326432 hare | 16.4%
+\end{lstlisting}
+
+Fig.\ref{fish_bike}の実行結果
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+#1 | n04120489 running shoe |  6.9%
+#2 | n04509417 unicycle, monocycle |  3.9%
+#3 | n04482393 tricycle, trike, velocipede |  3.6%
+\end{lstlisting}
+
+\section{今後の課題}
+
+
 \end{document}
