@@ -60,7 +60,7 @@
 \end{list}
 
 \section{進行状況}
-サンプル実行を実行することができた．
+サンプルを実行することができた．
 
 \subsection{サンプルの実行}
 
@@ -69,25 +69,25 @@
 python classify.py --raw_scale 255 ../examples/images/cat.jpg ./result.npy
 \end{lstlisting}
 
-サンプル画像をFig.\ref{cat}〜\ref{fish_bike}に示す．
+サンプル画像をFig.\ref{sample1}〜\ref{sample3}に示す．
 
 \begin{figure}[b]
- \centering
-    \includegraphics[width=70mm]{../02nd/fig/cat.eps}
+ \centering	
+    \includegraphics[width=50mm]{../02nd/fig/cat.eps}
    \caption{sample1}
-	 \label{cat}
+	 \label{sample1}
 \end{figure}
 \begin{figure}[b]
- \centering
-    \includegraphics[width=70mm]{../02nd/fig/cat_gray.eps}
- \caption{sample2}	 
- \label{cat_gray}
+\centering
+    \includegraphics[width=50mm]{../02nd/fig/cat_gray.eps}
+\caption{sample2}	 
+ \label{sample2}
 \end{figure}
 \begin{figure}[b]
- \centering
-    \includegraphics[width=70mm]{../02nd/fig/fish-bike.eps}
- \caption{sample3}
- \label{fish_bike}
+\centering
+    \includegraphics[width=50mm]{../02nd/fig/fish-bike.eps}
+\caption{sample3}
+\label{sample3}
 \end{figure}
 
 分類の実行
@@ -95,21 +95,21 @@ python classify.py --raw_scale 255 ../examples/images/cat.jpg ./result.npy
 python show_result.py ../data/ilsvrc12/synset_words.txt result.npy
 \end{lstlisting}
 
-Fig.\ref{cat}の実行結果
+Fig.\ref{sample1}の実行結果
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 #1 | n02123045 tabby, tabby cat | 27.9%
 #2 | n02123159 tiger cat | 21.9%
 #3 | n02124075 Egyptian cat | 16.1%
 \end{lstlisting}
 
-Fig.\ref{cat_gray}の実行結果
+Fig.\ref{sample2}の実行結果
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 #1 | n02342885 hamster | 54.7%
 #2 | n02325366 wood rabbit, cottontail, cottontail rabbit | 17.2%
 #3 | n02326432 hare | 16.4%
 \end{lstlisting}
 
-Fig.\ref{fish_bike}の実行結果
+Fig.\ref{sample3}の実行結果
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 #1 | n04120489 running shoe |  6.9%
 #2 | n04509417 unicycle, monocycle |  3.9%
