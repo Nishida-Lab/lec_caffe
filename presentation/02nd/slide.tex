@@ -1,0 +1,231 @@
+\documentclass[dvipdfmx,11pt,notheorems]{beamer}
+%%%% 和文用 %%%%%
+\usepackage{bxdpx-beamer}
+\usepackage{pxjahyper}
+\usepackage{minijs}%和文用
+\renewcommand{\kanjifamilydefault}{\gtdefault}%和文用
+
+%%%% スライドの見た目 %%%%%
+\usetheme{Boadilla}
+\usecolortheme{seahorse}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{frametitle}[default][center]
+\setbeamertemplate{navigation symbols}{}
+\setbeamercovered{transparent}%好みに応じてどうぞ）
+\setbeamertemplate{footline}[page number]
+\setbeamerfont{footline}{size=\normalsize,series=\bfseries}
+\setbeamercolor{footline}{fg=black,bg=black}
+%%%%
+
+%%%% 定義環境 %%%%%
+\usepackage{amsmath,amssymb}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem{definition}{定義}
+\newtheorem{proposition}{命題}
+\newtheorem{lemma}{補題}
+\newtheorem{corollary}{系}
+\newtheorem{conjecture}{予想}
+\newtheorem*{remark}{Remark}
+\renewcommand{\proofname}{}
+%%%%%%%%%
+
+%%%%% フォント基本設定 %%%%%
+% \usepackage[T1]{fontenc}%8bit フォント
+% \usepackage{textcomp}%欧文フォントの追加
+% \usepackage[utf8]{inputenc}%文字コードをUTF-8
+% \usepackage{otf}%otfパッケージ
+% \usepackage{lxfonts}%数式・英文ローマン体を Lxfont にする
+% \usepackage{bm}%数式太字
+%%%%%%%%%%
+ 
+%%%%% 複数人の著者を揃える %%%%%
+%% http://tex.stackexchange.com/questions/
+%%   166531/how-to-change-author-alignment-in-beamer
+\makeatletter
+\long\def\beamer@author[#1]#2{%
+  \def\insertauthor{\def\inst{\beamer@insttitle}\def\and{\beamer@andtitle}%
+  \begin{tabular}{rl}#2\end{tabular}}%
+  \def\beamer@shortauthor{#1}%
+  \ifbeamer@autopdfinfo%
+    \def\beamer@andstripped{}%
+    \beamer@stripands#1 \and\relax
+    {\let\inst=\@gobble\let\thanks=\@gobble\def\and{, }\hypersetup{pdfauthor={\beamer@andstripped}}}
+  \fi%
+}
+\makeatother
+%%%%%%%%%%
+
+\title[略タイトル]{第1回　知能システム学特論レポート}%[略タイトル]{タイトル}
+\author[NishidaLab]{
+15344203 & 有田 裕太 \\
+15344206 & 株丹 亮 \\
+15344209 & 緒形 裕太 \\
+12104125 & 宮本 和 }%[略名前]{名前}
+\institute[NishidaLab]{西田研究室，計算力学研究室}%[略所属]{所属}
+\date{2015年\ 6月\ 18日}%日付
+
+\begin{document}
+
+\begin{frame}[plain]\frametitle{}
+\titlepage %表紙
+\end{frame}
+
+% \begin{frame}\frametitle{Contents}
+% \tableofcontents %目次
+% \end{frame}
+
+\section{進捗状況}
+\begin{frame}\frametitle{進捗状況1}
+\begin{block}{宮本の研究について}
+計算力学研究室では，二次デブリ（宇宙ゴミ同士の衝突によりできる宇宙ゴミ）の大きさや分布を検討するために，デブリ同士の衝突を模擬した実験を行っている．
+この実験の衝突で生じた二次デブリを受け止めるために銅板を設置しており，ここに破片がぶつかるとクレーターが出来る．
+このクレーターの大きさ，数，位置を検出するために{\color{red} Deep Learning}を用いる．
+
+\end{block}
+\begin{exampleblock}{本グループの目的}
+Caffeを用いて目的に応じたデータセットの作成，そして画像の分類を行う．
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}\frametitle{進捗状況2}
+\begin{block}{プログラミングの進捗状況}
+\begin{itemize}
+\item ソフトウェア（Caffe）のダウンロード及びコンパイルができた
+\item サンプルの実行方法がわからない
+\item データセットの作り方がわからない
+\end{itemize}
+\end{block}
+
+Caffeのコンパイル方法はスライドでは省略する．
+
+\vspace{1cm}
+\begin{exampleblock}{実行環境} 
+\begin{itemize}
+ \item Ubuntu 14.04 LTS
+ \item Intel core i5-4440 3.10GHz$\times$4
+ \item RAM 16GB
+\end{itemize}
+\end{exampleblock}
+% 公式にはWindowsに対応していないため，今回はUbuntuを用いた． 
+\end{frame}
+% \section{具体例}
+
+% \begin{frame}\frametitle{定理環境の例}
+% \begin{theorem}[Fermat]
+% $a^{p-1} \equiv 1 \pmod{p}$
+% \end{theorem}
+% \pause
+% \begin{theorem}[Wilson]
+% \begin{equation}
+% (p-1)! \equiv 1 \pmod{p}
+% \end{equation}
+% \end{theorem}
+% \end{frame}
+
+% \begin{frame}<1-2>\frametitle{オーバーレイ}
+% \onslide*<1>{
+% \Large{これは1枚目です}
+% }
+% \onslide*<2>{
+% これは2枚目です
+% \begin{theorem}[Euclid]
+% There is no largest prime number.
+% \end{theorem}
+% }
+% \end{frame}
+
+% \begin{frame}\frametitle{色もつけれるよ}
+%   {\color{red} red}(\alert{alert}),
+%   {\color{blue} blue}(\structure{structure}),
+%   {\color{green} green},
+%   {\color{cyan} cyan},
+%   {\color{magenta} magenta},
+%   {\color{yellow} yellow},
+%   {\color{black} black},
+%   {\color{darkgray} darkgray},
+%   {\color{gray} gray},
+%   {\color{lightgray} lightgray},
+%   {\color{orange} orange},
+%   {\color{violet} violet},
+%   {\color{purple} purple},
+%   {\color{brown} brown},
+% \end{frame}
+
+% \begin{frame}\frametitle{いろんなブロック}
+% \begin{block}{ブロック}
+% これは普通のブロックです
+% \end{block}
+
+% \begin{alertblock}{警告ブロック}
+% 警告！これは警告ブロックだ！
+% \end{alertblock}
+
+% \begin{exampleblock}{例ブロック}
+% 例えば、こんなブロックです。
+% \end{exampleblock}
+% \end{frame}
+
+% \begin{frame}<1-2>\frametitle{画像も貼れるよ}
+% \onslide*<1>{
+% このように画像を貼れるよ
+% %\begin{figure}[htb]
+% %\centering
+% %\includegraphics[width=12cm,clip]{dummygraph.pdf}
+% %\caption{$f(x)=e^{-\frac{x}{10}}\sin(x)$}
+% %\end{figure}%
+% }
+% \onslide*<2>{
+% 画像や表は各自用意してね
+% %\begin{figure}[htb]
+% %\centering
+% %\includegraphics[width=8cm,clip]{sym4.pdf}
+% %\caption{Cayley graph of $\mathfrak{S}_{4}$}
+% %\end{figure}%
+% }
+% \end{frame}
+
+% \begin{frame}\frametitle{まとめ}
+% \LARGE{大事なのは中身です！}
+% \end{frame}
+
+% \begin{frame}\frametitle{}
+% {\Large ありがとうございました}
+% \end{frame}
+% \appendix
+
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+
+% \begin{frame}[containsverbatim]\frametitle{dvipngの使い方(1)}
+% \begin{block}{この様なファイルを用意する}
+% \tiny{
+% \begin{verbatim*}
+% \documentclass[43pt]{jsarticle}
+% \usepackage{amsmath}
+% \usepackage{lmodern}
+% \pagestyle{empty}
+% \begin{document}
+% \begin{equation*}
+% \sum_{k=0}^{\infty} \frac{(2k)!}{2^{2k}(k!)^2} \frac{1}{2k+1}=\frac{\pi}{2} 
+% \end{equation*}
+% \end{document}
+% \end{verbatim*}
+% }
+% \end{block}
+% \end{frame}
+
+% \begin{frame}[containsverbatim]\frametitle{dvipngの使い方(2)}
+% \begin{block}{使い方（コマンドライン）}
+% \scriptsize{
+% \begin{verbatim*}
+% latex dvipng-sample.tex
+% dvipng dvipng-sample.dvi -T tight -bd 1000
+% \end{verbatim*}
+% }
+% \end{block}
+% \end{frame}
+
+\setcounter{framenumber}{\value{finalframe}}
+\end{document}
