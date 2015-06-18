@@ -1,6 +1,6 @@
 *.fdb_latexmk
 *..synctex.gz
 *.fdb_latexmk
-*..snm
+*.snm
 *.synctex.gz
 *.DS_Store
