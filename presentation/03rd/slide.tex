@@ -22,6 +22,11 @@
 \setbeamertemplate{footline}[page number]
 \setbeamerfont{footline}{size=\normalsize,series=\bfseries}
 \setbeamercolor{footline}{fg=black,bg=black}
+
+\setbeamercolor{white-cyan1}
+{fg=white,bg=cyan!80!black}
+\setbeamercolor{white-cyan2}
+{fg=white,bg=cyan!60!black}
 %%%%
 
 %%%% 定義環境 %%%%%
@@ -149,36 +154,47 @@
 %%%% 4 %%%%
 \begin{frame}[fragile]\frametitle{caffe}
  caffe - CNN(Convolutional Neural Networks)の実装
+\vspace{0.2cm}
 
 \hfill
-\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{frametitle}
+\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan1}
  イメージを入力
 \end{beamercolorbox}
 \hfill\hfill
 
+\vspace{0.2cm}
+
 \hfill
-\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{frametitle}
+\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan2}
 低次元の特徴検出 (単純な形状など)
 \end{beamercolorbox}
 \hfill\hfill
 
+\vspace{0.2cm}
+
 \hfill
-\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{frametitle}
+\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan1}
 高次元の特徴検出 (複雑な形状)
 \end{beamercolorbox}
 \hfill\hfill
 
+\vspace{0.2cm}
+
 \hfill
-\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{frametitle}
+\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan2}
 画像全体を把握
 \end{beamercolorbox}
 \hfill\hfill
 
+\vspace{0.2cm}
+
 \hfill
-\begin{beamercolorbox}[ center, wd=80mm, sep=2pt, shadow=false, rounded=true ]{frametitle}
+\begin{beamercolorbox}[ center, wd=80mm, sep=2pt, shadow=false, rounded=true ]{white-cyan1}
 オブジェクトを形成する不変の要素を把握
 \end{beamercolorbox}
 \hfill\hfill
+
+\vspace{0.2cm}
 
 学習により自動でオブジェクトを区分できるようになる
 \end{frame}
