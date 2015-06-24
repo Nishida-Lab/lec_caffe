@@ -66,7 +66,6 @@
 \end{itemize}
 
 \section{理論研究}
-
 \subsection{人工ニューラルネットワーク}
 80年代から90年代にかけて誤差逆伝搬法（back propagation）と呼ばれる多層ニューラルネットワークの学習法の開発をきっかけに多くの研究がなされた．しかし，誤差逆伝搬法では２層程度のニューラルネットワークの学習は行うことができるが，それより多い層をもつニューラルネットワークの学習では様々な問題により上手く学習することが出来ない．
 
@@ -77,8 +76,16 @@
 多層ニューラルネットワークでは，パラメータの初期値をランダムに与えると学習が上手く行えないが，層ごとに教師なし学習を行う事前学習により得られたパラメータを用いることによって上手く学習できることが発見された．
 
 これらの各技術に関して今後深く理解していく．
-\section{プログラム}
 
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=12cm]{./fig/eps/Deep_Learning_concept.eps}
+  \end{center}
+  \caption{2層のネットワークと多層ネットワークの概念図}
+  \label{fig:2層のネットワークと多層ネットワークの概念図}
+\end{figure}
+
+\section{プログラム}
 \subsection{caffeの基本的なアルゴリズム}
 CaffeはCNN(Convolutional Neural Networks)という技法を使っている．CNNは多
 層ネットワークで,入力イメージから,特徴を抽出し，オブジェクトの分類を行う．
@@ -90,14 +97,6 @@ CaffeはCNN(Convolutional Neural Networks)という技法を使っている．CN
 
 \subsection{中間層の出力}
 Caffeで画像を分類する際に中間層でどのような出力なっているかを確認したいと考えているが，現状ではその方法が分かっていない．
-
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=12cm]{./fig/eps/Deep_Learning_concept.eps}
-  \end{center}
-  \caption{title}
-  \label{fig:title}
-\end{figure}
 
 \section{今後の課題}
 \begin{itemize}
