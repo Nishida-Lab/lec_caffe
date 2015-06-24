@@ -161,6 +161,27 @@
 \end{frame}
 
 %%%% 4 %%%%
+
+\begin{frame}[fragile]\frametitle{人工ニューラルネットワーク}
+ディープビリーフネットワーク（deep belief network, DBN）を制約ボルツマン
+ マシンに単層ごとに分解後，それぞれ学習する手法が提案
+ される
+\begin{block}{自己符号化器（autoencoder）}
+入力に対し，計算される出力が入力になるべく近くなる用に訓練されるニューラ
+ ルネットワーク．
+\end{block}
+
+自己符号化器を用いて単層毎に教師なしで学習．
+
+\vspace{1cm}
+
+単層ごとに学習を行うことで初期パラメータを決定後，ニューラルネットワーク
+ 全体を学習すると上手く学習できる．
+
+\end{frame}
+
+
+%%%% 5 %%%%
 \begin{frame}[fragile]\frametitle{caffe}
  caffe - CNN(Convolutional Neural Networks)の実装
 \vspace{0.2cm}
@@ -208,7 +229,7 @@
 学習により自動でオブジェクトを区分できるようになる
 \end{frame}
 
-%%%% 5 %%%%
+%%%% 6 %%%%
 \begin{frame}\frametitle{今後の課題}
 
 \begin{block}{理論研究}
