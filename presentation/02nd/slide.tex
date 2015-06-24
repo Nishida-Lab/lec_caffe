@@ -3,6 +3,7 @@
 \usepackage{bxdpx-beamer}
 \usepackage{pxjahyper}
 \usepackage{minijs}%和文用
+\usepackage{listings,jlisting} % プログラムの表示用
 \renewcommand{\kanjifamilydefault}{\gtdefault}%和文用
 
 %%%% スライドの見た目 %%%%%
@@ -57,17 +58,48 @@
 \makeatother
 %%%%%%%%%%
 
-\title[略タイトル]{第1回　知能システム学特論レポート}%[略タイトル]{タイトル}
+%%%%% プログラムに色をつける
+\usepackage{color}
+ 
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+ 
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+
+%%%%
+\title[略タイトル]{第2回　知能システム学特論レポート}%[略タイトル]{タイトル}
 \author[NishidaLab]{
 15344203 & 有田 裕太 \\
 15344206 & 株丹 亮 \\
 15344209 & 緒形 裕太 \\
 12104125 & 宮本 和 }%[略名前]{名前}
 \institute[NishidaLab]{西田研究室，計算力学研究室}%[略所属]{所属}
-\date{2015年\ 6月\ 18日}%日付
+\date{2015年\ 6月\ 22日}%日付
 
 \begin{document}
 
+%%%% 1 %%%%
 \begin{frame}[plain]\frametitle{}
 \titlepage %表紙
 \end{frame}
@@ -77,30 +109,64 @@
 % \end{frame}
 
 \section{進捗状況}
+%%%% 2 %%%%
 \begin{frame}\frametitle{進捗状況1}
-\begin{block}{宮本の研究について}
-計算力学研究室では，二次デブリ（宇宙ゴミ同士の衝突によりできる宇宙ゴミ）の大きさや分布を検討するために，デブリ同士の衝突を模擬した実験を行っている．
-この実験の衝突で生じた二次デブリを受け止めるために銅板を設置しており，ここに破片がぶつかるとクレーターが出来る．
-このクレーターの大きさ，数，位置を検出するために{\color{red} Deep Learning}を用いる．
 
+\begin{block}{理論研究の進捗}
+まだ，開始していない
 \end{block}
-\begin{exampleblock}{本グループの目的}
-Caffeを用いて目的に応じたデータセットの作成，そして画像の分類を行う．
+\vspace{1cm}
+\begin{exampleblock}{プログラミングの進捗}
+サンプルプログラムを実行することができた
 \end{exampleblock}
 \end{frame}
 
-\begin{frame}\frametitle{進捗状況2}
-\begin{block}{プログラミングの進捗状況}
-\begin{itemize}
-\item ソフトウェア（Caffe）のダウンロード及びコンパイルができた
-\item サンプルの実行方法がわからない
-\item データセットの作り方がわからない
-\end{itemize}
-\end{block}
+%%%% 3 %%%%
 
-Caffeのコンパイル方法はスライドでは省略する．
+\begin{frame}[fragile]\frametitle{サンプルプログラムについて}
+サンプルプログラムを実行するには多少の変更が必要となった
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, language=Python,frame=single, firstnumber=254, numbers=left,breaklines=true,xleftmargin=5mm, ]
+if ms != self.inputs[in_][1:]:
+    raise ValueError('Mean shape incompatible with input shape.')
+\end{lstlisting}
+このように記述されている部分を以下のように修正する．
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, language=Python,frame=single, firstnumber=254, numbers=left, breaklines=true,xleftmargin=5mm]
+if ms != self.inputs[in_][1:]:
+    print(self.inputs[in_])
+    in_shape = self.inputs[in_][1:]
+    m_min, m_max = mean.min(), mean.max()
+    normal_mean = (mean - m_min) / (m_max - m_min)
+    mean = resize_image(normal_mean.transpose((1,2,0)),in_shape[1:]).transpose((2,0,1)) * (m_max - m_min) + m_min
+    #raise ValueError('Mean shape incompatible with input shape.')
+\end{lstlisting}
+\end{frame}
 
-\vspace{1cm}
+%%%% 3 %%%%
+\begin{frame}[fragile]\frametitle{サンプルプログラムの実行}
+ \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+$ python classify.py --raw_scale 255 ../examples/images/cat.jpg ./result.npy
+\end{lstlisting}
+
+\begin{figure}[t]
+ \begin{minipage}{0.3\hsize}
+  \centering
+  \includegraphics[width=30mm]{./figure/cat.eps}
+  \caption{cat.jpg}
+  \label{sample1}
+ \end{minipage}
+ \begin{minipage}{0.3\hsize}
+  \centering
+  \includegraphics[width=30mm]{./figure/cat_gray.eps}
+  \caption{cat\_gray.jpg}
+  \label{sample2}
+ \end{minipage}
+ \begin{minipage}{0.3\hsize}
+  \centering
+  \includegraphics[width=30mm]{./figure/fish-bike.eps}
+  \caption{fish-bike.jpg}
+  \label{sample3}
+ \end{minipage}
+\end{figure}
 \begin{exampleblock}{実行環境} 
 \begin{itemize}
  \item Ubuntu 14.04 LTS
@@ -108,8 +174,63 @@ Caffeのコンパイル方法はスライドでは省略する．
  \item RAM 16GB
 \end{itemize}
 \end{exampleblock}
-% 公式にはWindowsに対応していないため，今回はUbuntuを用いた． 
 \end{frame}
+
+%%%%% 4 %%%%%
+\begin{frame}[fragile]\frametitle{サンプルプログラムの実行結果1}
+ \begin{figure}[t]
+  \centering
+  \includegraphics[width=40mm]{./figure/cat.eps}
+  \caption{cat.jpg}
+  \label{sample1}
+ \end{figure}
+\begin{exampleblock}{実行結果} 
+実行時間は1.13秒．
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,xleftmargin=5mm]
+#1 | n02123045 tabby, tabby cat | 27.9%
+#2 | n02123159 tiger cat | 21.9%
+#3 | n02124075 Egyptian cat | 16.1%
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+%%%%% 5 %%%%%
+\begin{frame}[fragile]\frametitle{サンプルプログラムの実行結果2}
+ \begin{figure}[t]
+  \centering
+  \includegraphics[width=30mm]{./figure/cat_gray.eps}
+  \caption{gray\_cat.jpg}
+  \label{sample2}
+ \end{figure}
+\begin{exampleblock}{実行結果} 
+実行時間は1.14秒．
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,xleftmargin=5mm]
+#1 | n02342885 hamster | 54.7%
+#2 | n02325366 wood rabbit, cottontail, cottontail rabbit | 17.2%
+#3 | n02326432 hare | 16.4%
+\end{lstlisting}
+\end{exampleblock}
+白黒にするだけで実行結果に大きな差が出た．
+\end{frame}
+
+%%%%% 6 %%%%%
+\begin{frame}[fragile]\frametitle{サンプルプログラムの実行結果3}
+ \begin{figure}[t]
+  \centering
+  \includegraphics[width=40mm]{./figure/fish-bike.eps}
+  \caption{fish-bike.jpg}
+  \label{sample3}
+ \end{figure}
+\begin{exampleblock}{実行結果} 
+Fig.\ref{sample3}の実行結果．実行時間は1.15秒．
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,xleftmargin=5mm]
+#1 | n04120489 running shoe |  6.9%
+#2 | n04509417 unicycle, monocycle |  3.9%
+#3 | n04482393 tricycle, trike, velocipede |  3.6%
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
 % \section{具体例}
 
 % \begin{frame}\frametitle{定理環境の例}
