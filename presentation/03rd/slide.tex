@@ -46,7 +46,7 @@
 % \usepackage{lxfonts}%数式・英文ローマン体を Lxfont にする
 % \usepackage{bm}%数式太字
 %%%%%%%%%%
- 
+
 %%%%% 複数人の著者を揃える %%%%%
 %% http://tex.stackexchange.com/questions/
 %%   166531/how-to-change-author-alignment-in-beamer
@@ -66,31 +66,31 @@
 
 %%%%% プログラムに色をつける
 \usepackage{color}
- 
+
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{codepurple}{rgb}{0.58,0,0.82}
 \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
- 
+
 \lstdefinestyle{mystyle}{
-    backgroundcolor=\color{backcolour},   
+    backgroundcolor=\color{backcolour},
     commentstyle=\color{codegreen},
     keywordstyle=\color{magenta},
     numberstyle=\tiny\color{codegray},
     stringstyle=\color{codepurple},
     basicstyle=\footnotesize,
-    breakatwhitespace=false,         
-    breaklines=true,                 
-    captionpos=b,                    
-    keepspaces=true,                 
-    numbers=left,                    
-    numbersep=5pt,                  
-    showspaces=false,                
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
     showstringspaces=false,
-    showtabs=false,                  
+    showtabs=false,
     tabsize=2
 }
- 
+
 \lstset{style=mystyle}
 
 %%%%
@@ -119,7 +119,7 @@
 \begin{frame}\frametitle{進捗状況}
 
 \begin{block}{理論研究の進捗}
-人口ニューラルネットワーク・caffeについて調べた
+人工ニューラルネットワーク・caffeについて調べた
 \end{block}
 
 \vspace{1cm}
@@ -130,8 +130,20 @@
 
 %%%% 3 %%%%
 
-\begin{frame}[fragile]\frametitle{人口ニューラルネットワーク}
+\begin{frame}[fragile]\frametitle{人工ニューラルネットワーク}
+\begin{block}{誤差逆伝搬法}
+80年から90年代，誤差逆伝搬法（back propagation）が多層ニューラルネットワークの学習方法として確立
+\end{block}
 
+しかし，誤差逆伝搬法で学習可能なのは２層程度\\
+
+\begin{block}{問題点}
+多い層をもつニューラルネットワークの学習では様々な問題により上手く学習することが出来ない
+\end{block}
+\begin{itemize}
+\item 単相ネットワークに分解し，入力層に近い側から順番に教師なしで学習する
+\item 目的とするニューラルネットワークの学習前に層ごとに学習を行うことで良い初期値パラメータを求めておくやり方を事前学習（pretraining）という
+\end{itemize}
 \end{frame}
 
 %%%% 4 %%%%
@@ -180,7 +192,7 @@ DNN，CNN，caffeについて理解を深める
 %   \label{sample3}
 %  \end{minipage}
 % \end{figure}
-% \begin{exampleblock}{実行環境} 
+% \begin{exampleblock}{実行環境}
 % \begin{itemize}
 %  \item Ubuntu 14.04 LTS
 %  \item Intel core i5-4440 3.10GHz$\times$4
@@ -288,7 +300,7 @@ DNN，CNN，caffeについて理解を深める
 % \pagestyle{empty}
 % \begin{document}
 % \begin{equation*}
-% \sum_{k=0}^{\infty} \frac{(2k)!}{2^{2k}(k!)^2} \frac{1}{2k+1}=\frac{\pi}{2} 
+% \sum_{k=0}^{\infty} \frac{(2k)!}{2^{2k}(k!)^2} \frac{1}{2k+1}=\frac{\pi}{2}
 % \end{equation*}
 % \end{document}
 % \end{verbatim*}
