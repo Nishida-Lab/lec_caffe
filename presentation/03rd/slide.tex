@@ -6,6 +6,12 @@
 \usepackage{listings,jlisting} % プログラムの表示用
 \renewcommand{\kanjifamilydefault}{\gtdefault}%和文用
 
+%%%% tikz 用 %%%%%
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{intersections}
+\usetikzlibrary{shapes,arrows}
+
 %%%% スライドの見た目 %%%%%
 \usetheme{Boadilla}
 \usecolortheme{seahorse}
@@ -16,6 +22,20 @@
 \setbeamertemplate{footline}[page number]
 \setbeamerfont{footline}{size=\normalsize,series=\bfseries}
 \setbeamercolor{footline}{fg=black,bg=black}
+
+\setbeamercolor{white-cyan1}
+{fg=white,bg=cyan!80!black}
+\setbeamercolor{white-cyan2}
+{fg=white,bg=cyan!60!black}
+
+%フラットデザイン化
+\setbeamertemplate{blocks}[rounded] % Blockの影を消す
+%Beamer色設定
+\definecolor{UniBlue}{RGB}{0,150,200} 
+\definecolor{AlertOrange}{RGB}{255,76,0}
+\definecolor{AlmostBlack}{RGB}{38,38,38}
+\setbeamercolor{structure}{fg=UniBlue} % 見出しカラー
+\setbeamercolor{block title}{fg=UniBlue!50!black} % ブロック部分タイトルカラー
 %%%%
 
 %%%% 定義環境 %%%%%
@@ -88,14 +108,14 @@
 \lstset{style=mystyle}
 
 %%%%
-\title[略タイトル]{第2回　知能システム学特論レポート}%[略タイトル]{タイトル}
+\title[略タイトル]{第3回　知能システム学特論レポート}%[略タイトル]{タイトル}
 \author[NishidaLab]{
 15344203 & 有田 裕太 \\
 15344206 & 緒形 裕太 \\
 15344209 & 株丹 亮 \\
 12104125 & 宮本 和 }%[略名前]{名前}
 \institute[NishidaLab]{西田研究室，計算力学研究室}%[略所属]{所属}
-\date{2015年\ 6月\ 22日}%日付
+\date{2015年\ 6月\ 25日}%日付
 
 \begin{document}
 
@@ -110,126 +130,148 @@
 
 \section{進捗状況}
 %%%% 2 %%%%
-\begin{frame}\frametitle{進捗状況1}
+\begin{frame}\frametitle{進捗状況}
 
 \begin{block}{理論研究の進捗}
-まだ，開始していない
+人工ニューラルネットワーク・caffeについて調べた
 \end{block}
+
 \vspace{1cm}
 \begin{exampleblock}{プログラミングの進捗}
-サンプルプログラムを実行することができた
+中間層の出力，可視化を模索中
 \end{exampleblock}
 \end{frame}
 
 %%%% 3 %%%%
 
-\begin{frame}[fragile]\frametitle{サンプルプログラムについて}
-サンプルプログラムを実行するには多少の変更が必要となった
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, language=Python,frame=single, firstnumber=254, numbers=left,breaklines=true,xleftmargin=5mm, ]
-if ms != self.inputs[in_][1:]:
-    raise ValueError('Mean shape incompatible with input shape.')
-\end{lstlisting}
-このように記述されている部分を以下のように修正する．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, language=Python,frame=single, firstnumber=254, numbers=left, breaklines=true,xleftmargin=5mm]
-if ms != self.inputs[in_][1:]:
-    print(self.inputs[in_])
-    in_shape = self.inputs[in_][1:]
-    m_min, m_max = mean.min(), mean.max()
-    normal_mean = (mean - m_min) / (m_max - m_min)
-    mean = resize_image(normal_mean.transpose((1,2,0)),in_shape[1:]).transpose((2,0,1)) * (m_max - m_min) + m_min
-    #raise ValueError('Mean shape incompatible with input shape.')
-\end{lstlisting}
-\end{frame}
+\begin{frame}[fragile]\frametitle{人工ニューラルネットワーク}
+\begin{block}{誤差逆伝搬法}
+80年から90年代，誤差逆伝搬法（back propagation）が多層ニューラルネットワークの学習方法として確立
+\end{block}
 
-%%%% 3 %%%%
-\begin{frame}[fragile]\frametitle{サンプルプログラムの実行}
- \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
-$ python classify.py --raw_scale 255 ../examples/images/cat.jpg ./result.npy
-\end{lstlisting}
+しかし，誤差逆伝搬法で学習可能なのは２層程度\\
 
-\begin{figure}[t]
- \begin{minipage}{0.3\hsize}
-  \centering
-  \includegraphics[width=30mm]{./figure/cat.eps}
-  \caption{cat.jpg}
-  \label{sample1}
- \end{minipage}
- \begin{minipage}{0.3\hsize}
-  \centering
-  \includegraphics[width=30mm]{./figure/cat_gray.eps}
-  \caption{cat\_gray.jpg}
-  \label{sample2}
- \end{minipage}
- \begin{minipage}{0.3\hsize}
-  \centering
-  \includegraphics[width=30mm]{./figure/fish-bike.eps}
-  \caption{fish-bike.jpg}
-  \label{sample3}
- \end{minipage}
-\end{figure}
-\begin{exampleblock}{実行環境}
+\begin{block}{問題点}
+多い層をもつニューラルネットワークの学習では様々な問題により上手く学習することが出来ない
+\end{block}
 \begin{itemize}
- \item Ubuntu 14.04 LTS
- \item Intel core i5-4440 3.10GHz$\times$4
- \item RAM 16GB
+\item 単層ネットワークに分解し，入力層に近い側から順番に教師なしで学習する
+\item 目的とするニューラルネットワークの学習前に層ごとに学習を行うことで良い初期値パラメータを求めておくやり方を事前学習（pretraining）という
 \end{itemize}
+\end{frame}
+
+%%%% 4 %%%%
+
+\begin{frame}[fragile]\frametitle{人工ニューラルネットワーク}
+ディープビリーフネットワーク（deep belief network, DBN）を制約ボルツマン
+ マシンに単層ごとに分解後，それぞれ学習する手法が提案
+ される
+\begin{block}{自己符号化器（autoencoder）}
+入力に対し，計算される出力が入力になるべく近くなる用に訓練されるニューラ
+ ルネットワーク．
+\end{block}
+
+自己符号化器を用いて単層毎に教師なしで学習．
+
+\vspace{1cm}
+
+単層ごとに学習を行うことで初期パラメータを決定後，ニューラルネットワーク
+ 全体を学習すると上手く学習できる．
+
+\end{frame}
+
+
+%%%% 5 %%%%
+\begin{frame}[fragile]\frametitle{caffe}
+ caffe - CNN(Convolutional Neural Networks)の実装
+\vspace{0.2cm}
+
+\hfill
+\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan1}
+ イメージを入力
+\end{beamercolorbox}
+\hfill\hfill
+
+\vspace{0.2cm}
+
+\hfill
+\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan2}
+低次元の特徴検出 (単純な形状など)
+\end{beamercolorbox}
+\hfill\hfill
+
+\vspace{0.2cm}
+
+\hfill
+\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan1}
+高次元の特徴検出 (複雑な形状)
+\end{beamercolorbox}
+\hfill\hfill
+
+\vspace{0.2cm}
+
+\hfill
+\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan2}
+画像全体を把握
+\end{beamercolorbox}
+\hfill\hfill
+
+\vspace{0.2cm}
+
+\hfill
+\begin{beamercolorbox}[ center, wd=80mm, sep=2pt, shadow=false, rounded=true ]{white-cyan1}
+オブジェクトを形成する不変の要素を把握
+\end{beamercolorbox}
+\hfill\hfill
+
+\vspace{0.2cm}
+
+学習により自動でオブジェクトを区分できるようになる
+\end{frame}
+
+%%%% 6 %%%%
+\begin{frame}\frametitle{今後の課題}
+
+\begin{block}{理論研究}
+誤差逆伝搬法，DBN，制約ボルツマンマシン，自己符号化器などについて詳しく
+ 調べていく．
+\end{block}
+
+\vspace{1cm}
+\begin{exampleblock}{プログラミング}
+中間層の出力，可視化
 \end{exampleblock}
 \end{frame}
 
-%%%%% 4 %%%%%
-\begin{frame}[fragile]\frametitle{サンプルプログラムの実行結果1}
- \begin{figure}[t]
-  \centering
-  \includegraphics[width=40mm]{./figure/cat.eps}
-  \caption{cat.jpg}
-  \label{sample1}
- \end{figure}
-\begin{exampleblock}{実行結果}
-実行時間は1.13秒．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,xleftmargin=5mm]
-#1 | n02123045 tabby, tabby cat | 27.9%
-#2 | n02123159 tiger cat | 21.9%
-#3 | n02124075 Egyptian cat | 16.1%
-\end{lstlisting}
-\end{exampleblock}
-\end{frame}
+% \begin{figure}[t]
+%  \begin{minipage}{0.3\hsize}
+%   \centering
+%   \includegraphics[width=30mm]{./figure/cat.eps}
+%   \caption{cat.jpg}
+%   \label{sample1}
+%  \end{minipage}
+%  \begin{minipage}{0.3\hsize}
+%   \centering
+%   \includegraphics[width=30mm]{./figure/cat_gray.eps}
+%   \caption{cat\_gray.jpg}
+%   \label{sample2}
+%  \end{minipage}
+%  \begin{minipage}{0.3\hsize}
+%   \centering
+%   \includegraphics[width=30mm]{./figure/fish-bike.eps}
+%   \caption{fish-bike.jpg}
+%   \label{sample3}
+%  \end{minipage}
+% \end{figure}
+% \begin{exampleblock}{実行環境}
+% \begin{itemize}
+%  \item Ubuntu 14.04 LTS
+%  \item Intel core i5-4440 3.10GHz$\times$4
+%  \item RAM 16GB
+% \end{itemize}
+% \end{exampleblock}
+% \end{frame}
 
-%%%%% 5 %%%%%
-\begin{frame}[fragile]\frametitle{サンプルプログラムの実行結果2}
- \begin{figure}[t]
-  \centering
-  \includegraphics[width=30mm]{./figure/cat_gray.eps}
-  \caption{gray\_cat.jpg}
-  \label{sample2}
- \end{figure}
-\begin{exampleblock}{実行結果}
-実行時間は1.14秒．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,xleftmargin=5mm]
-#1 | n02342885 hamster | 54.7%
-#2 | n02325366 wood rabbit, cottontail, cottontail rabbit | 17.2%
-#3 | n02326432 hare | 16.4%
-\end{lstlisting}
-\end{exampleblock}
-白黒にするだけで実行結果に大きな差が出た．
-\end{frame}
-
-%%%%% 6 %%%%%
-\begin{frame}[fragile]\frametitle{サンプルプログラムの実行結果3}
- \begin{figure}[t]
-  \centering
-  \includegraphics[width=40mm]{./figure/fish-bike.eps}
-  \caption{fish-bike.jpg}
-  \label{sample3}
- \end{figure}
-\begin{exampleblock}{実行結果}
-Fig.\ref{sample3}の実行結果．実行時間は1.15秒．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,xleftmargin=5mm]
-#1 | n04120489 running shoe |  6.9%
-#2 | n04509417 unicycle, monocycle |  3.9%
-#3 | n04482393 tricycle, trike, velocipede |  3.6%
-\end{lstlisting}
-\end{exampleblock}
-\end{frame}
 
 % \section{具体例}
 
@@ -347,6 +389,5 @@ Fig.\ref{sample3}の実行結果．実行時間は1.15秒．
 % }
 % \end{block}
 % \end{frame}
-
 \setcounter{framenumber}{\value{finalframe}}
 \end{document}

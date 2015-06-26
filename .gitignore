@@ -9,5 +9,6 @@
 *.log
 *.toc
 *.DS_Store
-/presentation/02nd/.#slide.vrb
-/presentation/02nd/slide.vrb
+*.vrb
+
+/presentation/03rd/.yatexrc
