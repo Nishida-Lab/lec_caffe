@@ -144,7 +144,6 @@
 \end{frame}
 
 %%%% 3.1 %%%%
-
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{figure}[tb]
@@ -163,7 +162,6 @@
 \end{frame}
 
 %%%% 3.2 %%%%
-
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{figure}[tb]
@@ -172,7 +170,7 @@
   \end{center}
   \caption{2層のネットワーク}
 \end{figure}
-
+中間層($l=2$)，出力層($l=3$)はそれぞれ
 \begin{eqnarray}
 \label{eq:3a}
   \bm{u}^{(2)} &=& \bm{W}^{(2)}\bm{x} + \bm{b}^{(2)} \nonumber\\
@@ -180,7 +178,6 @@
   \bm{u}^{(3)} &=& \bm{W}^{(3)}\bm{z}^{(2)} + \bm{b}^{(3)} \nonumber\\
   \bm{z}^{(3)} &=& \bm{f}(\bm{u}^{(3)})\nonumber
 \end{eqnarray}
-
 \end{frame}
 
 %%%% 3.3 %%%%
@@ -192,6 +189,7 @@
   \bm{u}^{(l+1)} &=& \bm{W}^{(l+1)}\bm{z}^{(l)} + \bm{b}^{(l+1)} \nonumber\\
   \bm{z}^{(l+1)} &=& \bm{f}(\bm{u}^{(l+1)}) \nonumber
 \end{eqnarray}
+\vspace{0.1mm}
 \end{block}
 
 \begin{itemize}
