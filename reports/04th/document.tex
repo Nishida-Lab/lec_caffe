@@ -149,7 +149,12 @@ $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm
 \end{eqnarray}
 
 \subsubsection{多クラス分類}
-多クラス分類とは入力$\vec{x}$に応じて有限個のクラスに分類する問題である．一例としてFig.\ref{010714_27Jun15}に手書き文字認識の例を示す．この問題では活性化関数にはソフトマックス関数(softmax function)が良く用いられる．また，誤差関数は次式で与える．
+多クラス分類とは入力$\vec{x}$に応じて有限個のクラスに分類する問題である．一例としてFig.\ref{010714_27Jun15}に手書き文字認識の例を示す．この問題では活性化関数にはソフトマックス関数(softmax function)が良く用いられる．出力相$l=L$の$k$番目($k=1,...,K$)のユニットの出力は$l=L-1$層の出力を元に次式で与えられ，これをソフトマックス関数という．
+\begin{eqnarray}
+ y_{k} \equiv z_{k}^{(L)}= \frac{\exp(u_{k}^{(L)})}{\sum^{K}_{j=1}exp(u_{j}^{(L)})}
+\end{eqnarray}
+
+また，誤差関数は次式で与える．
 \begin{eqnarray}
  E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\label{000700_27Jun15}
 \end{eqnarray}
