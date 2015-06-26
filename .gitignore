@@ -10,5 +10,6 @@
 *.toc
 *.DS_Store
 *.vrb
-
-/presentation/03rd/.yatexrc
+*.yatexrc
+*.nav
+*~
