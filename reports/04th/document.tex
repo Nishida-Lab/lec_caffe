@@ -85,18 +85,18 @@
 る．
 \begin{figure}[t]
  \centering
- \includegraphics[scale=0.55]{../04th/fig/sigmoid.eps}
+ \includegraphics[scale=0.55]{fig/eps/sigmoid.eps}
     \caption{典型的な活性化関数とその概形}
 		\label{sigmoid}
 \end{figure}
 \subsubsection{マックスアウト}
 K個１つ１つが異なる重みとバイアスを持ち，それぞれの総入力を
-$u_(j1)$...$u_(jk)$と別々に計算したあと，それぞれの最大値をユニットの出力と
+$u_{j1}$...$u_{jk}$と別々に計算したあと，それぞれの最大値をユニットの出力と
 する．
 
 \begin{align}
  u_{jk}=\sum w_{jik}z_i +b_{jk}\ \ (1...K)\\
- f(u_{j})=max_{k=1...K}(u_{jk})
+ f(u_{j})=\max_{k=1...K}u_{jk}
 \end{align}
 
 \subsection{多層ネットワーク}

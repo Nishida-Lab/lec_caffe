@@ -143,7 +143,38 @@
 \end{exampleblock}
 \end{frame}
 
-%%%% 3.1 %%%%
+%%%% 3.2.1 %%%%
+\begin{frame}[fragile]\frametitle{活性化(シグモイド)関数}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=10cm]{fig/eps/sigmoid.eps}
+  \end{center}
+  \caption{典型的なシグモイド関数}
+\end{figure}
+\end{frame}
+
+%%%% 3.2.2 %%%%
+
+\begin{frame}[fragile]\frametitle{マックスアウト}
+
+\begin{block}{マックスアウト関数}
+\begin{align}
+ u_{jk}=\sum w_{jik}z_i +b_{jk}\ \ (1...K)\\
+ f(u_{j})=max_{k=1...K}(u_{jk})
+\end{align}
+\vspace{0.1mm}
+\end{block}
+
+\begin{itemize}
+\item ユニットをまとめたような構造を持つ．
+\item 異なる重みとバイアスを持つそれぞれの総入力を別々に計算し\\
+最大値をユニットの出力とする．
+\end{itemize}
+\end{frame}
+
+
+%%%% 3.3 %%%%
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{figure}[tb]
@@ -161,7 +192,7 @@
 
 \end{frame}
 
-%%%% 3.2 %%%%
+%%%% 3.3 %%%%
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{figure}[tb]
@@ -193,59 +224,12 @@
 \end{block}
 
 \begin{itemize}
-\item $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm{y}$を\\決定することができる．
-\item 各層間の結合重み$\bm{W}^{(l)}$とユニットのバイアス$\bm{b}^{(l)}$を成分に持つ\\ベクトル$\bm{w}$を定義する．
+\item $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm{y}$を決定することができる．
+\item 各層間の結合重み$\bm{W}^{(l)}$とユニットのバイアス$\bm{b}^{(l)}$を成分に持つベクトル$\bm{w}$を定義する．\\
 \item これを$\bm{y}(\bm{x};\bm{w})$と表現する．
 \end{itemize}
 \end{frame}
 
-%%%% 4 %%%%
-\begin{frame}[fragile]\frametitle{caffe}
- caffe - CNN(Convolutional Neural Networks)の実装
-\vspace{0.2cm}
-
-\hfill
-\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan1}
- イメージを入力
-\end{beamercolorbox}
-\hfill\hfill
-
-\vspace{0.2cm}
-
-\hfill
-\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan2}
-低次元の特徴検出 (単純な形状など)
-\end{beamercolorbox}
-\hfill\hfill
-
-\vspace{0.2cm}
-
-\hfill
-\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan1}
-高次元の特徴検出 (複雑な形状)
-\end{beamercolorbox}
-\hfill\hfill
-
-\vspace{0.2cm}
-
-\hfill
-\begin{beamercolorbox}[ center, wd=60mm, sep=2pt, shadow=false, rounded=true ]{white-cyan2}
-画像全体を把握
-\end{beamercolorbox}
-\hfill\hfill
-
-\vspace{0.2cm}
-
-\hfill
-\begin{beamercolorbox}[ center, wd=80mm, sep=2pt, shadow=false, rounded=true ]{white-cyan1}
-オブジェクトを形成する不変の要素を把握
-\end{beamercolorbox}
-\hfill\hfill
-
-\vspace{0.2cm}
-
-学習により自動でオブジェクトを区分できるようになる
-\end{frame}
 
 %%%% 5 %%%%
 \begin{frame}\frametitle{今後の課題}
