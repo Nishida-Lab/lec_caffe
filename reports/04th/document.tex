@@ -81,7 +81,27 @@
 
 \subsection{出力層の設計と誤差関数}
 \subsubsection{学習の枠組み}
-順伝播型ネットワークが表現する関数$y$
+順伝播型ネットワークが表現する関数$\vec{y}(\vec{x};\vec{w})$をネットワークのパラメータ$\vec{w}$を変えることで変化させ，望みの関数を与えることを考える．
+入力$\vec{x}$と望みの出力$\mathrm{d}$のペアを次のように与える．
+\begin{eqnarray}
+ \{(\vec{x}_{1},\mathrm{d}_{1}),(\vec{x}_{1},\mathrm{d}_{1}),...,(\vec{x}_{N},\mathrm{d}_{N})\}
+\end{eqnarray}
+これらのペア$(\vec{x},\mathrm{d})$１つ１つを訓練サンプル(training samples)といい，その集合を訓練データ(training data)という．
+ネットワーク$\vec{w}$を調整することで訓練データの入出力ペアをできるだけ再現すること学習という．
+
+この場合，ネットワークが表す関数と訓練データとの近さ$(\vec{y}(\vec{x}_{n};\vec{w}))$を誤差関数(error function)で定義する．誤差関数は問題の種別や活性化関数によって異なる．表に問題の種別ごとの活性化関数と誤差関数の一覧を示す．
+
+\begin{table}[htb]
+\centering
+\caption{問題の種別ごとの活性化関数と誤差関数}
+\begin{tabular}[bt]{|c|c|c|}\hline
+ 問題の種別& 出力層の活性化関数&誤差関数 \\ \hline \hline
+ 回帰&恒等写像 & 二乗誤差 式\\
+ 二値分類& ロジスティック関数& 式\\ 
+ 多クラス分類& ソフトマックス関数& 交差エントロピー 式\\ \hline
+\end{tabular}
+\end{table}
+
 
 \section{今後の課題}
 \begin{itemize}
