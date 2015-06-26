@@ -149,11 +149,19 @@ $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm
 \end{eqnarray}
 
 \subsubsection{多クラス分類}
-多クラス分類とは入力$\vec{x}$に応じて有限個のクラスに分類する問題である．一例としてFigに手書き文字認識の例を示す．この問題では活性化関数にはソフトマックス関数(softmax function)が良く用いられる．また，誤差関数は次式で与える．
+多クラス分類とは入力$\vec{x}$に応じて有限個のクラスに分類する問題である．一例としてFig.\ref{010714_27Jun15}に手書き文字認識の例を示す．この問題では活性化関数にはソフトマックス関数(softmax function)が良く用いられる．また，誤差関数は次式で与える．
 \begin{eqnarray}
  E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\label{000700_27Jun15}
 \end{eqnarray}
 なお，この関数は交差エントロピー(cross entropy)と呼ばれる．
+
+\begin{figure}[htbp]
+ 	\centering
+	\includegraphics[width=12cm]{./fig/eps/example_digits.eps}
+	\caption{手書き文字認識の例}
+	\label{010714_27Jun15}
+\end{figure}
+
 \section{今後の課題}
 \begin{itemize}
  \item 理論研究を進める．
