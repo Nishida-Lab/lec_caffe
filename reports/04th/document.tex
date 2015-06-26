@@ -76,6 +76,28 @@
 \subsection{ユニットの出力}
 
 \subsection{活性化関数}
+\subsubsection{シグモイド関数}
+入力の絶対値が大きな値をとると，出力が飽和し一定値になり，その間の入力に
+対して出力が徐々にかつ滑らかに変化する関数．
+\subsubsection{正規化線形関数}
+シグモイド関数は入力の変動が大き過ぎると出力が0か1の値しかとれないが，正
+規化線形関数はバイアスがない場合，入力が0以上であれば出力が入力に比例す
+る．
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.55]{../04th/fig/sigmoid.eps}
+    \caption{典型的な活性化関数とその概形}
+		\label{sigmoid}
+\end{figure}
+\subsubsection{マックスアウト}
+K個１つ１つが異なる重みとバイアスを持ち，それぞれの総入力を
+$u_j1$...$u_jk$と別々に計算したあと，それぞれの最大値をユニットの出力と
+する．
+
+\begin{align}
+ u_jk=\sum w_jik z_i +b_jk\\(1...k)
+ f(u_jk)=max u_jk
+\end{align}
 
 \subsection{多層ネットワーク}
 Fig.~\ref{fig:2層のネットワーク}に2層構造のネットワークを示す．
