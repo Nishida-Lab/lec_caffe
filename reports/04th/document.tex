@@ -91,12 +91,12 @@
 \end{figure}
 \subsubsection{マックスアウト}
 K個１つ１つが異なる重みとバイアスを持ち，それぞれの総入力を
-$u_j1$...$u_jk$と別々に計算したあと，それぞれの最大値をユニットの出力と
+$u_(j1)$...$u_(jk)$と別々に計算したあと，それぞれの最大値をユニットの出力と
 する．
 
 \begin{align}
- u_jk=\sum w_jik z_i +b_jk\\(1...k)
- f(u_jk)=max u_jk
+ u_{jk}=\sum w_{jik}z_i +b_{jk}\ \ (1...K)\\
+ f(u_{j})=max_{k=1...K}(u_{jk})
 \end{align}
 
 \subsection{多層ネットワーク}
