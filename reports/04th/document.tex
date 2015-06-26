@@ -96,12 +96,23 @@
 \caption{問題の種別ごとの活性化関数と誤差関数}
 \begin{tabular}[bt]{|c|c|c|}\hline
  問題の種別& 出力層の活性化関数&誤差関数 \\ \hline \hline
- 回帰&恒等写像 & 二乗誤差 式\\
+ 回帰&正接双曲線関数や恒等写像 & 二乗誤差 式\\
  二値分類& ロジスティック関数& 式\\ 
  多クラス分類& ソフトマックス関数& 交差エントロピー 式\\ \hline
 \end{tabular}
 \end{table}
 
+\subsubsection{回帰}
+回帰(regression)とは出力連続値をとる関数を対象に訓練データを良く再現する関数を求めることをいう．回帰では活性化関数に正接双曲線関数や恒等写像を用い，評価関数は次式が良く用いられる．
+\begin{eqnarray}
+ E(\vec{w}) = \displaystyle{\frac{1}{2}}\sum^{N}_{n=1}||\vec{d}_{n}-\vec{y}(\vec{x}_{n};\vec{w})||^{2}
+\end{eqnarray}
+
+\subsubsection{二値分類}
+二値分類では入力$\vec{x}$に応じて２種類に区別する問題を考える．すなわち，$d\in\{0,1\}$とする．このとき，活性化関数はロジスティック関数$y=1/(1+\exp(-u))$とし，誤差関数は次式で与える．
+\begin{eqnarray}
+ E(\vec{w})=-\sum^{N}_{n=1}\left[d_{n}\log y(\vec{x}_{n};\vec{w} + (1-d_{n})\log\{1-y(\vec{x}_{n};\vec{w})\})\right]
+\end{eqnarray}
 
 \section{今後の課題}
 \begin{itemize}
