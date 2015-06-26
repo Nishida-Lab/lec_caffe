@@ -76,6 +76,28 @@
 \subsection{ユニットの出力}
 
 \subsection{活性化関数}
+\subsubsection{シグモイド関数}
+入力の絶対値が大きな値をとると，出力が飽和し一定値になり，その間の入力に
+対して出力が徐々にかつ滑らかに変化する関数．
+\subsubsection{正規化線形関数}
+シグモイド関数は入力の変動が大き過ぎると出力が0か1の値しかとれないが，正
+規化線形関数はバイアスがない場合，入力が0以上であれば出力が入力に比例す
+る．
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.55]{../04th/fig/sigmoid.eps}
+    \caption{典型的な活性化関数とその概形}
+		\label{sigmoid}
+\end{figure}
+\subsubsection{マックスアウト}
+K個１つ１つが異なる重みとバイアスを持ち，それぞれの総入力を
+$u_(j1)$...$u_(jk)$と別々に計算したあと，それぞれの最大値をユニットの出力と
+する．
+
+\begin{align}
+ u_{jk}=\sum w_{jik}z_i +b_{jk}\ \ (1...K)\\
+ f(u_{j})=max_{k=1...K}(u_{jk})
+\end{align}
 
 \subsection{多層ネットワーク}
 Fig.~\ref{fig:2層のネットワーク}に2層構造のネットワークを示す．
@@ -101,12 +123,12 @@ $\bm{W}^{(2)}$は入力層と中間層の結合重みであり，$\bm{b}^{(2)}$�
 \end{eqnarray}
 と書ける．
 $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm{y}$を決定することができる．
-この出力を決定するのは各層間の結合重み$\bm{W}^{(l)}\ (l=2,\cdots, L)$とユニットのバイアス$\bm{W}^{(l)}\ (l=2,\cdots, L)$である．
+この出力を決定するのは各層間の結合重み$\bm{W}^{(l)}\ (l=2,\cdots, L)$とユニットのバイアス$\bm{b}^{(l)}\ (l=2,\cdots, L)$である．
 これらのパラメータを持つベクトル$\bm{w}$を定義して，$\bm{y}(\bm{x};\bm{w})$と表現する．
 
 \begin{figure}[tb]
   \begin{center}
-    \includegraphics[clip,width=10cm]{fig/eps/unit.eps}
+    \includegraphics[clip,width=12cm]{fig/eps/unit.eps}
   \end{center}
   \caption{2層のネットワーク}
   \label{fig:2層のネットワーク}
@@ -131,7 +153,7 @@ $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm
 \begin{tabular}[bt]{|c|c|c|}\hline
  問題の種別& 出力層の活性化関数&誤差関数 \\ \hline \hline
  回帰&正接双曲線関数や恒等写像 & 二乗誤差 式\eqref{000645_27Jun15}\\
- 二値分類& ロジスティック関数& 式\eqref{000654_27Jun15}\\ 
+ 二値分類& ロジスティック関数& 式\eqref{000654_27Jun15}\\
  多クラス分類& ソフトマックス関数& 交差エントロピー 式\eqref{000700_27Jun15}\\ \hline
 \end{tabular}
 \end{table}

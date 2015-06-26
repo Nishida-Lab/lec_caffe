@@ -31,7 +31,7 @@
 %フラットデザイン化
 \setbeamertemplate{blocks}[rounded] % Blockの影を消す
 %Beamer色設定
-\definecolor{UniBlue}{RGB}{0,150,200} 
+\definecolor{UniBlue}{RGB}{0,150,200}
 \definecolor{AlertOrange}{RGB}{255,76,0}
 \definecolor{AlmostBlack}{RGB}{38,38,38}
 \setbeamercolor{structure}{fg=UniBlue} % 見出しカラー
@@ -41,6 +41,7 @@
 %%%% 定義環境 %%%%%
 \usepackage{amsmath,amssymb}
 \usepackage{amsthm}
+\usepackage{bm}
 \theoremstyle{definition}
 \newtheorem{theorem}{定理}
 \newtheorem{definition}{定義}
@@ -108,14 +109,14 @@
 \lstset{style=mystyle}
 
 %%%%
-\title[略タイトル]{第3回　知能システム学特論レポート}%[略タイトル]{タイトル}
+\title[略タイトル]{第4回　知能システム学特論レポート}%[略タイトル]{タイトル}
 \author[NishidaLab]{
 15344203 & 有田 裕太 \\
 15344206 & 緒形 裕太 \\
 15344209 & 株丹 亮 \\
 12104125 & 宮本 和 }%[略名前]{名前}
 \institute[NishidaLab]{西田研究室，計算力学研究室}%[略所属]{所属}
-\date{2015年\ 6月\ 25日}%日付
+\date{2015年\ 6月\ 29日}%日付
 
 \begin{document}
 
@@ -133,30 +134,68 @@
 \begin{frame}\frametitle{進捗状況}
 
 \begin{block}{理論研究の進捗}
-人工ニューラルネットワーク・caffeについて調べた
+人工ニューラルネットワークの理論について
 \end{block}
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミングの進捗}
-中間層の出力，可視化を模索中
+なし
 \end{exampleblock}
 \end{frame}
 
-%%%% 3 %%%%
+%%%% 3.1 %%%%
+\begin{frame}[fragile]\frametitle{多層ネットワーク}
 
-\begin{frame}[fragile]\frametitle{人工ニューラルネットワーク}
-\begin{block}{誤差逆伝搬法}
-80年から90年代，誤差逆伝搬法（back propagation）が多層ニューラルネットワークの学習方法として確立
-\end{block}
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=10cm]{fig/eps/unit.eps}
+  \end{center}
+  \caption{2層のネットワーク}
+\end{figure}
 
-しかし，誤差逆伝搬法で学習可能なのは２層程度\\
-
-\begin{block}{問題点}
-多い層をもつニューラルネットワークの学習では様々な問題により上手く学習することが出来ない
-\end{block}
 \begin{itemize}
-\item 単相ネットワークに分解し，入力層に近い側から順番に教師なしで学習する
-\item 目的とするニューラルネットワークの学習前に層ごとに学習を行うことで良い初期値パラメータを求めておくやり方を事前学習（pretraining）という
+\item 入力$\bm{u}^{(l)}$，出力$\bm{z}^{(l)}$
+\item 各層間の結合重み$\bm{W}^{(l)}\ (l=2,\cdots, L)$
+\item ユニットのバイアス$\bm{b}^{(l)}\ (l=2,\cdots, L)$
+\end{itemize}
+
+\end{frame}
+
+%%%% 3.2 %%%%
+\begin{frame}[fragile]\frametitle{多層ネットワーク}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=10cm]{fig/eps/unit.eps}
+  \end{center}
+  \caption{2層のネットワーク}
+\end{figure}
+中間層($l=2$)，出力層($l=3$)はそれぞれ
+\begin{eqnarray}
+\label{eq:3a}
+  \bm{u}^{(2)} &=& \bm{W}^{(2)}\bm{x} + \bm{b}^{(2)} \nonumber\\
+  \bm{z}^{(2)} &=& \bm{f}(\bm{u}^{(2)}) \nonumber\\
+  \bm{u}^{(3)} &=& \bm{W}^{(3)}\bm{z}^{(2)} + \bm{b}^{(3)} \nonumber\\
+  \bm{z}^{(3)} &=& \bm{f}(\bm{u}^{(3)})\nonumber
+\end{eqnarray}
+\end{frame}
+
+%%%% 3.3 %%%%
+
+\begin{frame}[fragile]\frametitle{多層ネットワーク}
+
+\begin{block}{任意の階層 L のネットワークに一般化すると}
+\begin{eqnarray}
+  \bm{u}^{(l+1)} &=& \bm{W}^{(l+1)}\bm{z}^{(l)} + \bm{b}^{(l+1)} \nonumber\\
+  \bm{z}^{(l+1)} &=& \bm{f}(\bm{u}^{(l+1)}) \nonumber
+\end{eqnarray}
+\vspace{0.1mm}
+\end{block}
+
+\begin{itemize}
+\item $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm{y}$を\\決定することができる．
+\item 各層間の結合重み$\bm{W}^{(l)}$とユニットのバイアス$\bm{b}^{(l)}$を成分に持つ\\ベクトル$\bm{w}$を定義する．
+\item これを$\bm{y}(\bm{x};\bm{w})$と表現する．
 \end{itemize}
 \end{frame}
 
