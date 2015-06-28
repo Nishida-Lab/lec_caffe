@@ -149,6 +149,43 @@
 \end{exampleblock}
 \end{frame}
 
+%%%% 3.1.1 %%%%
+\begin{frame}[fragile]\frametitle{ユニットの出力}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=4cm]{fig/eps/input_output.eps}
+  \end{center}
+  \caption{ユニット1つの入出力の例}
+\end{figure}
+
+\begin{itemize}
+\item 各ユニットは複数の入力を受けて1つの出力を計算する．
+\item 各入力に対しそれぞれ異なる重み$w1$，$w2$，$w3$，$w4$を入力$x1$，$x2$，$x3$，$x4$に掛けたものの和にバイアス値$b$を加える．
+\end{itemize}
+
+\end{frame}
+
+%%%% 3.1.2 %%%%
+\begin{frame}[fragile]\frametitle{ユニットの出力}
+
+\begin{block}{総入力$u$とユニットの出力$z$}
+\begin{eqnarray}
+  u & = & w_1x_1+w_2x_2+w_3x_3+w_4x_4+b\\
+  z & = & f(u)
+\end{eqnarray}
+\end{block}
+これを一般化し\\
+第1層のユニットを$i=1,\cdots,I$，第2層のユニットを$j=1,\cdots,J$で表すと
+\begin{block}{入出力式の一般化}
+\begin{eqnarray}
+  u_j & = & \sum_{i=1}^I w_{ji}x_i + b_j\\
+  z_j & = & f(u_j)
+\end{eqnarray}
+\end{block}
+\end{frame}
+
+
 %%%% 3.2.1 %%%%
 \begin{frame}[fragile]\frametitle{活性化(シグモイド)関数}
 
@@ -180,7 +217,7 @@
 \end{frame}
 
 
-%%%% 3.3 %%%%
+%%%% 3.3.1 %%%%
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{figure}[tb]
@@ -198,7 +235,7 @@
 
 \end{frame}
 
-%%%% 3.3 %%%%
+%%%% 3.3.2 %%%%
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{figure}[tb]
@@ -217,14 +254,14 @@
 \end{eqnarray}
 \end{frame}
 
-%%%% 3.3 %%%%
+%%%% 3.3.3 %%%%
 
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{block}{任意の階層 L のネットワークに一般化すると}
 \begin{eqnarray}
-  \bm{u}^{(l+1)} &=& \bm{W}^{(l+1)}\bm{z}^{(l)} + \bm{b}^{(l+1)} \nonumber\\
-  \bm{z}^{(l+1)} &=& \bm{f}(\bm{u}^{(l+1)}) \nonumber
+  \bm{u}^{(l+1)} &=& \bm{W}^{(l+1)}\bm{z}^{(l)} + \bm{b}^{(l+1)} \\
+  \bm{z}^{(l+1)} &=& \bm{f}(\bm{u}^{(l+1)})
 \end{eqnarray}
 \vspace{0.1mm}
 \end{block}
