@@ -116,7 +116,7 @@
 15344209 & 株丹 亮 \\
 12104125 & 宮本 和 }%[略名前]{名前}
 \institute[NishidaLab]{西田研究室，計算力学研究室}%[略所属]{所属}
-\date{2015年\ 6月\ 29日}%日付
+\date{2015年\ 7月\ 2日}%日付
 
 \begin{document}
 
@@ -139,37 +139,34 @@
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミングの進捗}
-なし
+中間層の出力，可視化
 \end{exampleblock}
 \end{frame}
 
-%%%% 3.2.1 %%%%
-\begin{frame}[fragile]\frametitle{活性化(シグモイド)関数}
+%%%% 6.1 Ogata1 %%%%
 
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=10cm]{fig/eps/sigmoid.eps}
-  \end{center}
-  \caption{典型的なシグモイド関数}
+\begin{frame}[fragile]\frametitle{単純型細胞と複雑型細胞}
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.3]{fig/eps/cnn62.eps}
+    \caption{単純型細胞と複雑型細胞のモデル}
+		\label{fig:単純型細胞と複雑型細胞のモデル}
 \end{figure}
-\end{frame}
-
-%%%% 3.2.2 %%%%
-
-\begin{frame}[fragile]\frametitle{マックスアウト}
-
-\begin{block}{マックスアウト関数}
-\begin{align}
- u_{jk}=\sum w_{jik}z_i +b_{jk}\ \ (1...K)\\
- f(u_{j})=max_{k=1...K}(u_{jk})
-\end{align}
-\vspace{0.1mm}
-\end{block}
 
 \begin{itemize}
-\item ユニットをまとめたような構造を持つ．
-\item 異なる重みとバイアスを持つそれぞれの総入力を別々に計算し\\
-最大値をユニットの出力とする．
+\item (a),(b) 入力層と中間層の結合
+\item (c),(d) 中間層の変化と出力層の変化
+\end{itemize}
+
+\end{frame}
+
+%%%% 6.1 Ogata2 %%%%
+\begin{frame}[fragile]\frametitle{単純型細胞と複雑型細胞}
+\begin{itemize}
+\item ２つの細胞をモデル化した二層構造を繰り返す構造がCNNに用いられている
+\item 神経科学の分野において，多層のCNNが霊長類の脳の高次視覚野と似た振
+			る舞いを示す
+\item コンピュータによる物体カテゴリ認識ができるようになってきている
 \end{itemize}
 \end{frame}
 
@@ -177,12 +174,12 @@
 %%%% 3.3 %%%%
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=9cm]{fig/eps/unit.eps}
-  \end{center}
-  \caption{2層のネットワーク}
-\end{figure}
+% \begin{figure}[tb]
+%   \begin{center}
+%     \includegraphics[clip,width=9cm]{fig/eps/unit.eps}
+%   \end{center}
+%   \caption{2層のネットワーク}
+% \end{figure}
 
 \begin{itemize}
 \item 入力$\bm{u}^{(l)}$，出力$\bm{z}^{(l)}$
@@ -195,12 +192,12 @@
 %%%% 3.3 %%%%
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=9cm]{fig/eps/unit.eps}
-  \end{center}
-  \caption{2層のネットワーク}
-\end{figure}
+% \begin{figure}[tb]
+%   \begin{center}
+%     \includegraphics[clip,width=9cm]{fig/eps/unit.eps}
+%   \end{center}
+%   \caption{2層のネットワーク}
+% \end{figure}
 中間層($l=2$)，出力層($l=3$)はそれぞれ
 \begin{eqnarray}
 \label{eq:3a}
