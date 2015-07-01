@@ -117,7 +117,8 @@ python/draw_net.py models/bvlc_reference_caffenet/train_val.prototxt caffeNet.pn
 \end{lstlisting}
 
 \subsection{中間層の出力}
-畳込み層１層目のフィルタとFig.に示す入力画像を入力したときの出力を得ることができた．1層目のフィルタをFig.\ref{220453_1Jul15}，その出力をFig.\ref{220458_1Jul15}に示す．
+畳込み1層目のフィルタとFig.に示す入力画像を入力したときの出力を得ることができた．1層目のフィルタをFig.\ref{220453_1Jul15}，その出力をFig.\ref{220458_1Jul15}に示す．
+畳込み1層目は全部で96個の$11\times11$のフィルタから構成されており，ストライドが4である．従って，出力される画像のサイズは$55\times55$であり，96個の画像が出力される．
 \begin{figure}[t]
  \centering
  \includegraphics[scale=0.5]{fig/png/input.png}
