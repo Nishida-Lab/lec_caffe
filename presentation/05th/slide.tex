@@ -4,6 +4,7 @@
 \usepackage{pxjahyper}
 \usepackage{minijs}%和文用
 \usepackage{listings,jlisting} % プログラムの表示用
+\usepackage{type1cm}
 \renewcommand{\kanjifamilydefault}{\gtdefault}%和文用
 
 %%%% tikz 用 %%%%%
@@ -143,6 +144,23 @@
 \end{exampleblock}
 \end{frame}
 
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワーク}
+\begin{itemize}
+\item 畳込みニューラルネットワークは主に画像認識に応用される順伝播型ニューラルネットワークである．
+\item 順伝播型ネットワークは隣接層間のユニットの全てが結合されているのに対し，畳込みニューラルネットワークでは特定のユニットのみが結合を持つ特別な構造を持つ．
+\item 神経細胞はその受容野に刺激が入った場合にのみ反応し、受容野の外側にいくら刺激を与えても、細胞を発火しないという特徴を持つ．
+\end{itemize}
+
+\begin{figure}[htbp]
+  \begin{center}
+   \includegraphics[width=70mm]{fig/eps/network.eps}
+  \end{center}
+  \caption{畳込みニューラルネットワーク}
+  \label{fig:FNN}
+\end{figure}
+\end{frame}
+
+
 %%%% 6.1 Ogata1 %%%%
 
 \begin{frame}[fragile]\frametitle{単純型細胞と複雑型細胞}
@@ -172,59 +190,36 @@
 
 
 %%%% 3.3 %%%%
-\begin{frame}[fragile]\frametitle{多層ネットワーク}
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
 
-% \begin{figure}[tb]
-%   \begin{center}
-%     \includegraphics[clip,width=9cm]{fig/eps/unit.eps}
-%   \end{center}
-%   \caption{2層のネットワーク}
-% \end{figure}
-
-\begin{itemize}
-\item 入力$\bm{u}^{(l)}$，出力$\bm{z}^{(l)}$
-\item 各層間の結合重み$\bm{W}^{(l)}\ (l=2,\cdots, L)$
-\item ユニットのバイアス$\bm{b}^{(l)}\ (l=2,\cdots, L)$
-\end{itemize}
-
-\end{frame}
-
-%%%% 3.3 %%%%
-\begin{frame}[fragile]\frametitle{多層ネットワーク}
-
-% \begin{figure}[tb]
-%   \begin{center}
-%     \includegraphics[clip,width=9cm]{fig/eps/unit.eps}
-%   \end{center}
-%   \caption{2層のネットワーク}
-% \end{figure}
-中間層($l=2$)，出力層($l=3$)はそれぞれ
-\begin{eqnarray}
-\label{eq:3a}
-  \bm{u}^{(2)} &=& \bm{W}^{(2)}\bm{x} + \bm{b}^{(2)} \nonumber\\
-  \bm{z}^{(2)} &=& \bm{f}(\bm{u}^{(2)}) \nonumber\\
-  \bm{u}^{(3)} &=& \bm{W}^{(3)}\bm{z}^{(2)} + \bm{b}^{(3)} \nonumber\\
-  \bm{z}^{(3)} &=& \bm{f}(\bm{u}^{(3)})\nonumber
-\end{eqnarray}
-\end{frame}
-
-%%%% 3.3 %%%%
-
-\begin{frame}[fragile]\frametitle{多層ネットワーク}
-
-\begin{block}{任意の階層 L のネットワークに一般化すると}
-\begin{eqnarray}
-  \bm{u}^{(l+1)} &=& \bm{W}^{(l+1)}\bm{z}^{(l)} + \bm{b}^{(l+1)} \nonumber\\
-  \bm{z}^{(l+1)} &=& \bm{f}(\bm{u}^{(l+1)}) \nonumber
-\end{eqnarray}
-\vspace{0.1mm}
-\end{block}
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=9cm]{fig/eps/structure.eps}
+  \end{center}
+  \caption{畳込みニューラルネットワークの構造}
+\end{figure}
 
 \begin{itemize}
-\item $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm{y}$を決定することができる．
-\item 各層間の結合重み$\bm{W}^{(l)}$とユニットのバイアス$\bm{b}^{(l)}$を成分に持つベクトル$\bm{w}$を定義する．\\
-\item これを$\bm{y}(\bm{x};\bm{w})$と表現する．
+\item 畳込み層（convolution layer）とプーリング層（pooling layer）が\\ペアでこの順に並び，このペアが複数回繰り返される．
+\item 畳込み層とプーリング層の後に，局所コントラスト正規化\\（local contrast normalization, LCN）層を挿入する場合がある．
+\item 畳込み層とプーリング層の繰り返しの後には，隣接層間ユニットが\\全結合した層が配置される．
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=12cm]{fig/eps/conv_pool.eps}
+  \end{center}
+  % \caption{畳込みニューラルネットワークの構造}
+\end{figure}
+
+\begin{itemize}
+\item 全結合層は順伝播型ネットワークの各層と同じ
+\item 目的がクラス分類であれば最終の出力がソフトマックスを適用する
+\end{itemize}
+
 \end{frame}
 
 
