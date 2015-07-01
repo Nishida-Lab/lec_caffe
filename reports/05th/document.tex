@@ -75,9 +75,9 @@
 \subsection{畳込みニューラルネットワーク}
 畳込みニューラルネットワークは主に画像認識に応用される順伝播型ニューラルネットワークである．
 順伝播型ネットワークは隣接層間のユニットの全てが結合されているのに対し，畳込みニューラルネットワークでは特定のユニットのみが結合を持つ特別な構造を持つ．
-そして、畳込みとプーリングという画像処理の基本的な演算を行う．
+そして，畳込みとプーリングという画像処理の基本的な演算を行う．
 これは生物の脳の視覚野に関する神経科学の知見をヒントにしている．
-神経細胞はその受容野に刺激が入った場合にのみ反応し、受容野の外側にいくら刺激を与えても、細胞を発火しないという特徴を持つ．
+神経細胞はその受容野に刺激が入った場合にのみ反応し，受容野の外側にいくら刺激を与えても，細胞を発火しないという特徴を持つ．
 
 \begin{figure}[htbp]
  \begin{minipage}{0.5\hsize}
@@ -135,18 +135,12 @@
 
 そして畳込み層とプーリング層の繰り返しの後には，隣接層間ユニットが全結合した層が配置される．
 これを全結合層（fully-connected layer）と呼ぶ．
-全結合層は順伝播型ネットワークの各層と同じで，目的がクラス分類であれば最終の出力がソフトマックスを適用する．
+全結合層は順伝播型ネットワークの各層と同じで，目的がクラス分類であれば最終的な出力はソフトマックスを適用する．
 
 
 \section{プログラム}
 \subsection{caffeNetの構造}
 caffeでは訓練済みのニューラルネットワークをダウンロードし，使用することができる．先日，示したサンプルの画像認識に用いたCNNの構造をFig.\ref{204941_1Jul15}に示す．
-\begin{figure}[t]
- \centering
- \includegraphics[scale=0.2]{fig/png/caffeNet.png}
-  \caption{caffeNet}
-  \label{204941_1Jul15}
-\end{figure}
 赤色は畳込み層，オレンジ色はプーリング層，青色は正規化層，紫色は全結合層を表している．また，活性化関数にはソフトマックス関数を用いている．すなわち，このCNNは5つの畳込み層，3つのプーリング層，2つの正規化層，そして3つの全結合層からできている．
 
 Fig.\ref{204941_1Jul15}を出力するには，caffeのディレクトリ直下で，次のコマンドを実行する．
@@ -154,32 +148,45 @@ Fig.\ref{204941_1Jul15}を出力するには，caffeのディレクトリ直下�
 python/draw_net.py models/bvlc_reference_caffenet/train_val.prototxt caffeNet.png --rankdir BT
 \end{lstlisting}
 
+\begin{figure}[p]
+ \centering
+ \includegraphics[scale=0.2]{fig/png/caffeNet.png}
+  \caption{caffeNet}
+  \label{204941_1Jul15}
+\end{figure}
+
 \subsection{中間層の出力}
 畳込み1層目のフィルタとFig.に示す入力画像を入力したときの出力を得ることができた．1層目のフィルタをFig.\ref{220453_1Jul15}，その出力をFig.\ref{220458_1Jul15}に示す．
 畳込み1層目は全部で96個の$11\times11$のフィルタから構成されており，ストライドが4である．従って，出力される画像のサイズは$55\times55$であり，96個の画像が出力される．
-\begin{figure}[t]
+\begin{figure}[b]
  \centering
  \includegraphics[scale=0.5]{fig/png/input.png}
   \caption{入力画像}
 \end{figure}
 \begin{figure}[t]
  \centering
- \includegraphics[scale=0.5]{fig/png/conv1_params.png}
+ \includegraphics[scale=0.4]{fig/png/conv1_params.png}
   \caption{畳込み層1層目のフィルタ}
   \label{220453_1Jul15}
 \end{figure}
 \begin{figure}[t]
  \centering
- \includegraphics[scale=0.5]{fig/png/conv1_blobs.png}
+ \includegraphics[scale=0.4]{fig/png/conv1_blobs.png}
   \caption{畳込み層1層目のフィルタ出力}
   \label{220458_1Jul15}
 \end{figure}
-
 中間層を表示するにあたりipython notebookを用いた．
 \section{今後の課題}
 \begin{itemize}
- \item 理論研究を進める．
- \item Caffeを使いこなす
+ \item CNNの詳細な調査
+ \item 畳み込み，プーリングの理論
+ \item データセットの作成
 \end{itemize}
+
+
+\begin{thebibliography}{99}
+  \addcontentsline{toc}{section}{参考文献}
+ \bibitem{okatani} 岡谷貴之，``機械学習プロフェッショナルシリーズ　深層学習''，講談社，2015．
+ \end{thebibliography}
 
 \end{document}
