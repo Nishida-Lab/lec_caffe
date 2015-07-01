@@ -4,6 +4,7 @@
 \usepackage{pxjahyper}
 \usepackage{minijs}%和文用
 \usepackage{listings,jlisting} % プログラムの表示用
+\usepackage{type1cm}
 \renewcommand{\kanjifamilydefault}{\gtdefault}%和文用
 
 %%%% tikz 用 %%%%%
@@ -51,6 +52,11 @@
 \newtheorem{conjecture}{予想}
 \newtheorem*{remark}{Remark}
 \renewcommand{\proofname}{}
+% 定義
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\def\vec#1{\mbox{\boldmath$#1$}}
+\def\R{{\Bbb R}}
 %%%%%%%%%
 
 %%%%% フォント基本設定 %%%%%
@@ -143,12 +149,49 @@
 \end{exampleblock}
 \end{frame}
 
+%%%% 3.1.1 %%%%
+\begin{frame}[fragile]\frametitle{ユニットの出力}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=4cm]{fig/eps/input_output.eps}
+  \end{center}
+  \caption{ユニット1つの入出力の例}
+\end{figure}
+
+\begin{itemize}
+\item 各ユニットは複数の入力を受けて1つの出力を計算する．
+\item 各入力に対しそれぞれ異なる重み$w1$，$w2$，$w3$，$w4$を入力$x1$，$x2$，$x3$，$x4$に掛けたものの和にバイアス値$b$を加える．
+\end{itemize}
+
+\end{frame}
+
+%%%% 3.1.2 %%%%
+\begin{frame}[fragile]\frametitle{ユニットの出力}
+
+\begin{block}{総入力$u$とユニットの出力$z$}
+\begin{eqnarray}
+  u & = & w_1x_1+w_2x_2+w_3x_3+w_4x_4+b\\
+  z & = & f(u)
+\end{eqnarray}
+\end{block}
+これを一般化し\\
+第1層のユニットを$i=1,\cdots,I$，第2層のユニットを$j=1,\cdots,J$で表すと
+\begin{block}{入出力式の一般化}
+\begin{eqnarray}
+  u_j & = & \sum_{i=1}^I w_{ji}x_i + b_j\\
+  z_j & = & f(u_j)
+\end{eqnarray}
+\end{block}
+\end{frame}
+
+
 %%%% 3.2.1 %%%%
 \begin{frame}[fragile]\frametitle{活性化(シグモイド)関数}
 
 \begin{figure}[tb]
   \begin{center}
-    \includegraphics[clip,width=10cm]{fig/eps/sigmoid.eps}
+    \includegraphics[clip,width=9cm]{fig/eps/sigmoid.eps}
   \end{center}
   \caption{典型的なシグモイド関数}
 \end{figure}
@@ -161,7 +204,7 @@
 \begin{block}{マックスアウト関数}
 \begin{align}
  u_{jk}=\sum w_{jik}z_i +b_{jk}\ \ (1...K)\\
- f(u_{j})=max_{k=1...K}(u_{jk})
+ f(u_{j})=\max_{k=1...K}(u_{jk})
 \end{align}
 \vspace{0.1mm}
 \end{block}
@@ -174,7 +217,7 @@
 \end{frame}
 
 
-%%%% 3.3 %%%%
+%%%% 3.3.1 %%%%
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{figure}[tb]
@@ -192,7 +235,7 @@
 
 \end{frame}
 
-%%%% 3.3 %%%%
+%%%% 3.3.2 %%%%
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{figure}[tb]
@@ -211,14 +254,14 @@
 \end{eqnarray}
 \end{frame}
 
-%%%% 3.3 %%%%
+%%%% 3.3.3 %%%%
 
 \begin{frame}[fragile]\frametitle{多層ネットワーク}
 
 \begin{block}{任意の階層 L のネットワークに一般化すると}
 \begin{eqnarray}
-  \bm{u}^{(l+1)} &=& \bm{W}^{(l+1)}\bm{z}^{(l)} + \bm{b}^{(l+1)} \nonumber\\
-  \bm{z}^{(l+1)} &=& \bm{f}(\bm{u}^{(l+1)}) \nonumber
+  \bm{u}^{(l+1)} &=& \bm{W}^{(l+1)}\bm{z}^{(l)} + \bm{b}^{(l+1)} \\
+  \bm{z}^{(l+1)} &=& \bm{f}(\bm{u}^{(l+1)})
 \end{eqnarray}
 \vspace{0.1mm}
 \end{block}
@@ -230,6 +273,74 @@
 \end{itemize}
 \end{frame}
 
+%%%% 3.4 %%%%
+%%%% 3.4.1 %%%%
+
+\begin{frame}[fragile]\frametitle{出力層の設計と誤差関数}
+
+順伝播型ネットワークが表現する関数$\vec{y}(\vec{x};\vec{w})$をネットワークのパラメータ$\vec{w}$を変えることで変化させ，望みの関数を与える．
+\begin{eqnarray}
+ \{(\vec{x}_{1},\mathrm{d}_{1}),(\vec{x}_{1},\mathrm{d}_{1}),...,(\vec{x}_{N},\mathrm{d}_{N})\}
+\end{eqnarray}
+これらのペア$(\vec{x},\mathrm{d})$１つ１つを訓練サンプル(training samples)といい，その集合を訓練データ(training data)という．
+学習とはネットワーク$\vec{w}$を調整することで訓練データの入出力ペアをで
+ きるだけ再現すること．
+
+ネットワークが表す関数と訓練データとの近さ$(\vec{y}(\vec{x}_{n};\vec{w}))$を誤差関数(error function)で定義する．誤差関数は問題の種別や活性化関数によって異なる．
+
+\begin{table}[htb]
+\centering
+\caption{問題の種別ごとの活性化関数と誤差関数}
+\label{000718_27Jun15}
+\begin{tabular}[bt]{|c|c|c|}\hline
+ 問題の種別& 出力層の活性化関数&誤差関数 \\ \hline \hline
+ 回帰&正接双曲線関数や恒等写像 & 二乗誤差 式\eqref{000645_27Jun15}\\
+ 二値分類& ロジスティック関数& 式\eqref{000654_27Jun15}\\
+ 多クラス分類& ソフトマックス関数& 交差エントロピー 式\eqref{000700_27Jun15}\\ \hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+%%%% 3.4.2 %%%%
+\begin{frame}[fragile]\frametitle{回帰}
+\begin{block}{回帰}
+出力連続値をとる関数を対象に訓練データを良く再現する関数を求めることをいう．回帰では活性化関数に正接双曲線関数や恒等写像を用いる
+\end{block}
+\begin{exampleblock}{評価関数}
+\begin{eqnarray}
+ E(\vec{w}) = \displaystyle{\frac{1}{2}}\sum^{N}_{n=1}||\vec{d}_{n}-\vec{y}(\vec{x}_{n};\vec{w})||^{2}\label{000645_27Jun15}
+\end{eqnarray}
+\vspace{0.1cm}
+\end{exampleblock}
+\end{frame}
+
+%%%% 3.4.3 %%%%
+\begin{frame}[fragile]\frametitle{二値分類}
+\begin{block}{二値分類}
+入力$\vec{x}$に応じて２種類に区別する問題を考える．すなわち，$d\in\{0,1\}$とする．このとき，活性化関数はロジスティック関数$y=1/(1+\exp(-u))$とする．
+\end{block}
+\begin{exampleblock}{評価関数}
+\begin{eqnarray}
+E(\vec{w})=-\sum^{N}_{n=1}\left[d_{n}\log y(\vec{x}_{n};\vec{w} + (1-d_{n})\log\{1-y(\vec{x}_{n};\vec{w})\})\right]\label{000654_27Jun15}
+\end{eqnarray}
+\vspace{0.1cm}
+\end{exampleblock}
+\end{frame}
+
+%%%% 3.4.4 %%%%
+\begin{frame}[fragile]\frametitle{多クラス分類}
+\begin{block}{多クラス分類}
+入力$\vec{x}$に応じて有限個のクラスに分類する問題である．活性化関数にはソフトマックス関数(softmax function)が良く用いられる．
+\end{block}
+\begin{exampleblock}{活性化関数と評価関数}
+\begin{eqnarray}
+ y_{k} \equiv z_{k}^{(L)}= \frac{\exp(u_{k}^{(L)})}{\sum^{K}_{j=1}exp(u_{j}^{(L)})} \\
+E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\label{000700_27Jun15}
+\end{eqnarray}
+\vspace{0.1cm}
+\end{exampleblock}
+
+\end{frame}
 
 %%%% 5 %%%%
 \begin{frame}\frametitle{今後の課題}
