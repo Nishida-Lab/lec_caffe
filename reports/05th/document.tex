@@ -102,11 +102,38 @@
 
 \section{プログラム}
 \subsection{caffeNetの構造}
-caffeでは訓練済みのニューラルネットワークをダウンロードすることができる．先日，示したサンプルの認識に用いたニューラルネットワークの構造をFig.に示す．
+caffeでは訓練済みのニューラルネットワークをダウンロードし，使用することができる．先日，示したサンプルの画像認識に用いたCNNの構造をFig.\ref{204941_1Jul15}に示す．
 \begin{figure}[t]
  \centering
  \includegraphics[scale=0.2]{fig/png/caffeNet.png}
   \caption{caffeNet}
+  \label{204941_1Jul15}
+\end{figure}
+赤色は畳込み層，オレンジ色はプーリング層，青色は正規化層，紫色は全結合層を表している．また，活性化関数にはソフトマックス関数を用いている．すなわち，このCNNは5つの畳込み層，3つのプーリング層，2つの正規化層，そして3つの全結合層からできている．
+
+Fig.\ref{204941_1Jul15}を出力するには，caffeのディレクトリ直下で，次のコマンドを実行する．
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,breaklines = true]
+python/draw_net.py models/bvlc_reference_caffenet/train_val.prototxt caffeNet.png --rankdir BT
+\end{lstlisting}
+
+\subsection{中間層の出力}
+畳込み層１層目のフィルタとFig.に示す入力画像を入力したときの出力を得ることができた．1層目のフィルタをFig.\ref{220453_1Jul15}，その出力をFig.\ref{220458_1Jul15}に示す．
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.5]{fig/png/input.png}
+  \caption{入力画像}
+\end{figure}
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.5]{fig/png/conv1_params.png}
+  \caption{畳込み層1層目のフィルタ}
+  \label{220453_1Jul15}
+\end{figure}
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.5]{fig/png/conv1_blobs.png}
+  \caption{畳込み層1層目のフィルタ出力}
+  \label{220458_1Jul15}
 \end{figure}
 
 \section{今後の課題}
