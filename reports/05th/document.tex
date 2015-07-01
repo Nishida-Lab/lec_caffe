@@ -73,31 +73,35 @@
 
 
 \section{理論研究}
-\subsection{ユニットの出力}
 
 \subsection{活性化関数}
-\subsubsection{シグモイド関数}
-入力の絶対値が大きな値をとると，出力が飽和し一定値になり，その間の入力に
-対して出力が徐々にかつ滑らかに変化する関数．
-\subsubsection{正規化線形関数}
-シグモイド関数は入力の変動が大き過ぎると出力が0か1の値しかとれないが，正
-規化線形関数はバイアスがない場合，入力が0以上であれば出力が入力に比例す
-る．
+\subsubsection{単純型細胞と複雑型細胞}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+単純型細胞と複雑型細胞のモデルをFig.~\ref{fig:単純型細胞と複雑型細胞の
+モデル}に示す．(a),(b)は4×4の入力層が中間層のそれぞれと結合していること
+を示しており，(c),(d)は入力パターンの位置変化に伴う中間層および出力層の
+状態の変化を示している．\\
+　中間層は単純型細胞，出力層は複雑型細胞のモデルと
+なっており，中間層は位置選択性が厳密であるが，出力層は入力パターンが少し
+ずれても活性化する．全体への入力が(c)から(d)のように変化すると，中間層で
+も図のように活性化するユニットが変化するが，出力層のユニットは活性化した
+ままである．これは出力層は中間層のユニットが一つでも活性化されていれば活
+性化するためである．\\
+　この２つの細胞をモデル化した二層構造のペアを繰り返す構造が畳み込みニュー
+ラルネットに用いられている．物体カテゴリ認識は長年コンピュータには難し
+いとされてきたが，近年畳み込みニューラルネットによってそれも解決されつつ
+ある．神経科学の分野では，多層の畳み込みニューラルネットが霊長類の脳の高
+次視覚野と似た振る舞いを示すことが示されている．
+
 \begin{figure}[t]
  \centering
- \includegraphics[scale=0.55]{fig/eps/sigmoid.eps}
-    \caption{典型的な活性化関数とその概形}
-		\label{sigmoid}
+ \includegraphics[scale=0.4]{fig/eps/cnn62.eps}
+    \caption{単純型細胞と複雑型細胞のモデル}
+		\label{fig:単純型細胞と複雑型細胞のモデル}
 \end{figure}
-\subsubsection{マックスアウト}
-K個１つ１つが異なる重みとバイアスを持ち，それぞれの総入力を
-$u_{j1}$...$u_{jk}$と別々に計算したあと，それぞれの最大値をユニットの出力と
-する．
 
-\begin{align}
- u_{jk}=\sum w_{jik}z_i +b_{jk}\ \ (1...K)\\
- f(u_{j})=\max_{k=1...K}u_{jk}
-\end{align}
 
 \subsection{多層ネットワーク}
 Fig.~\ref{fig:2層のネットワーク}に2層構造のネットワークを示す．
@@ -126,13 +130,13 @@ $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm
 この出力を決定するのは各層間の結合重み$\bm{W}^{(l)}\ (l=2,\cdots, L)$とユニットのバイアス$\bm{b}^{(l)}\ (l=2,\cdots, L)$である．
 これらのパラメータを持つベクトル$\bm{w}$を定義して，$\bm{y}(\bm{x};\bm{w})$と表現する．
 
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=12cm]{fig/eps/unit.eps}
-  \end{center}
-  \caption{2層のネットワーク}
-  \label{fig:2層のネットワーク}
-\end{figure}
+% \begin{figure}[tb]
+%   \begin{center}
+%     \includegraphics[clip,width=12cm]{fig/eps/unit.eps}
+%   \end{center}
+%   \caption{2層のネットワーク}
+%   \label{fig:2層のネットワーク}
+% \end{figure}
 
 \subsection{出力層の設計と誤差関数}
 \subsubsection{学習の枠組み}
@@ -146,17 +150,17 @@ $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm
 
 この場合，ネットワークが表す関数と訓練データとの近さ$(\vec{y}(\vec{x}_{n};\vec{w}))$を誤差関数(error function)で定義する．誤差関数は問題の種別や活性化関数によって異なる．Tab.\ref{000718_27Jun15}に問題の種別ごとの活性化関数と誤差関数の一覧を示す．
 
-\begin{table}[htb]
-\centering
-\caption{問題の種別ごとの活性化関数と誤差関数}
-\label{000718_27Jun15}
-\begin{tabular}[bt]{|c|c|c|}\hline
- 問題の種別& 出力層の活性化関数&誤差関数 \\ \hline \hline
- 回帰&正接双曲線関数や恒等写像 & 二乗誤差 式\eqref{000645_27Jun15}\\
- 二値分類& ロジスティック関数& 式\eqref{000654_27Jun15}\\
- 多クラス分類& ソフトマックス関数& 交差エントロピー 式\eqref{000700_27Jun15}\\ \hline
-\end{tabular}
-\end{table}
+% \begin{table}[htb]
+% \centering
+% \caption{問題の種別ごとの活性化関数と誤差関数}
+% \label{000718_27Jun15}
+% \begin{tabular}[bt]{|c|c|c|}\hline
+%  問題の種別& 出力層の活性化関数&誤差関数 \\ \hline \hline
+%  回帰&正接双曲線関数や恒等写像 & 二乗誤差 式\eqref{000645_27Jun15}\\
+%  二値分類& ロジスティック関数& 式\eqref{000654_27Jun15}\\
+%  多クラス分類& ソフトマックス関数& 交差エントロピー 式\eqref{000700_27Jun15}\\ \hline
+% \end{tabular}
+% \end{table}
 
 \subsubsection{回帰}
 回帰(regression)とは出力連続値をとる関数を対象に訓練データを良く再現する関数を求めることをいう．回帰では活性化関数に正接双曲線関数や恒等写像を用い，評価関数は次式が良く用いられる．
@@ -182,12 +186,12 @@ $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm
 \end{eqnarray}
 なお，この関数は交差エントロピー(cross entropy)と呼ばれる．
 
-\begin{figure}[htbp]
- 	\centering
-	\includegraphics[width=12cm]{./fig/eps/example_digits.eps}
-	\caption{手書き文字認識の例}
-	\label{010714_27Jun15}
-\end{figure}
+% \begin{figure}[htbp]
+%  	\centering
+% 	\includegraphics[width=12cm]{./fig/eps/example_digits.eps}
+% 	\caption{手書き文字認識の例}
+% 	\label{010714_27Jun15}
+% \end{figure}
 
 \section{今後の課題}
 \begin{itemize}
