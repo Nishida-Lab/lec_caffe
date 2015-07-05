@@ -4,6 +4,7 @@
 \usepackage{pxjahyper}
 \usepackage{minijs}%和文用
 \usepackage{listings,jlisting} % プログラムの表示用
+\usepackage{type1cm}
 \renewcommand{\kanjifamilydefault}{\gtdefault}%和文用
 
 %%%% tikz 用 %%%%%
@@ -109,14 +110,14 @@
 \lstset{style=mystyle}
 
 %%%%
-\title[略タイトル]{第4回　知能システム学特論レポート}%[略タイトル]{タイトル}
+\title[略タイトル]{第5回　知能システム学特論レポート}%[略タイトル]{タイトル}
 \author[NishidaLab]{
 15344203 & 有田 裕太 \\
 15344206 & 緒形 裕太 \\
 15344209 & 株丹 亮 \\
 12104125 & 宮本 和 }%[略名前]{名前}
 \institute[NishidaLab]{西田研究室，計算力学研究室}%[略所属]{所属}
-\date{2015年\ 6月\ 29日}%日付
+\date{2015年\ 7月\ 2日}%日付
 
 \begin{document}
 
@@ -129,118 +130,169 @@
 % \tableofcontents %目次
 % \end{frame}
 
-\section{進捗状況}
-%%%% 2 %%%%
+%%%% 進捗状況 %%%%
 \begin{frame}\frametitle{進捗状況}
 
 \begin{block}{理論研究の進捗}
-人工ニューラルネットワークの理論について
+畳込みニューラルネットワークの理論について
 \end{block}
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミングの進捗}
-なし
+中間層の出力，可視化
 \end{exampleblock}
 \end{frame}
 
-%%%% 3.2.1 %%%%
-\begin{frame}[fragile]\frametitle{活性化(シグモイド)関数}
 
-\begin{figure}[tb]
+%%%% 畳込みニューラルネットワーク %%%%
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワーク}
+\begin{itemize}
+\item 畳込みニューラルネットワークは主に画像認識に応用される順伝播型ニューラルネットワークである．
+\item 順伝播型ネットワークは隣接層間のユニットの全てが結合されているのに対し，畳込みニューラルネットワークでは特定のユニットのみが結合を持つ特別な構造を持つ．
+\item 神経細胞はその受容野に刺激が入った場合にのみ反応し、受容野の外側にいくら刺激を与えても、細胞を発火しないという特徴を持つ．
+\end{itemize}
+
+\begin{figure}[htbp]
   \begin{center}
-    \includegraphics[clip,width=10cm]{fig/eps/sigmoid.eps}
+   \includegraphics[width=70mm]{fig/eps/network.eps}
   \end{center}
-  \caption{典型的なシグモイド関数}
+  \caption{畳込みニューラルネットワーク}
+  \label{fig:FNN}
 \end{figure}
 \end{frame}
 
-%%%% 3.2.2 %%%%
 
-\begin{frame}[fragile]\frametitle{マックスアウト}
+%%%% 単純型細胞と複雑型細胞 1 %%%%
+\begin{frame}[fragile]\frametitle{単純型細胞と複雑型細胞}
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.3]{fig/eps/cnn62.eps}
+    \caption{単純型細胞と複雑型細胞のモデル}
+    \label{fig:単純型細胞と複雑型細胞のモデル}
+\end{figure}
 
-\begin{block}{マックスアウト関数}
-\begin{align}
- u_{jk}=\sum w_{jik}z_i +b_{jk}\ \ (1...K)\\
- f(u_{j})=max_{k=1...K}(u_{jk})
-\end{align}
-\vspace{0.1mm}
+\begin{itemize}
+\item (a),(b) 入力層と中間層の結合
+\item (c),(d) 中間層の変化と出力層の変化
+\end{itemize}
+
+\end{frame}
+
+%%%% 単純型細胞と複雑型細胞 2 %%%%
+\begin{frame}[fragile]\frametitle{単純型細胞と複雑型細胞}
+\begin{itemize}
+\item ２つの細胞をモデル化した二層構造を繰り返す構造がCNNに用いられている
+\item 神経科学の分野において，多層のCNNが霊長類の脳の高次視覚野と似た振る舞いを示す
+\item コンピュータによる物体カテゴリ認識ができるようになってきている
+\end{itemize}
+\end{frame}
+
+
+%%%% 畳込みニューラルネットワークの構造 1 %%%%
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=9cm]{fig/eps/structure.eps}
+  \end{center}
+  \caption{畳込みニューラルネットワークの構造}
+\end{figure}
+
+\begin{itemize}
+\item 畳込み層（convolution layer）とプーリング層（pooling layer）が\\ペアでこの順に並び，このペアが複数回繰り返される
+\item 畳込み層とプーリング層の後に，局所コントラスト正規化\\（local contrast normalization, LCN）層を挿入する場合がある
+\item 畳込み層とプーリング層の繰り返しの後には，隣接層間ユニットが\\全結合した層が配置される
+\item 目的がクラス分類であれば最終的な出力はソフトマックスを適用する
+\end{itemize}
+\end{frame}
+
+%%%% 畳込みニューラルネットワークの構造 2 %%%%
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=12cm]{fig/eps/conv_pool.eps}
+  \end{center}
+  % \caption{畳込みニューラルネットワークの構造}
+\end{figure}
+\end{frame}
+
+%%%% 畳込みニューラルネットワークの構造 2 %%%%
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=10cm]{fig/eps/conv_pool.eps}
+  \end{center}
+  % \caption{畳込みニューラルネットワークの構造}
+\end{figure}
+
+\begin{block}{二層の働き}
+\begin{itemize}
+\item 畳込み層はフィルタが表す特徴を入力から抽出する
+\item プーリング層は抽出された特徴の位置感度を低下させる
+\end{itemize}
 \end{block}
 
-\begin{itemize}
-\item ユニットをまとめたような構造を持つ．
-\item 異なる重みとバイアスを持つそれぞれの総入力を別々に計算し\\
-最大値をユニットの出力とする．
-\end{itemize}
 \end{frame}
 
 
-%%%% 3.3 %%%%
-\begin{frame}[fragile]\frametitle{多層ネットワーク}
-
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=9cm]{fig/eps/unit.eps}
-  \end{center}
-  \caption{2層のネットワーク}
-\end{figure}
-
-\begin{itemize}
-\item 入力$\bm{u}^{(l)}$，出力$\bm{z}^{(l)}$
-\item 各層間の結合重み$\bm{W}^{(l)}\ (l=2,\cdots, L)$
-\item ユニットのバイアス$\bm{b}^{(l)}\ (l=2,\cdots, L)$
-\end{itemize}
-
-\end{frame}
-
-%%%% 3.3 %%%%
-\begin{frame}[fragile]\frametitle{多層ネットワーク}
-
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=9cm]{fig/eps/unit.eps}
-  \end{center}
-  \caption{2層のネットワーク}
-\end{figure}
-中間層($l=2$)，出力層($l=3$)はそれぞれ
-\begin{eqnarray}
-\label{eq:3a}
-  \bm{u}^{(2)} &=& \bm{W}^{(2)}\bm{x} + \bm{b}^{(2)} \nonumber\\
-  \bm{z}^{(2)} &=& \bm{f}(\bm{u}^{(2)}) \nonumber\\
-  \bm{u}^{(3)} &=& \bm{W}^{(3)}\bm{z}^{(2)} + \bm{b}^{(3)} \nonumber\\
-  \bm{z}^{(3)} &=& \bm{f}(\bm{u}^{(3)})\nonumber
-\end{eqnarray}
-\end{frame}
-
-%%%% 3.3 %%%%
-
-\begin{frame}[fragile]\frametitle{多層ネットワーク}
-
-\begin{block}{任意の階層 L のネットワークに一般化すると}
-\begin{eqnarray}
-  \bm{u}^{(l+1)} &=& \bm{W}^{(l+1)}\bm{z}^{(l)} + \bm{b}^{(l+1)} \nonumber\\
-  \bm{z}^{(l+1)} &=& \bm{f}(\bm{u}^{(l+1)}) \nonumber
-\end{eqnarray}
-\vspace{0.1mm}
+%%%% プログラム 1 %%%%
+\begin{frame}\frametitle{プログラム}
+\begin{block}{caffeNetの構造}
+caffeNetは5つの畳込み層，3つのプーリング層，2つの正規化層，そして3つの全結合層からできている．また活性化関数にはソフトマックス関数を用いている．
 \end{block}
-
-\begin{itemize}
-\item $l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm{y}$を決定することができる．
-\item 各層間の結合重み$\bm{W}^{(l)}$とユニットのバイアス$\bm{b}^{(l)}$を成分に持つベクトル$\bm{w}$を定義する．\\
-\item これを$\bm{y}(\bm{x};\bm{w})$と表現する．
-\end{itemize}
+\vspace{0.2cm}
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=12cm]{fig/eps/caffeNet_structure.eps}
+  \end{center}
+   \caption{caffeNetの構造}
+\end{figure}
+\vspace{0.2cm}
 \end{frame}
 
+%%%% プログラム 2 %%%%
+\begin{frame}\frametitle{プログラム}
+\begin{block}{中間層の出力}
+畳込み1層目のフィルタと図に示す入力画像を入力したときの出力を得ることができた．畳込み1層目は全部で96個の$11\times11$のフィルタから構成されており，ストライドが4である．従って，出力される画像のサイズは$55\times55$であり，96個の画像が出力される．
+\end{block}
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=4.5cm,bb=0 0 594 590]{./fig/png/input.png}
+  \end{center}
+   \caption{入力画像}
+\end{figure}
+\end{frame}
 
-%%%% 5 %%%%
+%%%% プログラム 3 %%%%
+\begin{frame}\frametitle{プログラム}
+
+\begin{figure}[t]
+ \begin{minipage}{0.4\hsize}
+  \centering
+  \includegraphics[width=50mm,bb=0 0 594 590]{./fig/png/conv1_params.png}
+  \caption{フィルタ}
+ \end{minipage}
+ \begin{minipage}{0.4\hsize}
+  \centering
+  \includegraphics[width=50mm,bb=0 0 594 590]{./fig/png/conv1_blobs.png}
+  \caption{フィルタの出力}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
+%%%% 今後の課題 %%%%
 \begin{frame}\frametitle{今後の課題}
 
 \begin{block}{理論研究}
-DNN，CNN，caffeについて理解を深める
+CNNの詳細な調査\\
+畳み込み，プーリングの理論
 \end{block}
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミング}
-中間層の出力，可視化
+データセットの作成
 \end{exampleblock}
 \end{frame}
 

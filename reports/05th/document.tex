@@ -51,7 +51,7 @@
 \author{
 （DL2班）Caffe on Ubuntu\\
 }
-\date{2015年\ 6月\ 29日}
+\date{2015年\ 7月\ 2日}
 
 % ドキュメントの開始
 \begin{document}
@@ -68,131 +68,125 @@
 
 \begin{itemize}
 \item 理論研究
-\item 順伝播型ネットワークについて
+\item 中間層の出力
 \end{itemize}
-
 
 \section{理論研究}
-\subsection{ユニットの出力}
-
-\subsection{活性化関数}
-\subsubsection{シグモイド関数}
-入力の絶対値が大きな値をとると，出力が飽和し一定値になり，その間の入力に
-対して出力が徐々にかつ滑らかに変化する関数．
-\subsubsection{正規化線形関数}
-シグモイド関数は入力の変動が大き過ぎると出力が0か1の値しかとれないが，正
-規化線形関数はバイアスがない場合，入力が0以上であれば出力が入力に比例す
-る．
-\begin{figure}[t]
- \centering
- \includegraphics[scale=0.55]{fig/eps/sigmoid.eps}
-    \caption{典型的な活性化関数とその概形}
-		\label{sigmoid}
-\end{figure}
-\subsubsection{マックスアウト}
-K個１つ１つが異なる重みとバイアスを持ち，それぞれの総入力を
-$u_{j1}$...$u_{jk}$と別々に計算したあと，それぞれの最大値をユニットの出力と
-する．
-
-\begin{align}
- u_{jk}=\sum w_{jik}z_i +b_{jk}\ \ (1...K)\\
- f(u_{j})=\max_{k=1...K}u_{jk}
-\end{align}
-
-\subsection{多層ネットワーク}
-Fig.~\ref{fig:2層のネットワーク}に2層構造のネットワークを示す．
-Fig.~\ref{fig:2層のネットワーク}~(a)より各層を$l=0,\ 1,\ 2$とすると，$l=1$の層を入力層，$l=2$を中間層，隠れ層，$l=3$を出力層と呼ぶ．
-各層のユニットの入出力を区別するために，入力を$\bm{u}^{(l)}$，出力を$\bm{z}^{(l)}$と定義すると，中間層（$l=2$）のユニットの出力は以下の式で表される．
-\begin{eqnarray}
-\label{eq:3a}
-  \bm{u}^{(2)} &=& \bm{W}^{(2)}\bm{x} + \bm{b}^{(2)} \\
-  \bm{z}^{(2)} &=& \bm{f}(\bm{u}^{(2)})
-\end{eqnarray}
-$\bm{W}^{(2)}$は入力層と中間層の結合重みであり，$\bm{b}^{(2)}$は中間層のユニットに与えられたバイアスである．
-同様にして$\bm{u}^{(3)}$，$\bm{z}^{(3)}$は
-\begin{eqnarray}
-\label{eq:3b}
-  \bm{u}^{(3)} &=& \bm{W}^{(3)}\bm{z}^{(2)} + \bm{b}^{(3)} \\
-  \bm{z}^{(3)} &=& \bm{f}(\bm{u}^{(3)})
-\end{eqnarray}
-となり，任意の階層$L$のネットワークに一般化すると
-\begin{eqnarray}
-\label{eq:3c}
-  \bm{u}^{(l+1)} &=& \bm{W}^{(l+1)}\bm{z}^{(l)} + \bm{b}^{(l+1)} \\
-  \bm{z}^{(l+1)} &=& \bm{f}(\bm{u}^{(l+1)})
-\end{eqnarray}
-と書ける．
-$l=1,\ 2,\ 3,\cdots, L-1$の順に繰り返していくと最終的な出力$\bm{y}$を決定することができる．
-この出力を決定するのは各層間の結合重み$\bm{W}^{(l)}\ (l=2,\cdots, L)$とユニットのバイアス$\bm{b}^{(l)}\ (l=2,\cdots, L)$である．
-これらのパラメータを持つベクトル$\bm{w}$を定義して，$\bm{y}(\bm{x};\bm{w})$と表現する．
-
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=12cm]{fig/eps/unit.eps}
-  \end{center}
-  \caption{2層のネットワーク}
-  \label{fig:2層のネットワーク}
-\end{figure}
-
-\subsection{出力層の設計と誤差関数}
-\subsubsection{学習の枠組み}
-順伝播型ネットワークが表現する関数$\vec{y}(\vec{x};\vec{w})$をネットワークのパラメータ$\vec{w}$を変えることで変化させ，望みの関数を与えることを考える．
-入力$\vec{x}$と望みの出力$\mathrm{d}$のペアを次のように与える．
-\begin{eqnarray}
- \{(\vec{x}_{1},\mathrm{d}_{1}),(\vec{x}_{1},\mathrm{d}_{1}),...,(\vec{x}_{N},\mathrm{d}_{N})\}
-\end{eqnarray}
-これらのペア$(\vec{x},\mathrm{d})$１つ１つを訓練サンプル(training samples)といい，その集合を訓練データ(training data)という．
-ネットワーク$\vec{w}$を調整することで訓練データの入出力ペアをできるだけ再現すること学習という．
-
-この場合，ネットワークが表す関数と訓練データとの近さ$(\vec{y}(\vec{x}_{n};\vec{w}))$を誤差関数(error function)で定義する．誤差関数は問題の種別や活性化関数によって異なる．Tab.\ref{000718_27Jun15}に問題の種別ごとの活性化関数と誤差関数の一覧を示す．
-
-\begin{table}[htb]
-\centering
-\caption{問題の種別ごとの活性化関数と誤差関数}
-\label{000718_27Jun15}
-\begin{tabular}[bt]{|c|c|c|}\hline
- 問題の種別& 出力層の活性化関数&誤差関数 \\ \hline \hline
- 回帰&正接双曲線関数や恒等写像 & 二乗誤差 式\eqref{000645_27Jun15}\\
- 二値分類& ロジスティック関数& 式\eqref{000654_27Jun15}\\
- 多クラス分類& ソフトマックス関数& 交差エントロピー 式\eqref{000700_27Jun15}\\ \hline
-\end{tabular}
-\end{table}
-
-\subsubsection{回帰}
-回帰(regression)とは出力連続値をとる関数を対象に訓練データを良く再現する関数を求めることをいう．回帰では活性化関数に正接双曲線関数や恒等写像を用い，評価関数は次式が良く用いられる．
-\begin{eqnarray}
- E(\vec{w}) = \displaystyle{\frac{1}{2}}\sum^{N}_{n=1}||\vec{d}_{n}-\vec{y}(\vec{x}_{n};\vec{w})||^{2}\label{000645_27Jun15}
-\end{eqnarray}
-
-\subsubsection{二値分類}
-二値分類では入力$\vec{x}$に応じて２種類に区別する問題を考える．すなわち，$d\in\{0,1\}$とする．このとき，活性化関数はロジスティック関数$y=1/(1+\exp(-u))$とし，誤差関数は次式で与える．
-\begin{eqnarray}
- E(\vec{w})=-\sum^{N}_{n=1}\left[d_{n}\log y(\vec{x}_{n};\vec{w} + (1-d_{n})\log\{1-y(\vec{x}_{n};\vec{w})\})\right]\label{000654_27Jun15}
-\end{eqnarray}
-
-\subsubsection{多クラス分類}
-多クラス分類とは入力$\vec{x}$に応じて有限個のクラスに分類する問題である．一例としてFig.\ref{010714_27Jun15}に手書き文字認識の例を示す．この問題では活性化関数にはソフトマックス関数(softmax function)が良く用いられる．出力相$l=L$の$k$番目($k=1,...,K$)のユニットの出力は$l=L-1$層の出力を元に次式で与えられ，これをソフトマックス関数という．
-\begin{eqnarray}
- y_{k} \equiv z_{k}^{(L)}= \frac{\exp(u_{k}^{(L)})}{\sum^{K}_{j=1}exp(u_{j}^{(L)})}
-\end{eqnarray}
-
-また，誤差関数は次式で与える．
-\begin{eqnarray}
- E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\label{000700_27Jun15}
-\end{eqnarray}
-なお，この関数は交差エントロピー(cross entropy)と呼ばれる．
+\subsection{畳込みニューラルネットワーク}
+畳込みニューラルネットワークは主に画像認識に応用される順伝播型ニューラルネットワークである．
+順伝播型ネットワークは隣接層間のユニットの全てが結合されているのに対し，畳込みニューラルネットワークでは特定のユニットのみが結合を持つ特別な構造を持つ．
+そして，畳込みとプーリングという画像処理の基本的な演算を行う．
+これは生物の脳の視覚野に関する神経科学の知見をヒントにしている．
+神経細胞はその受容野に刺激が入った場合にのみ反応し，受容野の外側にいくら刺激を与えても，細胞を発火しないという特徴を持つ．
 
 \begin{figure}[htbp]
- 	\centering
-	\includegraphics[width=12cm]{./fig/eps/example_digits.eps}
-	\caption{手書き文字認識の例}
-	\label{010714_27Jun15}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[width=40mm]{fig/eps/FNN.eps}
+  \end{center}
+  \caption{順伝播型ニューラルネットワーク}
+  \label{fig:FNN}
+ \end{minipage}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[width=40mm]{fig/eps/CNN.eps}
+  \end{center}
+  \caption{畳込みニューラルネットワーク}
+  \label{fig:CNN}
+ \end{minipage}
 \end{figure}
 
+\subsection{単純型細胞と複雑型細胞}
+単純型細胞と複雑型細胞のモデルをFig.~\ref{fig:単純型細胞と複雑型細胞のモデル}に示す．(a)，(b)は$4\times4$の入力層が中間層のそれぞれと結合していることを示しており，
+(c),(d)は入力パターンの位置変化に伴う中間層および出力層の状態の変化を示している．
+
+中間層は単純型細胞，出力層は複雑型細胞のモデルとなっており，中間層は位置選択性が厳密であるが，出力層は入力パターンが少しずれても活性化する．
+全体への入力が(c)から(d)のように変化すると，中間層でも図のように活性化するユニットが変化するが，出力層のユニットは活性化したままである．
+これは出力層は中間層のユニットが一つでも活性化されていれば活性化するためである．
+
+この２つの細胞をモデル化した二層構造のペアを繰り返す構造が畳み込みニューラルネットに用いられている．
+物体カテゴリ認識は長年コンピュータには難しいとされてきたが，近年畳み込みニューラルネットによってそれも解決されつつある．
+神経科学の分野では，多層の畳み込みニューラルネットが霊長類の脳の高次視覚野と似た振る舞いを示すことが示されている．
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.4]{fig/eps/cnn62.eps}
+  \caption{単純型細胞と複雑型細胞のモデル}
+  \label{fig:単純型細胞と複雑型細胞のモデル}
+\end{figure}
+
+\subsection{全体の構造}
+物体の認識などの画像認識でよく用いられる畳込みネットの典型的な構造をFig.~\ref{fig:畳込みネットの構造}に示す．
+入力側から出力側に向けて，畳込み層（convolution layer）とプーリング層（pooling layer）がペアでこの順に並び，このペアが複数回繰り返される．
+特に畳込み層とプーリング層のペアの一回操作で行われる手順の一例をFig.~\ref{fig:畳込み層とプーリング層の操作}に示す．
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.65]{fig/eps/structure.eps}
+  \caption{畳込みネットの構造}
+  \label{fig:畳込みネットの構造}
+\end{figure}
+\begin{figure}[t]
+ \centering
+ \includegraphics[width=140mm]{fig/eps/conv_pool.eps}
+  \caption{畳込み層とプーリング層の操作}
+  \label{fig:畳込み層とプーリング層の操作}
+\end{figure}
+また畳込み層とプーリング層の後に，局所コントラスト正規化（local contrast normalization, LCN）層を挿入する場合がある．
+
+そして畳込み層とプーリング層の繰り返しの後には，隣接層間ユニットが全結合した層が配置される．
+これを全結合層（fully-connected layer）と呼ぶ．
+全結合層は順伝播型ネットワークの各層と同じで，目的がクラス分類であれば最終的な出力はソフトマックスを適用する．
+
+
+\section{プログラム}
+\subsection{caffeNetの構造}
+caffeでは訓練済みのニューラルネットワークをダウンロードし，使用することができる．先日，示したサンプルの画像認識に用いたCNNの構造をFig.\ref{204941_1Jul15}に示す．
+赤色は畳込み層，オレンジ色はプーリング層，青色は正規化層，紫色は全結合層を表している．また，活性化関数にはソフトマックス関数を用いている．すなわち，このCNNは5つの畳込み層，3つのプーリング層，2つの正規化層，そして3つの全結合層からできている．
+
+Fig.\ref{204941_1Jul15}を出力するには，caffeのディレクトリ直下で，次のコマンドを実行する．
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,breaklines = true]
+python/draw_net.py models/bvlc_reference_caffenet/train_val.prototxt caffeNet.png --rankdir BT
+\end{lstlisting}
+
+\begin{figure}[p]
+ \centering
+ \includegraphics[scale=0.2]{fig/png/caffeNet.png}
+  \caption{caffeNet}
+  \label{204941_1Jul15}
+\end{figure}
+
+\subsection{中間層の出力}
+畳込み1層目のフィルタとFig.に示す入力画像を入力したときの出力を得ることができた．1層目のフィルタをFig.\ref{220453_1Jul15}，その出力をFig.\ref{220458_1Jul15}に示す．
+畳込み1層目は全部で96個の$11\times11$のフィルタから構成されており，ストライドが4である．従って，出力される画像のサイズは$55\times55$であり，96個の画像が出力される．
+\begin{figure}[b]
+ \centering
+ \includegraphics[scale=0.5]{fig/png/input.png}
+  \caption{入力画像}
+\end{figure}
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.4]{fig/png/conv1_params.png}
+  \caption{畳込み層1層目のフィルタ}
+  \label{220453_1Jul15}
+\end{figure}
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.4]{fig/png/conv1_blobs.png}
+  \caption{畳込み層1層目のフィルタ出力}
+  \label{220458_1Jul15}
+\end{figure}
+中間層を表示するにあたりipython notebookを用いた．
 \section{今後の課題}
 \begin{itemize}
- \item 理論研究を進める．
- \item Caffeを使いこなす
+ \item CNNの詳細な調査
+ \item 畳み込み，プーリングの理論
+ \item データセットの作成
 \end{itemize}
+
+
+\begin{thebibliography}{99}
+  \addcontentsline{toc}{section}{参考文献}
+ \bibitem{okatani} 岡谷貴之，``機械学習プロフェッショナルシリーズ　深層学習''，講談社，2015．
+ \end{thebibliography}
 
 \end{document}
