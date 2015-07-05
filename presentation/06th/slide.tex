@@ -144,6 +144,21 @@
 \end{exampleblock}
 \end{frame}
 
+
+%%%% 畳み込みの定義 %%%%
+\begin{frame}[fragile]\frametitle{畳み込みの定義}
+\begin{itemize}
+\item 濃淡地を各画素に格納したグレースケールの画像を考える.
+\item 画像サイズを$W\times W$画素,画素をインデックス$(i,j)(i = 0,\cdots,W-1, j = 0,\cdots,W-1)$画素値を$x_{ij}$,\\
+フィルタサイズを$H\times H$画素,画素をインデックス$(p,q)(p=0,\cdots,H-1, q=0,\cdots,H-1)$,画素値を$h_{pq}$とすると,
+\begin{equation}
+  u_{ij} = \sum_{p=0}^{H-1} \sum_{q=0}^{H-1} x_{i+p,j+q} h_{pq}
+\end{equation}
+\item この計算はフィルタが表す特徴的な濃淡構造を，画像から抽出する「特徴抽出」の働きがある.
+\end{itemize}
+\end{frame}
+
+
 %%%% パディング 1 %%%%
 \begin{frame}[fragile]\frametitle{パディング}
 \begin{itemize}
@@ -185,7 +200,7 @@
 %%%% ストライド 1 %%%%
 \begin{frame}[fragile]\frametitle{ストライド}
 \begin{block}{ストライド}
-フィルタの適用位置を1画素ずつではなく，数画素ずつずらして計算する．このずらす間隔をストライド(stride)という． 
+フィルタの適用位置を1画素ずつではなく，数画素ずつずらして計算する．このずらす間隔をストライド(stride)という．
 \end{block}
 ストライドを$s$とするとき，出力画像の画素値は
 \begin{eqnarray}
