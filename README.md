@@ -29,7 +29,7 @@ sudo easy_install pillow
 ##CUDAとcuDNNを使う
 ###CUDAのインストール
 [https://developer.nvidia.com/cuda-downloads#linux](https://developer.nvidia.com/cuda-downloads#linux)  
-ここからLinux x86のタブの[Ubuntu 14.10 DEB (3KB)](http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1410/x86_64/cuda-repo-ubuntu1410_7.0-28_amd64.deb)をダウンロードする．  
+ここからLinux x86のタブの[Ubuntu 14.04 DEB (3KB)](http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.0-28_amd64.deb)をダウンロードする．  
 
 ```bash
 sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
