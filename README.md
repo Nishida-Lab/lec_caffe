@@ -1,5 +1,5 @@
-# Ubuntu 14.04にcaffeをインストール
-## 基本的に以下のURLを参照
+#Ubuntu 14.04にcaffeをインストール
+##基本的に以下のURLを参照
 参考サイトにもあるようにUbuntu 14.04の最新版（その時点でのバージョンアップはすべて更新済みの状態）で確認しています．  
 ~~[※注意]このREADMEはnVIDIAのCUDAを使わない方法です．~~  
 CUDAとcuDNNを使う方法も追記
@@ -8,7 +8,7 @@ CUDAとcuDNNを使う方法も追記
 >Ubuntu 14.04 VirtualBox VM  
 >[https://github.com/BVLC/caffe/wiki/Ubuntu-14.04-VirtualBox-VM](https://github.com/BVLC/caffe/wiki/Ubuntu-14.04-VirtualBox-VM)
 
-## 前準備
+##前準備
 
 ビルドに必要な最初のパッケージ群
 
@@ -26,9 +26,6 @@ sudo apt-get install -y libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-d
 sudo easy_install pillow
 ```
 
-<<<<<<< HEAD
-## 本家レポジトリからClone
-=======
 ##CUDAとcuDNNを使う
 ###CUDAのインストール
 [https://developer.nvidia.com/cuda-downloads#linux](https://developer.nvidia.com/cuda-downloads#linux)  
@@ -75,7 +72,6 @@ sudo cp cudnn.h /usr/local/cuda/include/
 ```
 
 ##本家レポジトリからClone
->>>>>>> d765b36544289452aceec8dac4d56215b787f2d5
 プログラムをダウンロードしてくる場所で以下を実行
 
 ```bash
@@ -158,7 +154,7 @@ PYTHON_INCLUDE := /usr/include/python2.7 \
     /usr/local/lib/python2.7/dist-packages/numpy/core/include
 ```
 
-## caffeをコンパイル
+##caffeをコンパイル
 
 ```bash
 make pycaffe -j4
@@ -166,14 +162,14 @@ make all -j4
 make test -j4
 ```
 
-##I mageNet Caffe modelとlabelsのダウンロード
+##ImageNet Caffe modelとlabelsのダウンロード
 
 ```bash
 ./scripts/download_model_binary.py models/bvlc_reference_caffenet
 ./data/ilsvrc12/get_ilsvrc_aux.sh
 ```
 
-## サンプルプログラムのエラー処理
+##サンプルプログラムのエラー処理
 このままサンプルを実行すると，以下のようなエラーが．
 
 ```bash
@@ -213,7 +209,7 @@ if ms != self.inputs[in_][1:]:
     #raise ValueError('Mean shape incompatible with input shape.')
 ```
 
-## サンプルを実行するための準備
+##サンプルを実行するための準備
 以下のコードを`show_result.py`として`caffe/python/`に保存．ファイルはこのレポジトリにある[show_result.py](https://github.com/Nishida-Lab/lec_caffe/blob/master/show_result.py)でもいいです．  
 このソースコードは[http://techblog.yahoo.co.jp/programming/caffe-intro/](http://techblog.yahoo.co.jp/programming/caffe-intro/)から拝借しました．
 
@@ -231,7 +227,7 @@ for rank, (score, name) in enumerate(prediction[:top_k], start=1):
     print('#%d | %s | %4.1f%%' % (rank, name, score * 100))
 ```
 
-## いよいよ実行
+##いよいよ実行
 かわいいわんちゃんをcaffeにかけてみます．この写真を保存するか，以下のコマンドのようにネット上にある画像を指定してもよい．
 
 ![golden.jpg](golden.jpg)  
