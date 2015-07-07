@@ -37,7 +37,8 @@ sudo apt-get update
 sudo apt-get install cuda
 ```
 
-.bashrcに以下を記述
+.bashrcに以下を記述  
+**この`.bashrc`の記述がサンプル実行時に大切**になります．
 
 ```bash
 #CUDA
@@ -59,7 +60,7 @@ make
 >Installing CUDA Toolkit 7.0 on Ubuntu 14.04 Linux  
 >[http://www.r-tutor.com/gpu-computing/cuda-installation/cuda7.0-ubuntu](http://www.r-tutor.com/gpu-computing/cuda-installation/cuda7.0-ubuntu)
 
-###CUDAのインストール
+###cuDNNのインストール
 [https://developer.nvidia.com/cudnn](https://developer.nvidia.com/cudnn)からダウンロード  
 ※デベロッパー登録必要
 
