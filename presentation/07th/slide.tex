@@ -258,63 +258,75 @@
 
 \end{frame}
 
-\begin{frame}\frametitle{画像データからの切り出し}
+\begin{frame}\frametitle{データセット作成のためのプログラムの作成}
+\begin{itemize}
+\item 独自のデータセットを作成する
+\item 写真や動画から人の顔を切り出し，データセットを作成，そして学習という一連の操作を行う計画．
+\item まずデータセットを作成するためには大量の人物が一人ずつ写った写真データを用意する必要がある．
+\end{itemize}
+\begin{exampleblock}{顔検出プログラムの作成}
+\begin{itemize}
+\item OpenCVに実装されている顔検出アルゴリズムを用いて，人物が写った部分を自動的に切り出すプログラムを作成した．
+\item 大量にある画像データや動画から切り出す．
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{画像データからの切り出し}
 実行は以下のようにソースとなる画像が含まれたディレクトリと，出力先のディレクトリを指定する．
 
-% \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,xleftmargin=5mm]
-% $ python facedetect.py src output
-% \end{lstlisting}
-\begin{exampleblock}{実行結果}
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,xleftmargin=5mm]
-#1 | n02342885 hamster | 54.7%
-#2 | n02325366 wood rabbit, cottontail, cottontail rabbit | 17.2%
-#3 | n02326432 hare | 16.4%
+$ python facedetect.py src output
 \end{lstlisting}
-\end{exampleblock}
+
 Pythonで実装した機能を以下に示す．
-% \begin{itemize}
-%  \item ディレクトリを指定したらそのディレクトリに入っているすべての画像ファイルを顔認識して切り取る．
-%  \item 指定したディレクトリの中に含まれているサブディレクトリの中もすべて探索してすべて取り込む．
-%  \item プログレスバーを設置して進捗を可視化
+\begin{itemize}
+ \item ディレクトリを指定したらそのディレクトリに入っているすべての画像ファイルを顔認識して切り取る．
+ \item 指定したディレクトリの中に含まれているサブディレクトリの中もすべて探索してすべて取り込む．
+ \item プログレスバーを設置して進捗を可視化
 
-% \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
-% $ python facedetect.py src output
-% Input directoryname = src/
-% Output directoryname = output/
-% Exist "output/" folder.
-% File num =  1
-% 66% (1 of 1) |##################          | Elapsed Time: 0:00:07 ETA:  0:04:26
-% \end{lstlisting}
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+66% (925 of 1522) |##################          | Elapsed Time: 0:00:07 ETA:  0:04:26
+\end{lstlisting}
 
-%  \item 壊れた画像ファイルを読み込まれた場合でも例外処理で次の画像へ．
-% \end{itemize}
+ \item 壊れた画像ファイルを読み込まれた場合でも例外処理．
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{画像データからの切り出し}
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=9cm]{fig/eps/facedetection.eps}
+  \end{center}
+  % \caption{画像からの切り出し出力結果}
+  % \label{fig:画像からの切り出し出力結果}
+\end{figure}
+
+動画からの切り出しプログラムも画像場合とほぼ同様の機能を有しており，ソースは動画ファイルを直接指定する．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+$ python facedetect_video.py src/test.mp4 output
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{動画データからの切り出し}
+
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=9cm]{fig/eps/facedetection_video.eps}
+  \end{center}
+  % \caption{動画からの切り出し出力結果}
+  % \label{fig:動画からの切り出し出力結果}
+\end{figure}
+
+\begin{exampleblock}{データセットの作成支援}
+このプログラムを用いて，アニメのキャラクターやアイドルグループの\\メンバーなどの写真から顔の部分のみを切り出すことが可能となる．\\
+しかし切り出したあとは自分で顔を識別してフォルダ分けする作業が必要である．
+\end{exampleblock}
 \end{frame}
 
 
-% \begin{frame}\frametitle{画像データからの切り出し}
-% \begin{figure}[t]
-%   \begin{center}
-%     \includegraphics[width=14cm]{fig/eps/facedetection.eps}
-%   \end{center}
-%   \caption{画像からの切り出し出力結果}
-%   \label{fig:画像からの切り出し出力結果}
-% \end{figure}
-
-% \end{frame}
-
-% \begin{frame}\frametitle{データセット作成のためのプログラムの作成}
-% \begin{itemize}
-% \item 独自のデータセットを作成する
-% \item 写真や動画から人の顔を切り出し，データセットを作成，そして学習という一連の操作を行う計画．
-% \item まずデータセットを作成するためには大量の人物が一人ずつ写った写真データを用意する必要がある．
-% \end{itemize}
-% \begin{block}{顔検出プログラムの作成}
-% \begin{itemize}
-% \item OpenCVに実装されている顔検出アルゴリズムを用いて，人物が写った部分を自動的に切り出すプログラムを作成した．
-% \item 大量にある画像データや動画から切り出す．
-% \end{itemize}
-% \end{block}
-% \end{frame}
 
 %%%% 今後の課題 %%%%
 \begin{frame}\frametitle{今後の課題}
