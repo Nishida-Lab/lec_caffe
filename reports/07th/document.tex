@@ -20,6 +20,7 @@
 \usepackage{type1cm}
 \usepackage{cancel}
 \usepackage{url}
+\usepackage{color}
 \usepackage{listings,jlisting}
 % 大きな中括弧
 \usepackage{cases}
@@ -46,12 +47,41 @@
 \@addtoreset{equation}{section}
 \makeatother
 
+% プログラムに色をつける
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
 % 表紙
 \title{知能システム学特論レポート}
 \author{
 （DL2班）Caffe on Ubuntu\\
 }
-\date{2015年\ 7月\ 6日}
+\date{2015年\ 7月\ 9日}
 
 % ドキュメントの開始
 \begin{document}
@@ -75,7 +105,7 @@
 
 \subsection{畳込み層}
 
-実用的な畳込みネットでは,グレースケールの画像1枚に対してではなく,多チャネルの画像に対し,複数個のフィルタを並行して畳込む演算を行う.チャネルの画像とは各画素が複数の値を持つ画像であり,チャネル数がKの画像の各画素はK個の値を持つ.例えば,グレースケールの画像では K = 1,RGBの3色からなるカラー画像では K = 3 となる.畳込みネットの中間層では,さらにそれ以上のチャネル数の画像を扱う.以下では,画像の縦横の画素数が W × W でチャネル数が K のとき,画像のサイズを W × W × K と書く.
+実用的な畳込みネットでは,グレースケールの画像1枚に対してではなく,多チャネルの画像に対し,複数個のフィルタを並行して畳込む演算を行う.チャネルの画像とは各画素が複数の値を持つ画像であり,チャネル数がKの画像の各画素はK個の値を持つ.例えば,グレースケールの画像では$K = 1$,RGBの3色からなるカラー画像では$K = 3$となる.畳込みネットの中間層では,さらにそれ以上のチャネル数の画像を扱う.以下では,画像の縦横の画素数が $W \times W$でチャネル数が K のとき,画像のサイズを$W \times W \times K$と書く.
 
 濃淡地を各画素に格納したグレースケールの画像を考える.
 画像サイズを$W\times W$画素とし,画素をインデックス$(i,j)(i = 0,\cdots,W-1, j = 0,\cdots,W-1)$で表す.
@@ -91,7 +121,7 @@
   \label{fig:畳み込み層の概要}
 \end{figure}
 
-図1を用いて畳込み層での計算を説明する.この畳込み層は直前の層からKチャネルの画像 $x_{ijk} (k = 0,...,K − 1)$ を受け取り,これに M = 3 種類のフィルタ $h_{pqkm} (m = 0,...,M − 1)$ を適用している.各フィルタ (m = 0, 1, 2) は通常,入力と同じチャネル数Kを持ち（サイズを H × H × K とする）,図1のようにフィルタごとに計算は並行に実行される.計算の中身は,そのフィルタの各チャネルごとに,これも並行に画像とフィルタの畳込みを行った後,結果を画素ごとに全チャネルにわたって加算する.
+図1を用いて畳込み層での計算を説明する.この畳込み層は直前の層からKチャネルの画像 $x_{ijk} (k = 0,...,K − 1)$ を受け取り,これに$ M = 3 $種類のフィルタ $h_{pqkm} (m = 0,...,M − 1)$ を適用している.各フィルタ ($m = 0, 1, 2$) は通常,入力と同じチャネル数$K$を持ち（サイズを $H \times H \times K $とする）,図1のようにフィルタごとに計算は並行に実行される.計算の中身は,そのフィルタの各チャネルごとに,これも並行に画像とフィルタの畳込みを行った後,結果を画素ごとに全チャネルにわたって加算する.
 
 \begin{equation}
   u_{ijm} = \sum_{p=0}^{K-1} \sum_{q=0}^{H-1} \sum_{q=0}^{H-1} z_{i+p,j+q,k}^{(l-1)} h_{pqkm}+b_{ijm}
@@ -120,13 +150,13 @@
 畳込みは画像にフィルタを重なり合う画素どおしの積を求めて，フィルタ全体の和を求める．
 したがって画像からフィルタがはみ出すような位置に重ねることができず，画像内にフィルタ全体が収まる範囲内でフィルタを動かすと，畳込み処理を行った後の画像サイズは入力画像は小さくなる．
 この様子をFig.~\ref{fig:88の入力画像を畳込み処理した場合の出力画像のサイズ縮小の様子}に示す．
-\begin{figure}[ht]
-  \begin{center}
-    \includegraphics[clip,scale=0.8]{fig/eps/convolution.eps}
-  \end{center}
-  \caption{$8\times 8$の入力画像を畳込み処理した場合の出力画像のサイズ縮小の様子}
-  \label{fig:88の入力画像を畳込み処理した場合の出力画像のサイズ縮小の様子}
-\end{figure}
+% \begin{figure}[ht]
+%   \begin{center}
+%     \includegraphics[clip,scale=0.8]{fig/eps/convolution.eps}
+%   \end{center}
+%   \caption{$8\times 8$の入力画像を畳込み処理した場合の出力画像のサイズ縮小の様子}
+%   \label{fig:88の入力画像を畳込み処理した場合の出力画像のサイズ縮小の様子}
+% \end{figure}
 
 このときの画像サイズは
 \begin{equation}
@@ -137,13 +167,13 @@
 一方で畳込みの結果が入力画像と同サイズに出力する場合，入力画像の外側に幅$\lfloor H/2\rfloor$の余剰を設け，出力画像が元の入力画像と同サイズになるようにする．
 このとき余分に設けた部分の画素値を0とする方法をゼロパディング（zero-padding）と呼ぶ．
 しかしゼロパディングを行った場合，画像の周辺部が暗くなってしまうため，画像をその4辺で折り返して未定部分の画素値を決める方法や画像の最終囲の画素値をそのまま適用する方法等を用いる場合がある．
-\begin{figure}[t]
-  \begin{center}
-    \includegraphics[clip,scale=0.8]{fig/eps/zero_padding.eps}
-  \end{center}
-  \caption{$8\times 8$の入力画像にゼロパディングを施した場合}
-  \label{fig:88の入力画像にゼロパディングを施した場合}
-\end{figure}
+% \begin{figure}[t]
+%   \begin{center}
+%     \includegraphics[clip,scale=0.8]{fig/eps/zero_padding.eps}
+%   \end{center}
+%   \caption{$8\times 8$の入力画像にゼロパディングを施した場合}
+%   \label{fig:88の入力画像にゼロパディングを施した場合}
+% \end{figure}
 
 \subsection{ストライド}
 フィルタの適用位置を1画素ずつではなく，数画素ずつずらして計算する場合がある．このずらす間隔をストライド(stride)という．ストライドを$s$とするとき，出力画像の画素値は
@@ -157,23 +187,74 @@
 と計算される．
 
 大きなサイズの入力画像を扱う際に，畳み込み層の出力側のユニット数が大きくなりすぎるのを防ぐために，2以上のストライドが使われることがある．しかし，ストライドを大きくすることは画像特徴を取りこぼすことを意味し，性能を悪化させると考えられるため，できるだけ避けるべきである．また，プーリング層においても同様の考え方が用いられる．プーリング層ではその目的から2以上のストライドを用いられる．
+
 \section{プログラミング}
 \subsection{学習を実行するPC環境の見直し}
-今までcaffeのサンプル実行，中間層の出力はCPUのみの演算で十分な応答を得られた．
-しかし与えられたデータセットにおいて学習を行うプログラムを実行する場合，非常に時間がかかることがわかった．
+学習を行うPC環境をcaffeがサポートしているNVIDIAの「CUDA」及び，Deep Learning用のCUDAライブラリ「cuDNN」を使用する．
+後者のライブラリはデベロッパー登録申請（CUDA Registered Developer Program）が認可され，Ubuntu 14.04のマシンにインストールすることができた．
+正確な計測は行っていないが，明らかに学習速度の向上が見られた．
 
-現時点では学習を行うために十分なデータ数を有するデータセットを準備できていないため，大規模なデータセットで学習済みの状態から目的とする別のデータセットへ学習し直す方法（ファインチューニング）を行った．
-ファインチューニングは学習データがあまり多くない場合でも学習を行うことができる．
-この手法を用いて試験的に学習用データとテスト用データを6枚ずつ用意して学習を行ったが，ファインチューニングが完全に完了するまで約3時間かかった．
+\subsection{データセット作成のためのプログラムの作成}
+独自のデータセットを作成する練習として，写真や動画から人の顔を切り出し，データセットを作成，そして学習という一連の操作を行う計画を立てた．
+まずデータセットを作成するためには大量の人物が一人ずつ写った写真データを用意する必要がある．
+したがってOpenCVに実装されている顔検出アルゴリズムを用いて，人物が写った部分を自動的に切り出すプログラムを作成した．
+プログラミングに用いた言語はC++，Pythonである．
 
-このことからもこれからの課題研究を可能な限り円滑に行うために，学習時にはGPUを使った並列計算が必要であることがわかった．
-したがってcaffeがサポートしているNVIDIAの「CUDA」及び，Deep Learning用のCUDAライブラリ「cuDNN」を使用する必要があると考える．
-後者のライブラリはデベロッパー登録申請（CUDA Registered Developer Program）が必要であるので申請を行い，認可を待っている状態である．
+\subsubsection{画像データからの切り出し}
+実行は以下のようにソースとなる画像が含まれたディレクトリと，出力先のディレクトリを指定する．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+$ python facedetect.py src output # 入力先と出力先ディレクトリ
+\end{lstlisting}
+
+Pythonで実装した機能を以下に示す．
+\begin{itemize}
+ \item ディレクトリを指定したらそのディレクトリに入っているすべての画像ファイルを顔認識して切り取る．
+ \item 指定したディレクトリの中に含まれているサブディレクトリの中もすべて探索してすべて取り込む．
+ \item プログレスバーを設置して進捗を可視化
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+$ python facedetect.py src output
+Input directoryname = src/
+Output directoryname = output/
+Exist "output/" folder.
+File num =  1
+66% (1 of 1) |##################          | Elapsed Time: 0:00:07 ETA:  0:04:26
+\end{lstlisting}
+
+ \item 壊れた画像ファイルを読み込まれた場合でも例外処理で次の画像へ．
+\end{itemize}
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=14cm]{fig/eps/facedetection.eps}
+  \end{center}
+  \caption{画像からの切り出し出力結果}
+  \label{fig:画像からの切り出し出力結果}
+\end{figure}
+
+\subsubsection{動画データからの切り出し}
+画像とほぼ同様の機能を有しており，ソースは動画ファイルを直接指定する．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+$ python facedetect_video.py src/test.mp4 output # 動画ファイルと出力先ディレクトリ
+\end{lstlisting}
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[width=14cm]{fig/eps/facedetection_video.eps}
+  \end{center}
+  \caption{動画からの切り出し出力結果}
+  \label{fig:動画からの切り出し出力結果}
+\end{figure}
+
+\subsubsection{データセットの作成}
+このプログラムを用いて，アニメのキャラクターやアイドルグループのメンバーなどの写真から顔の部分のみを切り出すことが可能となる．しかし切り出したあとは自分で顔を識別してフォルダ分けする作業が必要である．
 
 \section{今後の課題}
 \begin{itemize}
  \item 理論研究を進める．
- \item Caffeを使いこなす
+ \item データセットの作成，学習の実行
 \end{itemize}
 
 \end{document}
