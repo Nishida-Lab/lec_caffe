@@ -179,25 +179,7 @@
 
 
 
-%%%% ストライド 1 %%%%
-\begin{frame}[fragile]\frametitle{ストライド}
-\begin{block}{ストライド}
-フィルタの適用位置を1画素ずつではなく，数画素ずつずらして計算する．このずらす間隔をストライド(stride)という．
-\end{block}
-ストライドを$s$とするとき，出力画像の画素値は
-\begin{eqnarray}
- u_{ij} = \sum^{H-1}_{p=0}\sum^{H-1}_{q=0} x_{si+p,sj+q}h_{pq}
-\end{eqnarray}
-サイズは
-\begin{eqnarray}
- \left(\left[\left(W-1\right)/s\right]+1\right)\times \left(\left[\left(W-1\right)/s\right]+1\right)
-\end{eqnarray}
-\begin{itemize}
- \item 畳み込み層の出力側のユニット数が大きくなりすぎるのを防ぐために，2以上のストライドが使われることがある
- \item ストライドを大きくすることは画像特徴を取りこぼすことを意味し，性能を悪化させる可能性
-\end{itemize}
 
-\end{frame}
 
 %%%% GPUを用いた学習実行時の演算処理高速化 %%%%
 \begin{frame}\frametitle{GPUを用いた学習実行時の演算処理高速化}
