@@ -179,6 +179,42 @@
 
 
 
+%%%% プーリング 1 %%%%
+\begin{frame}[fragile]\frametitle{プーリング}
+\begin{block}{プーリング}
+プーリング層は通常，畳み込み層の直後に設置され，プーリング層は畳み込み層で抽出された特徴の位置
+感度を低下させる働きがある．
+\end{block}
+サイズ$W \times W \times K$の入力画像上で画素$(i,j)$を中心とする$H\times H$の正方領域とり，この中に含まれる画素の集合を$P_{ij}$で表す．$P_{ij}$内の画素についてチャネル$k$ごとに独立に，$H^2$個ある画素値を使って1つの画素値$u_{ijk}$を求める．
+
+\begin{itemize}
+ \item 最大プーリング(max pooling) 
+	   \begin{eqnarray}
+		u_{ijk} = \max_{(p,q) \in P_{ij}} z_{pqk}	
+	   \end{eqnarray}
+ \item 平均プーリング(average pooling) 
+	   \begin{eqnarray}
+		u_{ijk} = \frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}} z_{pq} 
+	   \end{eqnarray}
+
+\end{itemize}
+
+\end{frame}
+
+%%%% プーリング 2 %%%%
+\begin{frame}[fragile]\frametitle{プーリング}
+\begin{figure}[bt]
+ \centering
+ \includegraphics[scale = 0.6]{fig/eps/pooling.eps}
+ \caption{プーリングの例．プーリングサイズ$3\times 3$，ストライド$s=3$，ゼロパディングで最大プーリングを行った場合}
+\end{figure}
+平均プーリングや最大プーリングなどのプーリングを含む一般性を持った表記として，次のLpプーリング(Lp pooling)がある．
+\begin{eqnarray}
+ u_{ijk} = \left(\frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}}z^{P}_{pqk}\right)^{\frac{1}{P}}
+\end{eqnarray}
+$P=1$で平均プーリング，$P=\inf$で最大プーリングが表現できる．なお，画像認識では最大プーリングが良く用いられている．
+
+\end{frame}
 
 
 %%%% GPUを用いた学習実行時の演算処理高速化 %%%%
