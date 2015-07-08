@@ -178,43 +178,6 @@
 \end{frame}
 
 
-%%%% パディング 1 %%%%
-\begin{frame}[fragile]\frametitle{パディング}
-\begin{itemize}
-\item 畳込みは画像にフィルタを重なり合う画素どおしの積を求めて，フィルタ全体の和を求める．
-\item 画像内にフィルタ全体が収まる範囲内でフィルタを動かすと，畳込み処理を行った後の画像サイズは入力画像は小さくなる．
-\end{itemize}
-
-% \begin{figure}[b]
-%   \begin{center}
-%     \includegraphics[clip,width=9cm]{fig/eps/convolution.eps}
-%   \end{center}
-%   \caption{$8\times 8$の入力画像を畳込み処理した場合の出力画像のサイズ縮小の様子}
-%   \label{fig:88の入力画像を畳込み処理した場合の出力画像のサイズ縮小の様子}
-% \end{figure}
-
-\end{frame}
-
-%%%% パディング 2 %%%%
-\begin{frame}[fragile]\frametitle{パディング}
-\begin{block}{このときの画像サイズは}
-\begin{equation}
-  \left(W-2\left\lfloor \frac{H}{2}\right\rfloor\right)\times \left(W-2\left\lfloor \frac{H}{2}\right\rfloor\right)
-\end{equation}
-\end{block}
-\begin{itemize}
-\item 一方で畳込みの結果が入力画像と同サイズに出力する場合，入力画像の外側に幅$\lfloor H/2\rfloor$の余剰を設け，出力画像が元の入力画像と同サイズになるようにする．
-\item 余分に設けた部分の画素値を0とする方法をゼロパディング（zero-padding）と呼ぶ．
-\end{itemize}
-
-% \begin{figure}[t]
-%   \begin{center}
-%     \includegraphics[clip,width=9cm]{fig/eps/zero_padding.eps}
-%   \end{center}
-%   % \caption{$8\times 8$の入力画像にゼロパディングを施した場合}
-%   % \label{fig:88の入力画像にゼロパディングを施した場合}
-% \end{figure}
-\end{frame}
 
 %%%% ストライド 1 %%%%
 \begin{frame}[fragile]\frametitle{ストライド}
