@@ -145,18 +145,27 @@
 \end{frame}
 
 
-%%%% 畳み込みの定義 %%%%
-\begin{frame}[fragile]\frametitle{畳み込みの定義}
+%%%% 畳み込み層%%%%
+\begin{frame}[fragile]\frametitle{畳み込み層}
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.2]{fig/eps/dl67.eps}
+  \caption{畳み込み層の概要}
+  \label{fig:畳み込み層の概要}
+\end{figure}
+
 \begin{itemize}
-\item 濃淡地を各画素に格納したグレースケールの画像を考える.
-\item 画像サイズを$W\times W$画素,画素をインデックス$(i,j)(i = 0,\cdots,W-1, j = 0,\cdots,W-1)$画素値を$x_{ij}$,\\
-フィルタサイズを$H\times H$画素,画素をインデックス$(p,q)(p=0,\cdots,H-1, q=0,\cdots,H-1)$,画素値を$h_{pq}$とすると,
+\item 各フィルタについて並列に計算され,$u_{ijm}$が出力される.
+各チャンネルについて並列に画像とフィルタの畳み込みを行い全チャンネルにわたり加算する.
+
 \begin{equation}
-  u_{ij} = \sum_{p=0}^{H-1} \sum_{q=0}^{H-1} x_{i+p,j+q} h_{pq}
+  u_{ijm} = \sum_{p=0}^{K-1} \sum_{q=0}^{H-1} \sum_{q=0}^{H-1} z_{i+p,j+q,k}^{(l-1)} h_{pqkm}+b_{ijm}
 \end{equation}
-\item この計算はフィルタが表す特徴的な濃淡構造を，画像から抽出する「特徴抽出」の働きがある.
+
 \end{itemize}
 \end{frame}
+
 
 %%%% 畳み込みの働き %%%%
 \begin{frame}[fragile]\frametitle{畳み込みの働き}
