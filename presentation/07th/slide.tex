@@ -158,54 +158,29 @@
 \end{itemize}
 \end{frame}
 
-<<<<<<< Updated upstream
-
-%%%% 畳み込みの働き %%%%
-\begin{frame}[fragile]\frametitle{畳み込みの働き}
-
-% \begin{figure}[t]
-%  \centering
-%  \includegraphics[scale=0.3]{fig/eps/convlena.eps}
-%   \caption{画像の畳み込みの例}
-%   \label{fig:画像の畳み込みの例}
-% \end{figure}
-\begin{itemize}
- \item 入力画像：227×227
- \item フィルタ：11×11
- \item 出力画像：55×55
- \item ストライド：4
-\end{itemize}
-=======
-\begin{figure}[t]
- \centering
- \includegraphics[scale=0.4]{fig/eps/dl67.eps}
-  \caption{畳み込み層の概要}
-  \label{fig:畳み込み層の概要}
-\end{figure}
 %%%% ogata %%%%
 
-\begin{frame}[fragile]\frametitle{}
+\begin{frame}[fragile]\frametitle{畳み込み層}
 \begin{block}{活性化関数への適応}
 \begin{equation}
  z_{ijm}=f(u_{ijm})
 \end{equation}
 \end{block}
 
-図\ref{fig:畳み込み層の概要}のように，この値が畳み込み層の最終的な出力と
-なり，その後の層へと伝わる．これらはフィルタ数$M$と同数のチャネル数を持
-つ多チャネルの画像とみなせる．つまり入力サイズが$W\times W\times K$のとき，出力サ
-イズは$W\times W\times M$になる．
+式(1), (2)は，層間に特別な構造を持つ単層ネットワークとして表現できる.
+\begin{itemize}
+ \item 入力のユニット数：$W\times W\times K$
+ \item 出力のユニット数：$W\times W\times M$
+\end{itemize}
 
-式(6.2),(6.3)は，層間に特別な構造の単層ネットワークとして表現できる．こ
-の層の入力と出力のユニット数はそれぞれ$W\times W\times K$および$W\times W\times M$であり，畳
-み込み計算の局所性を反映して，出力層のユニットとのみ結合する．その結合の
-重みがフィルタ係数$h_{pqkm}$である．この重みは出力層の同一チャネルの全ユ
-ニットで共有される．これは重み共有(weigh sharing, weight tying)と呼ばれ，
-このような結合の局所性と重みを共有することが畳み込み層の特徴である．
->>>>>>> Stashed changes
-
+畳み込みの計算の局所性により，出力層のユニット１つは入力層の
+$W\times W\times K$個のユニットとのみ結合する．
+\begin{itemize}
+ \item その時の重みがフィルタ係数$h_{pqkm}$
+ \item 同一チャネルの全ユニットで共有されるため\\
+			 重み共有(weigh sharing, weight tying)と呼ばれる
+\end{itemize}
 \end{frame}
-
 
 
 %%%% プーリング 1 %%%%
