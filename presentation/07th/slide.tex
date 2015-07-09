@@ -134,7 +134,7 @@
 \vspace{1cm}
 \begin{exampleblock}{プログラミングの進捗}
 プログラム実行環境の見直し\\
-データセット作成
+データセット作成のための顔検出と切り出しプログラムの作成
 \end{exampleblock}
 \end{frame}
 
@@ -192,13 +192,13 @@ $W\times W\times K$個のユニットとのみ結合する．
 サイズ$W \times W \times K$の入力画像上で画素$(i,j)$を中心とする$H\times H$の正方領域とり，この中に含まれる画素の集合を$P_{ij}$で表す．$P_{ij}$内の画素についてチャネル$k$ごとに独立に，$H^2$個ある画素値を使って1つの画素値$u_{ijk}$を求める．
 
 \begin{itemize}
- \item 最大プーリング(max pooling) 
+ \item 最大プーリング(max pooling)
 	   \begin{eqnarray}
-		u_{ijk} = \max_{(p,q) \in P_{ij}} z_{pqk}	
+		u_{ijk} = \max_{(p,q) \in P_{ij}} z_{pqk}
 	   \end{eqnarray}
- \item 平均プーリング(average pooling) 
+ \item 平均プーリング(average pooling)
 	   \begin{eqnarray}
-		u_{ijk} = \frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}} z_{pq} 
+		u_{ijk} = \frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}} z_{pq}
 	   \end{eqnarray}
 
 \end{itemize}
@@ -225,12 +225,12 @@ $P=1$で平均プーリング，$P=\infty$で最大プーリングが表現で�
 \begin{frame}\frametitle{GPUを用いた学習実行時の演算処理高速化}
 \begin{itemize}
 \item caffeがサポートしているNVIDIAの{\color{orange} CUDA}を使う（導入済み）
-\item Deep Learning用のCUDAライブラリ{\color{orange} cuDNN}を使用う\\（デベロッパー登録申請認可）
+\item Deep Learning用のCUDAライブラリ{\color{orange} cuDNN}を使う\\（デベロッパー登録申請認可）
 \end{itemize}
 
 \begin{block}{GPUによる並列計算}
 \begin{itemize}
-\item Ubuntu 14.04のマシンにライブラリをインストールしCaffeをコンパイルし直し成功
+\item Ubuntu 14.04のマシンに各ライブラリをインストールしCaffeをコンパイルし直し
 \item 正確な計測は行っていないが，明らかに学習速度の向上が見られた．
 \end{itemize}
 \end{block}
@@ -317,8 +317,7 @@ $ python facedetect_video.py src/test.mp4 output
 \begin{frame}\frametitle{今後の課題}
 
 \begin{block}{理論研究}
-CNNの詳細な調査\\
-プーリングの理論
+CNNの詳細な調査
 \end{block}
 
 \vspace{1cm}
