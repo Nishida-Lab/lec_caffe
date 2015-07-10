@@ -226,6 +226,7 @@ for file in `ls`; do convert ${file} -equalize ${file}; done
 \subsection{LevelDBデータセットの作成}
 用意した画像をCaffeで読み込むLevelDBと呼ばれる形式に変換する必要がある．
 変換スクリプトはSIG2D\cite{SIG2D}に掲載されているものを使用した．
+このスクリプトによって全入力画像から9割を訓練データ，1割をテストデータに割り振ることができる．
 
 \subsection{平均画像の作成}
 平均画像を作成するために以下のコマンドを実行する．保存名はmean.binaryprotoである．

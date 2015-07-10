@@ -237,16 +237,17 @@
 \begin{frame}\frametitle{LevelDB形式のデータセットに変換}
 \begin{itemize}
 \item 独自のデータセットを用意してCaffeを使って学習させるためには，LevelDB形式と呼ばれる形式のデータセットに変換する必要がある．
-\item LevelDB形式はキーバリュー型データストアであり，keyとvalueの紐付けを高速に読み書きできるGoogle製のライブラリ．
+\item LevelDB形式はキーバリュー型データストアであり，keyとvalueの紐付けを高速に読み書きできるGoogle製のライブラリである．
 \end{itemize}
 
 \begin{exampleblock}{クラス分けした画像ファイルからLevelDBに}
 \begin{itemize}
 \item この変換は既存のプログラム\cite{SIG2D}を用いて変換を行った．
 \item これによって各画像データとラベル番号の紐付けを行う．
+\item 全入力画像から9割を訓練データ，1割をテストデータに割り振ることができる．
 \end{itemize}
 \end{exampleblock}
-\vspace{1cm}
+% \vspace{1cm}
 \begin{thebibliography}{99}
   \bibitem{SIG2D} SIG2D，``SIG2D' 14 Proceedings of the 3rd Interdimensional Conference on 2D Information Processing ''，\url{http://sig2d.org/publications/}，2014．
 \end{thebibliography}
