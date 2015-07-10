@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="learning_flow.eps">
+   sodipodi:docname="learning_flow.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -28,7 +28,7 @@
      inkscape:cx="153.32244"
      inkscape:cy="396.22978"
      inkscape:document-units="px"
-     inkscape:current-layer="use4230"
+     inkscape:current-layer="use4232"
      showgrid="true"
      inkscape:window-width="1877"
      inkscape:window-height="1056"
@@ -274,7 +274,7 @@
          width="340"
          height="60"
          x="200"
-         y="332.36218"
+         y="334.9812"
          rx="6.0008245"
          ry="5.9486165"
          inkscape:tile-cx="370"
@@ -400,7 +400,7 @@
        xml:space="preserve"
        id="flowRoot4324-3-2"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:124.00000095%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
-       transform="translate(19.35791,293.19233)"><flowRegion
+       transform="translate(-3.5405273,282.00532)"><flowRegion
          id="flowRegion4326-6-1"><rect
            id="rect4328-8-0"
            width="329.99109"
@@ -408,9 +408,12 @@
            x="208.57143"
            y="344.50504"
            style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'" /></flowRegion><flowPara
-         id="flowPara4370-9"><flowSpan
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:cmr10;-inkscape-font-specification:cmr10"
-   id="flowSpan4413">LevelDB</flowSpan>形式のデータセットに変換</flowPara></flowRoot>    <flowRoot
+         id="flowPara4370-9"
+         style="text-align:center;text-anchor:middle"><flowSpan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:cmr10;-inkscape-font-specification:cmr10"
+   id="flowSpan4413">LevelDB</flowSpan>形式のデータセットに変換</flowPara><flowPara
+         id="flowPara3257"
+         style="text-align:center;text-anchor:middle">平均画像(image mean)作成</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4324-3-2-7"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:124.00000095%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
@@ -441,7 +444,7 @@
        xml:space="preserve"
        id="flowRoot4324-3-2-0"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:124.00000095%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
-       transform="translate(-3.5405273,184.43877)"><flowRegion
+       transform="translate(-3.5405273,196.92153)"><flowRegion
          id="flowRegion4326-6-1-7"><rect
            id="rect4328-8-0-9"
            width="329.99109"
@@ -449,8 +452,5 @@
            x="208.57143"
            y="344.50504"
            style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'" /></flowRegion><flowPara
-         id="flowPara4370-9-0">画像の正規化</flowPara><flowPara
-         id="flowPara4654">平均画像(<flowSpan
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:cmr10;-inkscape-font-specification:cmr10"
-   id="flowSpan4656">image mean</flowSpan>)作成</flowPara></flowRoot>  </g>
+         id="flowPara4654">画像の正規化</flowPara></flowRoot>  </g>
 </svg>

@@ -200,7 +200,7 @@ $\bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}$を差し引く．
 \section{プログラミング}
 \subsection{画像を学習させて分類器を作るまでの流れ}
 データセットを作成し，学習を行ってモデルを作成するまでの流れをFig.~\ref{fig:モデルを作成するまでの流れ}に示す．
-Fig.~\ref{fig:モデルを作成するまでの流れ}より(1)の大量の写真データまたは動画からの切り出しに関しては
+Fig.~\ref{fig:モデルを作成するまでの流れ}より(1)の大量の写真データまたは動画からの切り出しに関しては前回の発表で述べた手法，作成したプログラムによって顔のみを切り出した画像ファイルを作成する．
 \begin{figure}[tb]
   \begin{center}
     \includegraphics[clip,width=6cm]{fig/eps/learning_flow.eps}
@@ -209,11 +209,78 @@ Fig.~\ref{fig:モデルを作成するまでの流れ}より(1)の大量の写�
   \label{fig:モデルを作成するまでの流れ}
 \end{figure}
 
+\subsection{切り出した画像からキャラクターごとにクラスタリングを行う}
+Fig.~\ref{fig:モデルを作成するまでの流れ}より(2)の作業は(1)で生成された顔画像をそれぞれの人物，キャラクターごとにクラス分けする作業である．
+各画像はラベル名のディレクトリに入れ，ラベル名のディレクトリ（0/ 1/ 2/...）はこのように数字にしておく．
+この数字とラベル名の関連付けは実際に画像を分類する際に必要なので記録しておく．
+
+\subsection{画像の正規化}
+Fig.~\ref{fig:モデルを作成するまでの流れ}の(3)で，生成した画像を正規化する．
+正規化の処理はImageMagickを用いた．
+クラスタリングした各ディレクトリで以下のコマンドを実行する．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+for file in `ls`; do convert ${file} -equalize ${file}; done
+\end{lstlisting}
+
+\subsection{LevelDBデータセットの作成}
+用意した画像をCaffeで読み込むLevelDBと呼ばれる形式に変換する必要がある．
+変換スクリプトはSIG2D\cite{SIG2D}に掲載されているものを使用した．
+
+\subsection{平均画像の作成}
+平均画像を作成するために以下のコマンドを実行する．保存名はmean.binaryprotoである．
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+build/tools/compute_image_mean.bin -backend=leveldb ./examples/cifar10/cifar10_train_leveldb ./examples/cifar10/mean.binaryproto
+\end{lstlisting}
+
+\subsection{学習機の設定}
+今回は基本的にはcifer10の学習器をそのまま使用した．
+ただし，最終的な出力は対象とするものによって数が変わるため，変更を行った．
+変更するファイルはcifar10\_quick\_train\_test.prototxtとcifar10\_quick.prototxtである．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+layers {
+  name: "ip2"
+  type: INNER_PRODUCT
+  bottom: "ip1"
+  top: "ip2"
+  blobs_lr: 1
+  blobs_lr: 2
+  inner_product_param {
+    num_output: 10      ここを変更
+    weight_filler {
+      type: "gaussian"
+      std: 0.1
+    }
+    bias_filler {
+      type: "constant"
+    }
+  }
+}
+\end{lstlisting}
+
+\subsection{学習の実行}
+以下のコマンドによって学習を実行する．
+学習は前回発表したように，GPUを用いて行った．
+GPUを用いる場合，標準設定がGPUで行うように設定してあるので，ファイルの記述を変更する必要はない．
+CPUのみを用いる場合，cifar10\_full\_solver.prototxtを最後の行にあるsolver\_mode: GPUをCPUに変更する．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
+\end{lstlisting}
+
+学習が完了すると，cifar10\_quick\_iter\_4000.caffemodelというファイルが生成される．
 
 \section{今後の課題}
 \begin{itemize}
  \item 理論研究を進める．
- \item データセットの作成，学習の実行
+ \item データセットの作成，学習実行結果の評価と過程の可視化
 \end{itemize}
+
+
+%% 文献
+\begin{thebibliography}{99}
+  \bibitem{SIG2D} SIG2D，``SIG2D' 14 Proceedings of the 3rd Interdimensional Conference on 2D Information Processing ''，\url{http://sig2d.org/publications/}，2014．
+\end{thebibliography}
 
 \end{document}
