@@ -140,178 +140,155 @@
 
 
 %%%% 畳み込み層%%%%
-\begin{frame}[fragile]\frametitle{畳み込み層}
+% \begin{frame}[fragile]\frametitle{畳み込み層}
 
-\begin{figure}[t]
- \centering
- \includegraphics[scale=0.25]{fig/eps/dl67.eps}
-\end{figure}
+% \begin{figure}[t]
+%  \centering
+%  \includegraphics[scale=0.25]{fig/eps/dl67.eps}
+% \end{figure}
 
-\begin{itemize}
-\item 各フィルタについて並列に計算され,$u_{ijm}$が出力される.
-各チャンネルについて並列に画像とフィルタの畳み込みを行い全チャンネルにわたり加算する.
+% \begin{itemize}
+% \item 各フィルタについて並列に計算され,$u_{ijm}$が出力される.
+% 各チャンネルについて並列に画像とフィルタの畳み込みを行い全チャンネルにわたり加算する.
 
-\begin{equation}
-  u_{ijm} = \sum_{p=0}^{K-1} \sum_{q=0}^{H-1} \sum_{q=0}^{H-1} z_{i+p,j+q,k}^{(l-1)} h_{pqkm}+b_{ijm}
-\end{equation}
+% \begin{equation}
+%   u_{ijm} = \sum_{p=0}^{K-1} \sum_{q=0}^{H-1} \sum_{q=0}^{H-1} z_{i+p,j+q,k}^{(l-1)} h_{pqkm}+b_{ijm}
+% \end{equation}
 
-\end{itemize}
-\end{frame}
+% \end{itemize}
+% \end{frame}
 
-%%%% ogata %%%%
+% %%%% ogata %%%%
 
-\begin{frame}[fragile]\frametitle{畳み込み層}
-\begin{block}{活性化関数への適応}
-\begin{equation}
- z_{ijm}=f(u_{ijm})
-\end{equation}
-\end{block}
+% \begin{frame}[fragile]\frametitle{畳み込み層}
+% \begin{block}{活性化関数への適応}
+% \begin{equation}
+%  z_{ijm}=f(u_{ijm})
+% \end{equation}
+% \end{block}
 
-式(1), (2)は，層間に特別な構造を持つ単層ネットワークとして表現できる.
-\begin{itemize}
- \item 入力のユニット数：$W\times W\times K$
- \item 出力のユニット数：$W\times W\times M$
-\end{itemize}
+% 式(1), (2)は，層間に特別な構造を持つ単層ネットワークとして表現できる.
+% \begin{itemize}
+%  \item 入力のユニット数：$W\times W\times K$
+%  \item 出力のユニット数：$W\times W\times M$
+% \end{itemize}
 
-畳み込みの計算の局所性により，出力層のユニット１つは入力層の
-$W\times W\times K$個のユニットとのみ結合する．
-\begin{itemize}
- \item その時の重みがフィルタ係数$h_{pqkm}$
- \item 同一チャネルの全ユニットで共有されるため\\
-			 重み共有(weigh sharing, weight tying)と呼ばれる
-\end{itemize}
-\end{frame}
-
-
-%%%% プーリング 1 %%%%
-\begin{frame}[fragile]\frametitle{プーリング}
-\begin{block}{プーリング}
-プーリング層は通常，畳み込み層の直後に設置され，プーリング層は畳み込み層で抽出された特徴の位置
-感度を低下させる働きがある．
-\end{block}
-サイズ$W \times W \times K$の入力画像上で画素$(i,j)$を中心とする$H\times H$の正方領域とり，この中に含まれる画素の集合を$P_{ij}$で表す．$P_{ij}$内の画素についてチャネル$k$ごとに独立に，$H^2$個ある画素値を使って1つの画素値$u_{ijk}$を求める．
-
-\begin{itemize}
- \item 最大プーリング(max pooling)
-	   \begin{eqnarray}
-		u_{ijk} = \max_{(p,q) \in P_{ij}} z_{pqk}
-	   \end{eqnarray}
- \item 平均プーリング(average pooling)
-	   \begin{eqnarray}
-		u_{ijk} = \frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}} z_{pq}
-	   \end{eqnarray}
-
-\end{itemize}
-
-\end{frame}
-
-%%%% プーリング 2 %%%%
-\begin{frame}[fragile]\frametitle{プーリング}
-\begin{figure}[bt]
- \centering
- \includegraphics[scale = 0.6]{fig/eps/pooling.eps}
- \caption{プーリングの例．プーリングサイズ$3\times 3$，ストライド$s=3$，ゼロパディングで最大プーリングを行った場合}
-\end{figure}
-平均プーリングや最大プーリングなどのプーリングを含む一般性を持った表記として，次のLpプーリング(Lp pooling)がある．
-\begin{eqnarray}
- u_{ijk} = \left(\frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}}z^{P}_{pqk}\right)^{\frac{1}{P}}
-\end{eqnarray}
-$P=1$で平均プーリング，$P=\infty$で最大プーリングが表現できる．
-
-\end{frame}
+% 畳み込みの計算の局所性により，出力層のユニット１つは入力層の
+% $W\times W\times K$個のユニットとのみ結合する．
+% \begin{itemize}
+%  \item その時の重みがフィルタ係数$h_{pqkm}$
+%  \item 同一チャネルの全ユニットで共有されるため\\
+% 			 重み共有(weigh sharing, weight tying)と呼ばれる
+% \end{itemize}
+% \end{frame}
 
 
-%%%% GPUを用いた学習実行時の演算処理高速化 %%%%
-\begin{frame}\frametitle{GPUを用いた学習実行時の演算処理高速化}
-\begin{itemize}
-\item caffeがサポートしているNVIDIAの{\color{orange} CUDA}を使う（導入済み）
-\item Deep Learning用のCUDAライブラリ{\color{orange} cuDNN}を使う\\（デベロッパー登録申請認可）
-\end{itemize}
+% %%%% プーリング 1 %%%%
+% \begin{frame}[fragile]\frametitle{プーリング}
+% \begin{block}{プーリング}
+% プーリング層は通常，畳み込み層の直後に設置され，プーリング層は畳み込み層で抽出された特徴の位置
+% 感度を低下させる働きがある．
+% \end{block}
+% サイズ$W \times W \times K$の入力画像上で画素$(i,j)$を中心とする$H\times H$の正方領域とり，この中に含まれる画素の集合を$P_{ij}$で表す．$P_{ij}$内の画素についてチャネル$k$ごとに独立に，$H^2$個ある画素値を使って1つの画素値$u_{ijk}$を求める．
 
-\begin{block}{GPUによる並列計算}
-\begin{itemize}
-\item Ubuntu 14.04のマシンに各ライブラリをインストールしCaffeをコンパイルし直し
-\item 正確な計測は行っていないが，明らかに学習速度の向上が見られた．
-\end{itemize}
-\end{block}
+% \begin{itemize}
+%  \item 最大プーリング(max pooling)
+% 	   \begin{eqnarray}
+% 		u_{ijk} = \max_{(p,q) \in P_{ij}} z_{pqk}
+% 	   \end{eqnarray}
+%  \item 平均プーリング(average pooling)
+% 	   \begin{eqnarray}
+% 		u_{ijk} = \frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}} z_{pq}
+% 	   \end{eqnarray}
 
+% \end{itemize}
+
+% \end{frame}
+
+% %%%% プーリング 2 %%%%
+% \begin{frame}[fragile]\frametitle{プーリング}
+% \begin{figure}[bt]
+%  \centering
+%  \includegraphics[scale = 0.6]{fig/eps/pooling.eps}
+%  \caption{プーリングの例．プーリングサイズ$3\times 3$，ストライド$s=3$，ゼロパディングで最大プーリングを行った場合}
+% \end{figure}
+% 平均プーリングや最大プーリングなどのプーリングを含む一般性を持った表記として，次のLpプーリング(Lp pooling)がある．
+% \begin{eqnarray}
+%  u_{ijk} = \left(\frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}}z^{P}_{pqk}\right)^{\frac{1}{P}}
+% \end{eqnarray}
+% $P=1$で平均プーリング，$P=\infty$で最大プーリングが表現できる．
+
+% \end{frame}
+
+
+%%%% Caffeで学習を行うまでの流れ %%%%
+\begin{frame}\frametitle{Caffeで学習を行うまでの流れ}
+独自のデータセットを用いて，Caffeで学習を行うまでの流れを下の図に示す．
 \begin{figure}[tb]
   \begin{center}
-    \includegraphics[clip,width=6cm]{./fig/eps/GPU.eps}
+    \includegraphics[clip,width=11cm]{./fig/eps/learning_flow.eps}
   \end{center}
 \end{figure}
 
 \end{frame}
 
-\begin{frame}\frametitle{データセット作成のためのプログラムの作成}
+
+%%%% Caffeで学習を行うまでの流れ %%%%
+\begin{frame}\frametitle{LevelDB形式のデータセットに変換}
 \begin{itemize}
-\item 独自のデータセットを作成する
-\item 写真や動画から人の顔を切り出し，データセットを作成，そして学習という一連の操作を行う計画．
-\item まずデータセットを作成するためには大量の人物が一人ずつ写った写真データを用意する必要がある．
+\item 独自のデータセットを用意してCaffeを使って学習させるためには，LevelDB形式と呼ばれる形式のデータセットに変換する必要がある．
+\item LevelDB形式はキーバリュー型データストアであり，keyとvalueの紐付けを高速に読み書きできるGoogle製のライブラリ．
 \end{itemize}
-\begin{exampleblock}{顔検出プログラムの作成}
+
+\begin{exampleblock}{クラス分けした画像ファイルからLevelDBに}
 \begin{itemize}
-\item OpenCVに実装されている顔検出アルゴリズムを用いて，人物が写った部分を自動的に切り出すプログラムを作成した．
-\item 大量にある画像データや動画から切り出す．
+\item この変換は既存のプログラム\cite{SIG2D}を用いて変換を行った．
+\item これによって各画像データとラベル番号の紐付けを行う．
 \end{itemize}
 \end{exampleblock}
+\vspace{1cm}
+\begin{thebibliography}{99}
+  \bibitem{SIG2D} SIG2D，``SIG2D' 14 Proceedings of the 3rd Interdimensional Conference on 2D Information Processing ''，\url{http://sig2d.org/publications/}，2014．
+\end{thebibliography}
+
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{画像データからの切り出し}
-実行は以下のようにソースとなる画像が含まれたディレクトリと，出力先のディレクトリを指定する．
-
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single,xleftmargin=5mm]
-$ python facedetect.py src output
-\end{lstlisting}
-
-Pythonで実装した機能を以下に示す．
+%%%% 学習器の設定 %%%%
+\begin{frame}[fragile]\frametitle{学習器の設定}
 \begin{itemize}
- \item ディレクトリを指定したらそのディレクトリに入っているすべての画像ファイルを顔認識して切り取る．
- \item 指定したディレクトリの中に含まれているサブディレクトリの中もすべて探索してすべて取り込む．
- \item プログレスバーを設置して進捗を可視化
-
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
-66% (925 of 1522) |##################          | Elapsed Time: 0:00:07 ETA:  0:04:26
-\end{lstlisting}
-
- \item 壊れた画像ファイルを読み込まれた場合でも例外処理．
+\item 今回はCifer10の学習モデルをそのまま使用した．
+\item ただし最終的な出力の数は学習にかけるラベル数に変更する必要がある．
+\item 変更するファイルはcifar10\_quick\_train\_test.prototxtとcifar10\_quick.prototxtである．
 \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{画像データからの切り出し}
-\begin{figure}[t]
-  \begin{center}
-    \includegraphics[width=9cm]{fig/eps/facedetection.eps}
-  \end{center}
-  % \caption{画像からの切り出し出力結果}
-  % \label{fig:画像からの切り出し出力結果}
-\end{figure}
-
-動画からの切り出しプログラムも画像場合とほぼ同様の機能を有しており，ソースは動画ファイルを直接指定する．
 
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
-$ python facedetect_video.py src/test.mp4 output
+layers {
+  name: "ip2"
+  type: INNER_PRODUCT
+  bottom: "ip1"
+  top: "ip2"
+  blobs_lr: 1
+  blobs_lr: 2
+  inner_product_param {
+    num_output: 10      ここを変更
+    weight_filler {
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{動画データからの切り出し}
+\begin{frame}[fragile]\frametitle{学習の実行}
+\begin{itemize}
+\item 以下のコマンドによって学習を実行する．
+\item 学習は前回発表したように，GPUを用いて行った．
+\item GPUを用いる場合，標準設定がGPUで行うように設定してあるので，設定ファイルの記述を変更する必要はない．
+\item CPUのみを用いる場合，cifar10\_full\_solver.prototxtを最後の行にあるsolver\_mode: GPUをCPUに変更する．
+\end{itemize}
 
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
+\end{lstlisting}
 
-\begin{figure}[t]
-  \begin{center}
-    \includegraphics[width=9cm]{fig/eps/facedetection_video.eps}
-  \end{center}
-  % \caption{動画からの切り出し出力結果}
-  % \label{fig:動画からの切り出し出力結果}
-\end{figure}
-
-\begin{exampleblock}{データセットの作成支援}
-このプログラムを用いて，アニメのキャラクターやアイドルグループの\\メンバーなどの写真から顔の部分のみを切り出すことが可能となる．\\
-しかし切り出したあとは自分で顔を識別してフォルダ分けする作業が必要である．
-\end{exampleblock}
+学習が完了すると，cifar10\_quick\_iter\_4000.caffemodelというファイルが生成される．
 \end{frame}
-
-
 
 %%%% 今後の課題 %%%%
 \begin{frame}\frametitle{今後の課題}
@@ -322,7 +299,7 @@ CNNの詳細な調査
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミング}
-データセットの作成
+データセットの作成，学習実行結果の評価と過程の可視化
 \end{exampleblock}
 \end{frame}
 

@@ -42,10 +42,10 @@
 \renewcommand{\tablename}{Tab.}
 
 % 式番号を式(章番号.番号)に
-\makeatletter
-\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
-\@addtoreset{equation}{section}
-\makeatother
+% \makeatletter
+% \renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+% \@addtoreset{equation}{section}
+% \makeatother
 
 % プログラムに色をつける
 \usepackage{color}
@@ -134,7 +134,7 @@
 画素濃淡から，$P_{ij}$に含まれる画素の濃淡の平均，つまり
 $\bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}$を差し引く．
 \begin{equation}
- z_{ij} = x_{ij}-\bar{x}_{ij} 
+ z_{ij} = x_{ij}-\bar{x}_{ij}
 \end{equation}
 ここで差し引く$\bar{x}_{ij}$には，重み付き平均
 \begin{equation}
@@ -154,7 +154,7 @@ $\bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}$を差し引く．
 \end{equation}
 となるが，減算正規化を施した入力画像をこの標準偏差で割る．
 \begin{equation}
- z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\omega_{ij}} 
+ z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\omega_{ij}}
 \end{equation}
 この計算をそのまま行うと，濃淡変化が少ない局所領域ほど濃淡変化が増幅され，
 ノイズが強調される．そこで，入力画像のコントラストが大きい部分にのみ適用
@@ -165,7 +165,7 @@ $\bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}$を差し引く．
 \end{equation}
 や，同様の効果が$\omega_{ij}$に応じて連続的に変化する
 \begin{equation}
- z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sqrt{\omega_{ij}+c}} 
+ z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sqrt{\omega_{ij}+c}}
 \end{equation}
 を使う．減算正規化および式\ref{}による除算正規化の計算例を図
 \ref{}に示す．
@@ -211,7 +211,7 @@ Fig.~\ref{fig:モデルを作成するまでの流れ}より(1)の大量の写�
 
 \subsection{切り出した画像からキャラクターごとにクラスタリングを行う}
 Fig.~\ref{fig:モデルを作成するまでの流れ}より(2)の作業は(1)で生成された顔画像をそれぞれの人物，キャラクターごとにクラス分けする作業である．
-各画像はラベル名のディレクトリに入れ，ラベル名のディレクトリ（0/ 1/ 2/...）はこのように数字にしておく．
+各画像はラベル名のディレクトリに入れ，ラベル名のディレクトリはこのように（0/ 1/ 2/...）数字にしておく．
 この数字とラベル名の関連付けは実際に画像を分類する際に必要なので記録しておく．
 
 \subsection{画像の正規化}
@@ -274,7 +274,7 @@ caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
 \section{今後の課題}
 \begin{itemize}
  \item 理論研究を進める．
- \item データセットの作成，学習実行結果の評価と過程の可視化
+ \item データセットの作成，学習実行結果の評価と過程の可視化．
 \end{itemize}
 
 

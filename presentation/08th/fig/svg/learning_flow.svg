@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="learning_flow_2.svg">
+   sodipodi:docname="learning_flow.eps">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,17 +24,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="695.15633"
-     inkscape:cy="488.2273"
+     inkscape:zoom="1.979899"
+     inkscape:cx="421.56545"
+     inkscape:cy="508.01287"
      inkscape:document-units="px"
-     inkscape:current-layer="use4230"
+     inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1189"
-     inkscape:window-height="794"
-     inkscape:window-x="573"
-     inkscape:window-y="147"
-     inkscape:window-maximized="0">
+     inkscape:window-width="1877"
+     inkscape:window-height="1056"
+     inkscape:window-x="43"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
     <inkscape:grid
        type="xygrid"
        id="grid2985" />
@@ -55,6 +55,17 @@
      inkscape:label="レイヤー 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <g
+       inkscape:tile-y0="332.36218"
+       inkscape:tile-x0="200"
+       id="use4226">
+      <path
+         style="fill:#afdde9;fill-opacity:1;stroke:none"
+         d="m 350,392.36218 0,15 -20,0 40,20 40,-20 -20,0 0,-15 z"
+         id="path4310"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccccc" />
+    </g>
     <g
        id="g4095"
        inkscape:tile-cx="370"
@@ -88,17 +99,6 @@
     <g
        inkscape:tile-y0="332.36218"
        inkscape:tile-x0="200"
-       id="use4226">
-      <path
-         style="fill:#afdde9;fill-opacity:1;stroke:none"
-         d="m 350,392.36218 0,15 -20,0 40,20 40,-20 -20,0 0,-15 z"
-         id="path4310"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="ccccccc" />
-    </g>
-    <g
-       inkscape:tile-y0="332.36218"
-       inkscape:tile-x0="200"
        id="use4228"
        transform="translate(0,95.949997)">
       <path
@@ -126,7 +126,7 @@
          xml:space="preserve"
          id="flowRoot4324-3"
          style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:124.00000095%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
-         transform="translate(0.61425781,-5.751747)"><flowRegion
+         transform="translate(-3.9052734,-5.751747)"><flowRegion
            id="flowRegion4326-6"><rect
              id="rect4328-8"
              width="329.99109"
@@ -134,8 +134,10 @@
              x="208.57143"
              y="344.50504"
              style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'" /></flowRegion><flowPara
-           id="flowPara4366">色による識別で大まかなクラスタリング</flowPara><flowPara
-           id="flowPara4370">人の手でクラスタリング</flowPara></flowRoot>    </g>
+           id="flowPara4366"
+           style="text-align:center;text-anchor:middle;-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">色による識別で大まかなクラスタリング</flowPara><flowPara
+           id="flowPara4370"
+           style="text-align:center;text-anchor:middle;-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">人の手でクラスタリング</flowPara></flowRoot>    </g>
     <g
        inkscape:tile-y0="332.36218"
        inkscape:tile-x0="200"
@@ -165,7 +167,7 @@
          sodipodi:linespacing="124%"
          transform="translate(0,-191.89999)"><tspan
            sodipodi:role="line"
-           id="tspan4374"></tspan></text>
+           id="tspan4374" /></text>
       <path
          style="fill:#afdde9;fill-opacity:1;stroke:none"
          d="m 790,166.36218 0,15 -20,0 40,20 40,-20 -20,0 0,-15 -40,0"
@@ -328,9 +330,8 @@
              x="208.57143"
              y="344.50504"
              style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:cmr10;-inkscape-font-specification:cmr10" /></flowRegion><flowPara
-           id="flowPara4475-6-5">caffemodel<flowSpan
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
-   id="flowSpan4566">の保存</flowSpan></flowPara></flowRoot>    </g>
+           id="flowPara4475-6-5"
+           style="-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">caffemodelの保存</flowPara></flowRoot>    </g>
     <flowRoot
        xml:space="preserve"
        id="flowRoot4316"
@@ -341,11 +342,11 @@
            height="38.57143"
            x="215.71428"
            y="343.79074" /></flowRegion><flowPara
-         id="flowPara4322"></flowPara></flowRoot>    <flowRoot
+         id="flowPara4322" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4324"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:124.00000095%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
-       transform="translate(9.4394531,-5.901161)"><flowRegion
+       transform="translate(1.7207031,-5.901161)"><flowRegion
          id="flowRegion4326"><rect
            id="rect4328"
            width="321.42859"
@@ -353,12 +354,14 @@
            x="208.57143"
            y="344.50504"
            style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'" /></flowRegion><flowPara
-         id="flowPara4330">顔検出と切り出しプログラムによって</flowPara><flowPara
-         id="flowPara4332">大量の画像データ作成</flowPara></flowRoot>    <flowRoot
+         id="flowPara4330"
+         style="text-align:center;text-anchor:middle;-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">顔検出と切り出しプログラムによって</flowPara><flowPara
+         id="flowPara4332"
+         style="text-align:center;text-anchor:middle;-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">大量の画像データ作成</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4324-3-2"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:124.00000095%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
-       transform="translate(459.35791,67.478044)"><flowRegion
+       transform="translate(436.45947,53.672012)"><flowRegion
          id="flowRegion4326-6-1"><rect
            id="rect4328-8-0"
            width="329.99109"
@@ -366,13 +369,14 @@
            x="208.57143"
            y="344.50504"
            style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'" /></flowRegion><flowPara
-         id="flowPara4370-9"><flowSpan
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:cmr10;-inkscape-font-specification:cmr10"
-   id="flowSpan4413">LevelDB</flowSpan>形式のデータセットに変換</flowPara></flowRoot>    <flowRoot
+         id="flowPara4370-9"
+         style="text-align:center;text-anchor:middle;-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">LevelDB形式のデータセットに変換</flowPara><flowPara
+         id="flowPara3056"
+         style="text-align:center;text-anchor:middle;-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">平均画像(image mean)作成</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4324-3-2-0"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:124.00000095%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
-       transform="translate(-3.5405273,184.43877)"><flowRegion
+       transform="translate(-3.6459961,196.92153)"><flowRegion
          id="flowRegion4326-6-1-7"><rect
            id="rect4328-8-0-9"
            width="329.99109"
@@ -380,10 +384,8 @@
            x="208.57143"
            y="344.50504"
            style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'" /></flowRegion><flowPara
-         id="flowPara4370-9-0">画像の正規化</flowPara><flowPara
-         id="flowPara4654">平均画像(<flowSpan
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;font-family:cmr10;-inkscape-font-specification:cmr10"
-   id="flowSpan4656">image mean</flowSpan>)作成</flowPara></flowRoot>    <flowRoot
+         id="flowPara4654"
+         style="-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">画像の正規化</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4324-3-2-7"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:124.00000095%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
@@ -395,10 +397,10 @@
            x="208.57143"
            y="344.50504"
            style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'" /></flowRegion><flowPara
-         id="flowPara4370-9-04">学習器の設定</flowPara><flowPara
-         id="flowPara4475"><flowSpan
-   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:cmr10;-inkscape-font-specification:cmr10"
-   id="flowSpan4477">Cifer10</flowSpan>を使用</flowPara></flowRoot>    <flowRoot
+         id="flowPara4370-9-04"
+         style="-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">学習器の設定</flowPara><flowPara
+         id="flowPara4475"
+         style="-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">Cifer10を使用</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4324-3-2-7-3"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:124.00000095%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'"
@@ -410,5 +412,16 @@
            x="208.57143"
            y="344.50504"
            style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IPAex明朝';-inkscape-font-specification:'IPAex明朝'" /></flowRegion><flowPara
-         id="flowPara4475-6">学習の実行</flowPara></flowRoot>  </g>
+         id="flowPara4475-6"
+         style="-inkscape-font-specification:'IPAexゴシック';font-family:'IPAexゴシック';font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal">学習の実行</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3058"
+       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:cmr10;font-style:normal;font-weight:normal;font-size:14px;line-height:124.00000095000000044%;letter-spacing:0px;word-spacing:0px;-inkscape-font-specification:cmr10;font-stretch:normal;font-variant:normal"><flowRegion
+         id="flowRegion3060"><rect
+           id="rect3062"
+           width="2.8571429"
+           height="14.285714"
+           x="312.85715"
+           y="216.6479" /></flowRegion><flowPara
+         id="flowPara3064" /></flowRoot>  </g>
 </svg>
