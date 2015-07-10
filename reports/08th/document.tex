@@ -172,6 +172,29 @@ $\bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}$を差し引く．
 これらの正規化の結果，画像の画素値は負の値をとり得るため，画素値の最大値
 と最小値が[0,255]の範囲に収まるように画素値を線形変換している.
 
+\subsection{多チャネル画像の正規化}
+多チャネル画像では，単一チャネルごとの正規化を適応することもできるが，一
+般的にはチャネル間の相互作用を考える．その場合，画素値の平均と分散を求め
+る対象が全チャネルにわたる局所領域$P_{ij}$内の画素の集合に代わる．$K$チャ
+ネルからなる画像$x_{ijk}$を対象とするとき，重み付き平均を
+\begin{equation}
+ \bar{x}_{ij}=\frac{1}{K}\sum_{k=0}{K-1}\sum{(p,q)\in{P_{ij}}}{} w_{pq}x_{i+p,j+q,k}
+\end{equation}
+のように決定します．減算正規化は，画素$(i,j)$ごとに違うがチャネル間では
+共通の$\bar{x}_ij$を差し引いて
+\begin{equation}
+ z_{ijk}=x_{ijk}-\bar{x}_{ij}
+\end{equation}
+のように行われる．画像の全チャネルにわたる$P_{ij}$の分散は
+\begin{equation}
+  \omega^2_{ij}=\frac{1}{K}\sum_{k=0}{K-1}\sum_{(p,q)\in{P_{ij}}}^{} w_{pqk}(x_{i+p,j+q,k}-\bar{x}_{ij})^2
+\end{equation}
+のように計算され，除算正規化は
+\begin{equation}
+  z_{ijk}=\frac{x_{ijk}-\bar{x}_{ij}}{max(\omega_{ij},c)}
+\end{equation}
+となる．単一チャネルの場合と同様に，分母を$\sqrt{c+\omega^2_{ij}}$とする
+こともできる．
 
 
 \section{プログラミング}
