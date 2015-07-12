@@ -1,7 +1,8 @@
 #Ubuntu 14.04にcaffeをインストール
 ##基本的に以下のURLを参照
 参考サイトにもあるようにUbuntu 14.04の最新版（その時点でのバージョンアップはすべて更新済みの状態）で確認しています．  
-[※注意]このREADMEはnVIDIAのCUDAを使わない方法です．  
+~~[※注意]このREADMEはnVIDIAのCUDAを使わない方法です．~~  
+CUDAとcuDNNを使う方法も追記
 
 >Github  
 >Ubuntu 14.04 VirtualBox VM  
@@ -23,6 +24,51 @@ sudo apt-get install -y libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-d
 
 ```bash
 sudo easy_install pillow
+```
+
+##CUDAとcuDNNを使う
+###CUDAのインストール
+[https://developer.nvidia.com/cuda-downloads#linux](https://developer.nvidia.com/cuda-downloads#linux)  
+ここからLinux x86のタブの[Ubuntu 14.04 DEB (3KB)](http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/cuda-repo-ubuntu1404_7.0-28_amd64.deb)をダウンロードする．  
+
+```bash
+sudo dpkg -i cuda-repo-ubuntu1404_7.0-28_amd64.deb
+sudo apt-get update
+sudo apt-get install cuda
+```
+
+.bashrcに以下を記述  
+**この`.bashrc`の記述がサンプル実行時に大切**になります．
+
+```bash
+#CUDA
+export CUDA_HOME=/usr/local/cuda-7.0 
+export LD_LIBRARY_PATH=${CUDA_HOME}/lib64 
+ 
+PATH=${CUDA_HOME}/bin:${PATH} 
+export PATH 
+```
+
+サンプルコードをコンパイル
+
+```bash
+cuda-install-samples-7.0.sh ~
+cd ~/NVIDIA_CUDA-7.0_Samples
+make 
+```
+####参考サイト
+>Installing CUDA Toolkit 7.0 on Ubuntu 14.04 Linux  
+>[http://www.r-tutor.com/gpu-computing/cuda-installation/cuda7.0-ubuntu](http://www.r-tutor.com/gpu-computing/cuda-installation/cuda7.0-ubuntu)
+
+###cuDNNのインストール
+[https://developer.nvidia.com/cudnn](https://developer.nvidia.com/cudnn)からダウンロード  
+※デベロッパー登録必要
+
+```bash
+tar -zxf cudnn-6.5-linux-x64-v2.tgz
+cd cudnn-6.5-linux-x64-v2
+sudo cp lib* /usr/local/cuda/lib64/
+sudo cp cudnn.h /usr/local/cuda/include/
 ```
 
 ##本家レポジトリからClone
@@ -54,6 +100,7 @@ cp Makefile.config.example Makefile.config
 gedit Makefile.config
 ```
 
+###CPUのみを使う場合
 8行目の`#`を外して
 
 ```bash
@@ -73,6 +120,22 @@ gedit Makefile.config
 CPU_ONLY := 1
 ```
 
+###CUDAとcuDNNを使う場合
+5行目のコメントアウトを外す．
+
+```bash
+# cuDNN acceleration switch (uncomment to build with cuDNN).
+USE_CUDNN := 1
+```
+
+15行目のコメントアウトを外す．上の方法でCUDAを入れた場合，ここを外しました．
+
+```bash
+# CUDA directory contains bin/ and lib/ directories that we need.
+CUDA_DIR := /usr/local/cuda
+```
+
+###CPUのみ，CUDA使用，共通の作業
 また52行目を以下のように編集．これを
 
 ```bash
@@ -94,9 +157,9 @@ PYTHON_INCLUDE := /usr/include/python2.7 \
 ##caffeをコンパイル
 
 ```bash
-make pycaffe
-make all
-make test
+make pycaffe -j4
+make all -j4
+make test -j4
 ```
 
 ##ImageNet Caffe modelとlabelsのダウンロード
