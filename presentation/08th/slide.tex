@@ -138,25 +138,21 @@
 \end{exampleblock}
 \end{frame}
 
+%%%% 局所コントラスト正規化%%%%
+\begin{frame}[fragile]\frametitle{局所コントラスト正規化}
 
-%%%% 畳み込み層%%%%
-% \begin{frame}[fragile]\frametitle{畳み込み層}
+ \begin{block}{局所コントラスト正規化}
+ 画像の中から対象物を捉えるための、画像の濃淡を正規化する方法の一種
+ \end{block}
 
-% \begin{figure}[t]
-%  \centering
-%  \includegraphics[scale=0.25]{fig/eps/dl67.eps}
-% \end{figure}
+ \begin{itemize}
+  \item 1つの層だけでこの処理が可能
+  \item 畳み込みネットに組み込むことが可能
+  \item 層の重みは固定され,学習の対象となるパラメータはない
+  \item 減算正規化と除算正規化の２種類がある
 
-% \begin{itemize}
-% \item 各フィルタについて並列に計算され,$u_{ijm}$が出力される.
-% 各チャンネルについて並列に画像とフィルタの畳み込みを行い全チャンネルにわたり加算する.
-
-% \begin{equation}
-%   u_{ijm} = \sum_{p=0}^{K-1} \sum_{q=0}^{H-1} \sum_{q=0}^{H-1} z_{i+p,j+q,k}^{(l-1)} h_{pqkm}+b_{ijm}
-% \end{equation}
-
-% \end{itemize}
-% \end{frame}
+ \end{itemize}
+\end{frame}
 
 % %%%% ogata %%%%
 
@@ -241,22 +237,22 @@
 \begin{frame}[fragile]\frametitle{色による大まかなクラスタリング}
 OpenCVに実装されているニューラルネットワーク（多層パーセプトロン）を用いて色特徴から大まかにクラスタリング．少量の画像を手動でラベリングして、それを学習．
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, tabsize=2,showtabs,firstnumber=1, numbers=left, breaklines=true]
-$ ./cpp/build/train train-labeled.csv train-labeled.csv 
+$ ./cpp/build/train train-labeled.csv train-labeled.csv
 Using training dataset
 Training iterations: 908
 Results on the testing dataset
  Correct classification: 496 (100%)
  Wrong classifications: 0 (0%)
-   0    1   2   3   4   5   6   7   8   9	
-0  13   0   0   0   0   0   0   0   0   0   
-1  0    12  0   0   0   0   0   0   0   0   
-2  0    0   137 0   0   0   0   0   0   0   
-3  0    0   0   54  0   0   0   0   0   0   
-4  0    0   0   0   11  0   0   0   0   0   
-5  0    0   0   0   0   8   0   0   0   0   
-6  0    0   0   0   0   0   11  0   0   0   
-7  0    0   0   0   0   0   0   19  0   0   
-8  0    0   0   0   0   0   0   0   164 0   
+   0    1   2   3   4   5   6   7   8   9
+0  13   0   0   0   0   0   0   0   0   0
+1  0    12  0   0   0   0   0   0   0   0
+2  0    0   137 0   0   0   0   0   0   0
+3  0    0   0   54  0   0   0   0   0   0
+4  0    0   0   0   11  0   0   0   0   0
+5  0    0   0   0   0   8   0   0   0   0
+6  0    0   0   0   0   0   11  0   0   0
+7  0    0   0   0   0   0   0   19  0   0
+8  0    0   0   0   0   0   0   0   164 0
 9  0    0   0   0   0   0   0   0   0   67
 \end{lstlisting}
 \end{frame}
