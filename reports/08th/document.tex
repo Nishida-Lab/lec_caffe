@@ -159,7 +159,7 @@ $\bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}$を差し引く．
 る対象が全チャネルにわたる局所領域$P_{ij}$内の画素の集合に代わる．$K$チャ
 ネルからなる画像$x_{ijk}$を対象とするとき，重み付き平均を
 \begin{equation}
- \bar{x}_{ij}=\frac{1}{K}\sum_{k=0}{K-1}\sum{(p,q)\in{P_{ij}}}{} w_{pq}x_{i+p,j+q,k}
+ \bar{x}_{ij}=\frac{1}{K}\sum_{k=0}^{K-1}\sum_{(p,q)\in{P_{ij}}}^{} w_{pq}x_{i+p,j+q,k}
 \end{equation}
 のように決定します．減算正規化は，画素$(i,j)$ごとに違うがチャネル間では
 共通の$\bar{x}_ij$を差し引いて
@@ -168,7 +168,7 @@ $\bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}$を差し引く．
 \end{equation}
 のように行われる．画像の全チャネルにわたる$P_{ij}$の分散は
 \begin{equation}
-  \omega^2_{ij}=\frac{1}{K}\sum_{k=0}{K-1}\sum_{(p,q)\in{P_{ij}}}^{} w_{pqk}(x_{i+p,j+q,k}-\bar{x}_{ij})^2
+  \omega^2_{ij}=\frac{1}{K}\sum_{k=0}^{K-1}\sum_{(p,q)\in{P_{ij}}}^{} w_{pqk}(x_{i+p,j+q,k}-\bar{x}_{ij})^2
 \end{equation}
 のように計算され，除算正規化は
 \begin{equation}

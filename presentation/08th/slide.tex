@@ -104,14 +104,14 @@
 \lstset{style=mystyle}
 
 %%%%
-\title[略タイトル]{第8回　知能システム学特論レポート}%[略タイトル]{タイトル}
+\title[略タイトル]{第6回　知能システム学特論レポート}%[略タイトル]{タイトル}
 \author[NishidaLab]{
 15344203 & 有田 裕太 \\
 15344206 & 緒形 裕太 \\
 15344209 & 株丹 亮 \\
 12104125 & 宮本 和 }%[略名前]{名前}
 \institute[NishidaLab]{西田研究室，計算力学研究室}%[略所属]{所属}
-\date{2015年\ 7月\ 13日}%日付
+\date{2015年\ 7月\ 6日}%日付
 
 \begin{document}
 
@@ -171,7 +171,6 @@
  \item $i,j$:入力画像の画素
  \item $p,q$:フィルタの画素
  \end{itemize}
-
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{除算正規化}
@@ -180,7 +179,7 @@
  \begin{equation}
  z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sigma_{ij}}
  \end{equation}
-\end{block}
+ \end{block}
 画素値の分散
  \begin{equation}
  \sigma^2_{ij}=\sum_{(p,q)\in{P_{ij}}}^{} w_{pq}(x_{i+p,j+q}-\bar{x}_{ij})^2
@@ -190,6 +189,21 @@
  \item $w_{pq}$:重み
  \end{itemize}
 
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{除算正規化}
+以上の計算をそのまま行うと，濃淡変化が少ない局所領域ほど濃淡変化が増幅され，
+ノイズが強調される．そこで，入力画像のコントラストが大きい部分にのみ適用
+するため，ある定数$c$を設定し濃淡の標準偏差がこれを下回る
+($\sigma_{ij}<c$)で除算する
+\begin{equation}
+ z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{max(\sigma_{ij}<c)}
+\end{equation}
+や，同様の効果が$\sigma_{ij}$に応じて連続的に変化する
+\begin{equation}
+ z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sqrt{\sigma_{ij}+c}}
+\end{equation}
+を用いる.
 \end{frame}
 
 % %%%% プーリング 1 %%%%
