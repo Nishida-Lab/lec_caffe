@@ -154,30 +154,43 @@
  \end{itemize}
 \end{frame}
 
-% %%%% ogata %%%%
+ %%%% ogata %%%%
+\begin{frame}[fragile]\frametitle{減算正規化}
+ \begin{block}{減算正規化}
+入力画像の各画素濃淡から平均を差し引く
+ \begin{equation}
+ z_{ij} = x_{ij}-\bar{x}_{ij}
+ \end{equation}
+ \end{block}
+濃淡値の平均
+ \begin{equation}
+ \bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}
+ \end{equation}
 
-% \begin{frame}[fragile]\frametitle{畳み込み層}
-% \begin{block}{活性化関数への適応}
-% \begin{equation}
-%  z_{ijm}=f(u_{ijm})
-% \end{equation}
-% \end{block}
+ \begin{itemize}
+ \item $i,j$:入力画像の画素
+ \item $p,q$:フィルタの画素
+ \end{itemize}
 
-% 式(1), (2)は，層間に特別な構造を持つ単層ネットワークとして表現できる.
-% \begin{itemize}
-%  \item 入力のユニット数：$W\times W\times K$
-%  \item 出力のユニット数：$W\times W\times M$
-% \end{itemize}
+\end{frame}
 
-% 畳み込みの計算の局所性により，出力層のユニット１つは入力層の
-% $W\times W\times K$個のユニットとのみ結合する．
-% \begin{itemize}
-%  \item その時の重みがフィルタ係数$h_{pqkm}$
-%  \item 同一チャネルの全ユニットで共有されるため\\
-% 			 重み共有(weigh sharing, weight tying)と呼ばれる
-% \end{itemize}
-% \end{frame}
+\begin{frame}[fragile]\frametitle{除算正規化}
+ \begin{block}{除算正規化}
+同じ局所領域内で画素値の分散を抑える
+ \begin{equation}
+ z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sigma_{ij}}
+ \end{equation}
+\end{block}
+画素値の分散
+ \begin{equation}
+ \sigma^2_{ij}=\sum_{(p,q)\in{P_{ij}}}^{} w_{pq}(x_{i+p,j+q}-\bar{x}_{ij})^2
+ \end{equation}
 
+ \begin{itemize}
+ \item $w_{pq}$:重み
+ \end{itemize}
+
+\end{frame}
 
 % %%%% プーリング 1 %%%%
 % \begin{frame}[fragile]\frametitle{プーリング}
