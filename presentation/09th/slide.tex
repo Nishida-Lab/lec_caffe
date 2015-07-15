@@ -246,7 +246,9 @@ snapshot: 4000
 snapshot_prefix: "examples/cifar10/cifar10_quick"
 solver_mode: GPU
 \end{lstlisting}
-
+\begin{exampleblock}{単位[batch]の定義}
+教師データを一度にいくつ処理するか（バッチサイズ）を決定し，これを1[batch]とする．
+\end{exampleblock}
 \end{frame}
 
 % %%%% 学習パラメータの設定 2 %%%%
@@ -254,11 +256,11 @@ solver_mode: GPU
 各項目の意味を以下に示す．
 \begin{description}
   \item[net :]学習用ネットワーク定義ファイルを指定する．
-  \item[test\_iter :]学習中の正答率評価を1回行うのに使う評価セットの\\データ数．
-  \item[test\_interval :]テストデータから正答率評価を行う間隔をイテレーション数で指定．
+  \item[test\_iter :]学習中の正答率評価を1回行うのに使う評価セットの\\データ数をバッチ数で指定．
+  \item[test\_interval :]テストデータから正答率評価を行う間隔をバッチ数で指定．
   \item[base\_lr,\ momentum,\ weight\_decay,\ lr\_policy :]学習率に関する設定．
-  \item[display :]学習中のステータスを出力する回数をイテレーション数で指定．
-  \item[max\_iter :]学習の計算を最大どれだけ続けるかを訓練データの\\イテレーション数で指定．
+  \item[display :]学習中のステータスを出力する回数をバッチ数で指定．
+  \item[max\_iter :]学習の計算を最大どれだけ続けるかを訓練データの\\バッチ数で指定．
   \item[snapshot,\ snapshot\_prefix :]学習の途中経過を保存する間隔と場所を指定．
   \item[solver\_mode :]学習をCPUのみ，あるいはGPUを用いるかを指定．
 \end{description}
