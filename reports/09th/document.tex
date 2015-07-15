@@ -179,6 +179,39 @@ Caffeでは繰り返し数をバッチ数で指定している．
   \item[solver\_mode :]学習をCPUのみ，あるいはGPUを用いるかを指定．
 \end{description}
 
+\subsection{訓練データの作成}
+独自の訓練データを用いて学習を行うということで今回はアニメ「ラブライブ！」における主要キャラクターの識別をDeep Learningで行うことを目標とした．そこで，まず訓練データを作成した．訓練データはキャラクター毎に約2000枚程度集めた．これはアニメの中からHaar-like特徴量を用いて顔検出を行い，その顔検出によって得られた矩形を切り出し保存したものを人間の目によって分類して集めた．また，キャラクターの顔画像の他に負例として7000枚ほど当該キャラクター以外の顔画像やそもそも顔画像ではない画像も集めている．以上の訓練データの画像は全て$200\times200$にリサイズを行っている．
+
+
+その後，前回の説明であった通り，$1:9$の割合でテストデータと訓練データにランダムに分け，caffeで用いられるデータ形式に変換後，学習を実行する．
+
+\subsection{学習}
+学習は以下のコマンドで実行される．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, tabsize=2,showtabs,firstnumber=1, numbers=left, breaklines=true]
+build/tools/caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
+\end{lstlisting}
+
+今回，アニメキャラクターの顔認識を行うにあたり，ネットワークモデルとしてcifar10のモデルを用いて学習を行った．cifar10のモデルは畳込み層が3層，プーリング層が3層，全結合層が2層からなるCNNであり，活性化関数にはSoftmax関数を用いている．
+
+また，学習を行った際のパラメータの一部を以下に示す．
+\begin{itemize}
+ \item test\_iter : 100
+ \item max\_iter : 4000
+ \item batch\_size : 100
+ \item solver\_mode : CPU
+\end{itemize}
+
+\subsection{学習結果}
+学習を行った結果得られた，トレーニングの繰り返し回数と損失関数の値及びテストデータにおける精度のグラフをFig.\ref{210045_15Jul15}に示す．
+精度は500イテレートあたりで急激に上昇し，最終的に94.2\%の精度となった．
+
+\begin{figure}[ht]
+ \centering
+ \includegraphics[scale=1.0]{fig/eps/result_train_test_graph.eps}
+ \caption{損失関数の値と精度 }
+ \label{210045_15Jul15}
+\end{figure}
 
 \section{今後の課題}
 \begin{itemize}
