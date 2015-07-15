@@ -81,7 +81,7 @@
 \author{
 （DL2班）Caffe on Ubuntu\\
 }
-\date{2015年\ 7月\ 13日}
+\date{2015年\ 7月\ 16日}
 
 % ドキュメントの開始
 \begin{document}
@@ -102,12 +102,8 @@
 \end{itemize}
 
 \section{理論研究}
+\subsection{勾配の計算}
 
-\subsection{局所コントラスト正規化層}
-
-我々人間は,画像の明るさやコントラストの違いにさほど気をとられることなく,画像に写るものに意識を向けることができる.生物の視覚系にはこれらの違いをうまく調節する機能があるためである.これに対応して,画像の濃淡をなんらかの方法で正規化する必要がある.
-その方法に局所コントラスト正規化があり,画像1枚1枚に対し個別に行う処理のことである.これは畳み込みネットに固有の処理ではなく,一般的な画像処理の1つだが,畳み込みやプーリングと同様,1つの層でこの処理を実行できる。誤差逆伝播計算も可能であり,畳み込みネットに組み込むことができる.また、プーリング層と同様,この層の重みは固定され,学習の対象となるパラネータはない.
-そして,局所コントラスト正規化には減算正規化と除算正規化の２つがある.
 
 \subsection{単一チャネルの正規化}
 単一チャネルの画像$x_{ij}$に対し，プーリングと同様，画素$(i,j)$を中心と
@@ -182,13 +178,13 @@ $\bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}$を差し引く．
 \subsection{画像を学習させて分類器を作るまでの流れ}
 データセットを作成し，学習を行ってモデルを作成するまでの流れをFig.~\ref{fig:モデルを作成するまでの流れ}に示す．
 Fig.~\ref{fig:モデルを作成するまでの流れ}より(1)の大量の写真データまたは動画からの切り出しに関しては前回の発表で述べた手法，作成したプログラムによって顔のみを切り出した画像ファイルを作成する．
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=6cm]{fig/eps/learning_flow.eps}
-  \end{center}
-  \caption{モデルを作成するまでの流れ}
-  \label{fig:モデルを作成するまでの流れ}
-\end{figure}
+% \begin{figure}[tb]
+%   \begin{center}
+%     \includegraphics[clip,width=6cm]{fig/eps/learning_flow.eps}
+%   \end{center}
+%   \caption{モデルを作成するまでの流れ}
+%   \label{fig:モデルを作成するまでの流れ}
+% \end{figure}
 
 \subsection{切り出した画像からキャラクターごとにクラスタリングを行う}
 Fig.~\ref{fig:モデルを作成するまでの流れ}より(2)の作業は(1)で生成された顔画像をそれぞれの人物，キャラクターごとにクラス分けする作業である．
@@ -258,11 +254,5 @@ caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
  \item 理論研究を進める．
  \item データセットの作成，学習実行結果の評価と過程の可視化．
 \end{itemize}
-
-
-%% 文献
-\begin{thebibliography}{99}
-  \bibitem{SIG2D} SIG2D，``SIG2D' 14 Proceedings of the 3rd Interdimensional Conference on 2D Information Processing ''，\url{http://sig2d.org/publications/}，2014．
-\end{thebibliography}
 
 \end{document}
