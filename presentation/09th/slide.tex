@@ -245,22 +245,81 @@
 
 
 %%%% Caffeで学習を行うまでの流れ %%%%
-\begin{frame}\frametitle{Caffeで学習を行うまでの流れ}
+\begin{frame}\frametitle{学習データの用意}
 \begin{figure}[t]
- \begin{minipage}{0.4\hsize}
+ \begin{minipage}{0.2\hsize}
   \centering
-  \includegraphics[width=50mm,bb=0 0 594 590]{./fig/png/conv1_params.png}
-  \caption{フィルタ}
+  \text{eri} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/eri.png} \\
+  \text{1908枚}
  \end{minipage}
- \begin{minipage}{0.4\hsize}
+ \begin{minipage}{0.2\hsize}
   \centering
-  \includegraphics[width=50mm,bb=0 0 594 590]{./fig/png/conv1_blobs.png}
-  \caption{フィルタの出力}
+  \text{hanayo} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/hanayo.png}\\
+  \text{2220枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{honoka} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/honoka.png}\\
+  \text{2733枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{kotori} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/kotori.png}\\
+  \text{1722枚}
  \end{minipage}
 \end{figure}
+\begin{figure}[t]
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{maki} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/maki.png}\\
+  \text{1874枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{niko} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/niko.png}\\
+  \text{1910枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{nozomi} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/nozomi.png}\\
+  \text{1489枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{rin} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/rin.png} \\
+  \text{2425枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{umi} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/umi.png}\\
+  \text{1703枚}
+ \end{minipage}
+ \end{figure}
+他に負例(etc)として7001枚の画像を用意
 \end{frame}
 
-
+\begin{frame}[fragile]\frametitle{学習}
+ 今回はネットワークモデルにcifer10のモデルを用いて学習を行った．
+build/tools/caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
+\end{frame}
 
 
 %%%% 今後の課題 %%%%
