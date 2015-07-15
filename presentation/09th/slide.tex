@@ -104,14 +104,14 @@
 \lstset{style=mystyle}
 
 %%%%
-\title[略タイトル]{第8回　知能システム学特論レポート}%[略タイトル]{タイトル}
+\title[略タイトル]{第9回　知能システム学特論レポート}%[略タイトル]{タイトル}
 \author[NishidaLab]{
 15344203 & 有田 裕太 \\
 15344206 & 緒形 裕太 \\
 15344209 & 株丹 亮 \\
 12104125 & 宮本 和 }%[略名前]{名前}
 \institute[NishidaLab]{西田研究室，計算力学研究室}%[略所属]{所属}
-\date{2015年\ 7月\ 13日}%日付
+\date{2015年\ 7月\ 16日}%日付
 
 \begin{document}
 
@@ -245,110 +245,85 @@
 
 
 %%%% Caffeで学習を行うまでの流れ %%%%
-\begin{frame}\frametitle{Caffeで学習を行うまでの流れ}
-独自のデータセットを用いて，Caffeで学習を行うまでの流れを下の図に示す．
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=11cm]{./fig/eps/learning_flow.eps}
-  \end{center}
-\end{figure}
-
-\end{frame}
-
-
-%%%% Caffeで学習を行うまでの流れ %%%%
-\begin{frame}\frametitle{顔検出と大量の画像データ}
-前回説明した通りなので今回は省略
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{色による大まかなクラスタリング}
-OpenCVに実装されているニューラルネットワーク（多層パーセプトロン）を用いて色特徴から大まかにクラスタリング．少量の画像を手動でラベリングして、それを学習．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, tabsize=2,showtabs,firstnumber=1, numbers=left, breaklines=true]
-$ ./cpp/build/train train-labeled.csv train-labeled.csv
-Using training dataset
-Training iterations: 908
-Results on the testing dataset
- Correct classification: 496 (100%)
- Wrong classifications: 0 (0%)
-   0    1   2   3   4   5   6   7   8   9
-0  13   0   0   0   0   0   0   0   0   0
-1  0    12  0   0   0   0   0   0   0   0
-2  0    0   137 0   0   0   0   0   0   0
-3  0    0   0   54  0   0   0   0   0   0
-4  0    0   0   0   11  0   0   0   0   0
-5  0    0   0   0   0   8   0   0   0   0
-6  0    0   0   0   0   0   11  0   0   0
-7  0    0   0   0   0   0   0   19  0   0
-8  0    0   0   0   0   0   0   0   164 0
-9  0    0   0   0   0   0   0   0   0   67
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{最後は人の目}
- \begin{figure}[ht]
+\begin{frame}\frametitle{学習データの用意}
+\begin{figure}[t]
+ \begin{minipage}{0.2\hsize}
   \centering
-  \includegraphics[scale=0.5, bb=0 0 613 397 ]{fig/png/train_result.png}
-  \caption{分別結果（正解は「花陽」、「ほのか」が間違い）}
+  \text{eri} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/eri.png} \\
+  \text{1908枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{hanayo} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/hanayo.png}\\
+  \text{2220枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{honoka} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/honoka.png}\\
+  \text{2733枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{kotori} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/kotori.png}\\
+  \text{1722枚}
+ \end{minipage}
+\end{figure}
+\begin{figure}[t]
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{maki} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/maki.png}\\
+  \text{1874枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{niko} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/niko.png}\\
+  \text{1910枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{nozomi} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/nozomi.png}\\
+  \text{1489枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{rin} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/rin.png} \\
+  \text{2425枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{umi} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/umi.png}\\
+  \text{1703枚}
+ \end{minipage}
  \end{figure}
-
+他に負例(etc)として7001枚の画像を用意
 \end{frame}
 
-\begin{frame}\frametitle{LevelDB形式のデータセットに変換}
-\begin{itemize}
-\item 独自のデータセットを用意してCaffeを使って学習させるためには，LevelDB形式と呼ばれる形式のデータセットに変換する必要がある．
-\item LevelDB形式はキーバリュー型データストアであり，keyとvalueの紐付けを高速に読み書きできるGoogle製のライブラリである．
-\end{itemize}
-
-\begin{exampleblock}{クラス分けした画像ファイルからLevelDBに}
-\begin{itemize}
-\item この変換は既存のプログラム\cite{SIG2D}を用いて変換を行った．
-\item これによって各画像データとラベル番号の紐付けを行う．
-\item 全入力画像から9割を訓練データ，1割をテストデータに割り振ることができる．
-\end{itemize}
-\end{exampleblock}
-% \vspace{1cm}
-\begin{thebibliography}{99}
-  \bibitem{SIG2D} SIG2D，``SIG2D' 14 Proceedings of the 3rd Interdimensional Conference on 2D Information Processing ''，\url{http://sig2d.org/publications/}，2014．
-\end{thebibliography}
-
-\end{frame}
-
-%%%% 学習器の設定 %%%%
-\begin{frame}[fragile]\frametitle{学習器の設定}
-\begin{itemize}
-\item 今回はCifer10の学習モデルをそのまま使用した．
-\item ただし最終的な出力の数は学習にかけるラベル数に変更する必要がある．
-\item 変更するファイルはcifar10\_quick\_train\_test.prototxtとcifar10\_quick.prototxtである．
-\end{itemize}
-
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
-layers {
-  name: "ip2"
-  type: INNER_PRODUCT
-  bottom: "ip1"
-  top: "ip2"
-  blobs_lr: 1
-  blobs_lr: 2
-  inner_product_param {
-    num_output: 10      ここを変更
-    weight_filler {
-\end{lstlisting}
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{学習の実行}
-\begin{itemize}
-\item 以下のコマンドによって学習を実行する．
-\item 学習は前回発表したように，GPUを用いて行った．
-\item GPUを用いる場合，標準設定がGPUで行うように設定してあるので，設定ファイルの記述を変更する必要はない．
-\item CPUのみを用いる場合，cifar10\_full\_solver.prototxtを最後の行にあるsolver\_mode: GPUをCPUに変更する．
-\end{itemize}
-
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
-caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
+\begin{frame}[fragile]\frametitle{学習}
+ 今回はネットワークモデルにcifer10のモデルを用いて学習を行った．
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, tabsize=2,showtabs,firstnumber=1, numbers=left, breaklines=true]
+build/tools/caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
 \end{lstlisting}
 
-学習が完了すると，cifar10\_quick\_iter\_4000.caffemodelというファイルが生成される．
 \end{frame}
+
 
 %%%% 今後の課題 %%%%
 \begin{frame}\frametitle{今後の課題}
