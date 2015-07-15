@@ -138,22 +138,35 @@
 \end{exampleblock}
 \end{frame}
 
-%%%% 局所コントラスト正規化%%%%
-\begin{frame}[fragile]\frametitle{局所コントラスト正規化}
+%%%%勾配の計算%%%%
+\begin{frame}[fragile]\frametitle{勾配の計算}
 
- \begin{block}{局所コントラスト正規化}
- 画像の中から対象物を捉えるための、画像の濃淡を正規化する方法の一種
+ \begin{block}{畳み込み層の計算式}
+  \begin{equation}
+   u^{(l)} = W^{(l)} u^{(l-1)} + b^{(l)}
+  \end{equation}
+  \begin{equation}
+   z^{(l)} = f^{(l)} (u)
+  \end{equation}
  \end{block}
 
  \begin{itemize}
-  \item 1つの層だけでこの処理が可能
-  \item 畳み込みネットに組み込むことが可能
-  \item 層の重みは固定され,学習の対象となるパラメータはない
-  \item 減算正規化と除算正規化の２種類がある
-
+  \item 逆伝播の計算も多層パーセプトロンのときと基本的に同じ
+  \item 同じフィルタの係数が何度も現れてしまう
  \end{itemize}
-\end{frame}
 
+ \begin{block}{重みの計算式}
+  \begin{equation}
+   W_{ji} = t_{ji}^{T} h
+  \end{equation}
+ \end{block}
+
+ \begin{itemize}
+  \item $h$：フィルタの係数$h_{pqkm}$を適当な順に並べたベクトル
+  \item $t_{ji}$：$h$と同じ長さで，$h$との内積が重み$w_{ji}$を与えるベクトル
+ \end{itemize}
+
+\end{frame}
  %%%% ogata %%%%
 \begin{frame}[fragile]\frametitle{減算正規化}
  \begin{block}{減算正規化}
