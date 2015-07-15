@@ -343,11 +343,14 @@ solver_mode: GPU
 \begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, tabsize=2,showtabs,firstnumber=1, numbers=left, breaklines=true]
 build/tools/caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
 \end{lstlisting}
-\begin{exampleblock}{cifar10_quick.prototxt}
+\begin{exampleblock}{cifar10\_quick.prototxt}
  畳込み層３層，プーリング層３層，全結合層２層，活性化関数はSoftmax関数を用いている．
 \end{exampleblock}
 \begin{itemize}
- \item 
+ \item test\_iter : 100
+ \item max\_iter : 4000
+ \item batch\_size : 100
+ \item solver\_mode : CPU
 \end{itemize}
 \end{frame}
 
