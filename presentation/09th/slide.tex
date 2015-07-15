@@ -155,57 +155,51 @@
 \end{frame}
 
  %%%% ogata %%%%
-\begin{frame}[fragile]\frametitle{減算正規化}
- \begin{block}{減算正規化}
-入力画像の各画素濃淡から平均を差し引く
- \begin{equation}
- z_{ij} = x_{ij}-\bar{x}_{ij}
- \end{equation}
- \end{block}
-濃淡値の平均
- \begin{equation}
- \bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}
- \end{equation}
 
- \begin{itemize}
- \item $i,j$:入力画像の画素
- \item $p,q$:フィルタの画素
- \end{itemize}
-\end{frame}
+\begin{frame}[fragile]\frametitle{勾配の計算}
 
-\begin{frame}[fragile]\frametitle{除算正規化}
- \begin{block}{除算正規化}
-同じ局所領域内で画素値の分散を抑える
- \begin{equation}
- z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sigma_{ij}}
- \end{equation}
- \end{block}
-画素値の分散
- \begin{equation}
- \sigma^2_{ij}=\sum_{(p,q)\in{P_{ij}}}^{} w_{pq}(x_{i+p,j+q}-\bar{x}_{ij})^2
- \end{equation}
-
- \begin{itemize}
- \item $w_{pq}$:重み
- \end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{除算正規化}
-以上の計算をそのまま行うと，濃淡変化が少ない局所領域ほど濃淡変化が増幅され，
-ノイズが強調される．そこで，入力画像のコントラストが大きい部分にのみ適用
-するため，ある定数$c$を設定し濃淡の標準偏差がこれを下回る
-($\sigma_{ij}<c$)で除算する
+層$l$のデルタを$\delta^{(l)}$とし，全結合層に対する勾配計算の式を
+形式的に適応したときの層の重み${\bf W}={\bf W}^{(l)}$の勾配
+%
 \begin{equation}
- z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{max(\sigma_{ij}<c)}
+ \partial{\bf W}= {\bf \delta}^{(l)}{\bf z}^{{(l-1)}^\top}
 \end{equation}
-や，同様の効果が$\sigma_{ij}$に応じて連続的に変化する
+%
+${\bf W}$の多くの成分はもともと０であり．そうで
+ない成分はも重み共有により同じ変数(フィルタの係数)に対応する．そこでフィ
+ルタの係数$\bf{h}$についての勾配$\partial{\bf W}$に変形する必要がある．微
+分の線形性より，$\partial\bf{h}$の成分$r$は次のように表せる．
+%
 \begin{equation}
- z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sqrt{\sigma_{ij}+c}}
+ (\partial{\bf h})_r =\sum_{i,j}^{}({\bf T}_r\odot\partial{\bf W})_{ji}
 \end{equation}
-を用いる.
+%
+\begin{itemize}
+ \item $\odot$ : 成分ごとの積
+\end{itemize}
+
 \end{frame}
 
+\begin{frame}[fragile]\frametitle{勾配の計算}
+プーリング層には学習の対象となるパラメータはないので，勾配計算は必要ない
+が，さらに下層に伝えるデルタの逆伝播計算は必要である．
+プーリングの種類ごとに${\bf W}^{(l+1)}$を定め，式??を計算する
+%
+\begin{equation}
+ w_{ji}^{(l+1)} =
+	\begin{cases}
+    \frac{1}{H^2} & (\text {if}  \  i\in{P_j}) \\
+    0 & (\text{otherwise})
+  \end{cases}
+\end{equation}
+
+\begin{itemize}
+ \item $P_{j}$ : 層$l+1$のユニット$j$のサイズ$H \times H$の受容野
+ \item 順伝播時のプーリングの結果により重みが変化する
+ \item 逆伝播計算では最大値を返したユニットにデルタがそのまま伝えられる
+\end{itemize}
+
+\end{frame}
 % %%%% プーリング 1 %%%%
 % \begin{frame}[fragile]\frametitle{プーリング}
 % \begin{block}{プーリング}
@@ -356,14 +350,7 @@ build/tools/caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{学習結果}
-\begin{figure}[ht]
- \centering
- \includegraphics[scale=1.0]{fig/eps/result_train_test_graph.eps}
- \caption{損失関数の値と精度 }
-\end{figure}
 
-\end{frame}
 %%%% 今後の課題 %%%%
 \begin{frame}\frametitle{今後の課題}
 
@@ -373,7 +360,7 @@ CNNの詳細な調査
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミング}
-学習によって得られた識別器を用いて実際に識別してみる
+データセットの作成，学習実行結果の評価と過程の可視化
 \end{exampleblock}
 \end{frame}
 
