@@ -133,8 +133,8 @@
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミングの進捗}
-プログラム実行環境の見直し\\
-データセット作成のための顔検出と切り出しプログラムの作成
+学習器のパラメータ設定について\\
+データセットを作成し，学習を行った結果
 \end{exampleblock}
 \end{frame}
 
@@ -228,20 +228,42 @@
 
 % \end{frame}
 
-% %%%% プーリング 2 %%%%
-% \begin{frame}[fragile]\frametitle{プーリング}
-% \begin{figure}[bt]
-%  \centering
-%  \includegraphics[scale = 0.6]{fig/eps/pooling.eps}
-%  \caption{プーリングの例．プーリングサイズ$3\times 3$，ストライド$s=3$，ゼロパディングで最大プーリングを行った場合}
-% \end{figure}
-% 平均プーリングや最大プーリングなどのプーリングを含む一般性を持った表記として，次のLpプーリング(Lp pooling)がある．
-% \begin{eqnarray}
-%  u_{ijk} = \left(\frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}}z^{P}_{pqk}\right)^{\frac{1}{P}}
-% \end{eqnarray}
-% $P=1$で平均プーリング，$P=\infty$で最大プーリングが表現できる．
+% %%%% 学習パラメータの設定 1 %%%%
+\begin{frame}[fragile]\frametitle{学習パラメータの設定}
+学習を行う上で必要なパラメータについて説明する．\\この設定が記述されているファイルはcifar10\_quick\_solver.prototxtである．
 
-% \end{frame}
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
+net: "examples/cifar10/cifar10_quick_train_test.prototxt"
+test_iter: 100
+test_interval: 500
+base_lr: 0.0001
+momentum: 0.9
+weight_decay: 0.004
+lr_policy: "fixed"
+display: 100
+max_iter: 4000
+snapshot: 4000
+snapshot_prefix: "examples/cifar10/cifar10_quick"
+solver_mode: GPU
+\end{lstlisting}
+
+\end{frame}
+
+% %%%% 学習パラメータの設定 2 %%%%
+\begin{frame}[fragile]\frametitle{学習パラメータの設定}
+各項目の意味を以下に示す．
+\begin{description}
+  \item[net :]学習用ネットワーク定義ファイルを指定する．
+  \item[test\_iter :]学習中の正答率評価を1回行うのに使う評価セットの\\データ数．
+  \item[test\_interval :]テストデータから正答率評価を行う間隔をイテレーション数で指定．
+  \item[base\_lr,\ momentum,\ weight\_decay,\ lr\_policy :]学習率に関する設定．
+  \item[display :]学習中のステータスを出力する回数をイテレーション数で指定．
+  \item[max\_iter :]学習の計算を最大どれだけ続けるかを訓練データの\\イテレーション数で指定．
+  \item[snapshot,\ snapshot\_prefix :]学習の途中経過を保存する間隔と場所を指定．
+  \item[solver\_mode :]学習をCPUのみ，あるいはGPUを用いるかを指定．
+\end{description}
+\end{frame}
+
 
 
 %%%% Caffeで学習を行うまでの流れ %%%%
