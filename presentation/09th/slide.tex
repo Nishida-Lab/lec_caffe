@@ -167,28 +167,36 @@
  \end{itemize}
 
 \end{frame}
- %%%% ogata %%%%
 
+%%%% ogata %%%%
 \begin{frame}[fragile]\frametitle{勾配の計算}
+% 層$l$のデルタを$\delta^{(l)}$とし，全結合層に対する勾配計算の式を
+% 形式的に適応したときの層の重み${\bf W}={\bf W}^{(l)}$の勾配
 
-層$l$のデルタを$\delta^{(l)}$とし，全結合層に対する勾配計算の式を
-形式的に適応したときの層の重み${\bf W}={\bf W}^{(l)}$の勾配
-%
-\begin{equation}
- \partial{\bf W}= {\bf \delta}^{(l)}{\bf z}^{{(l-1)}^\top}
-\end{equation}
-%
-${\bf W}$の多くの成分はもともと０であり．そうで
+ \begin{block}{${\bf W}={\bf W}^{(l)}$の勾配}
+  \begin{equation}
+  \partial{\bf W}= {\bf \delta}^{(l)}{\bf z}^{{(l-1)}^\top}
+  \end{equation}
+ \end{block}
+
+ \begin{itemize}
+	\item $\delta^{(l)}$: 層$l$のデルタ
+	\item ${\bf z}^{(l-1)}$: $l-1$層からの出力
+ \end{itemize}
+
+${\bf W}$の多くの成分はもともと0であり．そうで
 ない成分はも重み共有により同じ変数(フィルタの係数)に対応する．そこでフィ
-ルタの係数$\bf{h}$についての勾配$\partial{\bf W}$に変形する必要がある．微
-分の線形性より，$\partial\bf{h}$の成分$r$は次のように表せる．
-%
-\begin{equation}
+ルタの係数$\bf{h}$についての勾配$\partial{\bf W}$に変形する必要がある．
+
+ \begin{block}{$\partial\bf{h}$の成分$r$}
+	\begin{equation}
  (\partial{\bf h})_r =\sum_{i,j}^{}({\bf T}_r\odot\partial{\bf W})_{ji}
-\end{equation}
-%
+	\end{equation}
+ \end{block}
+
 \begin{itemize}
  \item $\odot$ : 成分ごとの積
+ \item $\sum_{}^{}$: 行列の全成分の和
 \end{itemize}
 
 \end{frame}
@@ -196,15 +204,16 @@ ${\bf W}$の多くの成分はもともと０であり．そうで
 \begin{frame}[fragile]\frametitle{勾配の計算}
 プーリング層には学習の対象となるパラメータはないので，勾配計算は必要ない
 が，さらに下層に伝えるデルタの逆伝播計算は必要である．
-プーリングの種類ごとに${\bf W}^{(l+1)}$を定め，式??を計算する
-%
-\begin{equation}
+
+\begin{block}{プーリング層の逆伝播計算計算}
+ \begin{equation}
  w_{ji}^{(l+1)} =
 	\begin{cases}
     \frac{1}{H^2} & (\text {if}  \  i\in{P_j}) \\
     0 & (\text{otherwise})
   \end{cases}
-\end{equation}
+ \end{equation}
+\end{block}
 
 \begin{itemize}
  \item $P_{j}$ : 層$l+1$のユニット$j$のサイズ$H \times H$の受容野
