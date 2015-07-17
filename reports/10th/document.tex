@@ -139,30 +139,31 @@ d}_n$によって表現すると，事後分布は次式のようになる．
 
 \subsection{識別に用意した画像}
 作成した識別器の性能を確認するために用意した画像をFig.\ref{224542_17Jul15}とFig.\ref{224550_17Jul15}に示す．Fig.\ref{224542_17Jul15}は学習したキャラクターしか含まれていないが，Fig.\ref{224550_17Jul15}では学習していないキャラクターしか含まれていない．従って，Fig.\ref{224542_17Jul15}ではキャラクター名それぞれに適切な名前が推定され，Fig.\ref{224550_17Jul15}では全て``etc''と推定されることが望ましい．
-\begin{figure}[ht]
+
+\begin{figure}[p]
  \centering
- \includegraphics[width=100mm, bb = 0 0 1920 1080]{fig/jpg/lovelive.jpg}
+ \includegraphics[width=140mm, bb = 0 0 1920 1080]{fig/jpg/lovelive.jpg}
  \caption{学習したキャラクターのみが含まれる画像 }
  \label{224542_17Jul15}
 \end{figure}
-\begin{figure}[ht]
+\begin{figure}[bt]
  \centering
- \includegraphics[scale=1.0]{fig/jpg/idolmaster.jpg}
+ \includegraphics[width=140mm]{fig/jpg/idolmaster.jpg}
  \caption{学習したキャラクターが含まれていない画像 }
  \label{224550_17Jul15}
 \end{figure}
 
 \subsection{識別結果}
 Fig.\ref{224542_17Jul15}とFig.\ref{224550_17Jul15}を識別した結果をそれぞれFig.\ref{224817_17Jul15}とFig.\ref{224823_17Jul15}に示す．Fig.\ref{224817_17Jul15}ではキャラクター名が全て適切に推定された．しかし，Fig.\ref{224823_17Jul15}では全て``etc''とならなければならないが一部のキャラクターで誤認識が発生した．誤認識が起こったキャラクターとそのラベルのキャラクターを比較すると髪の色が似ているなどの特徴があることが分かった．
-\begin{figure}[ht]
+\begin{figure}[bt]
  \centering
- \includegraphics[scale = 1.0]{fig/jpg/result_lovelive.jpg}
+ \includegraphics[width=140mm]{fig/jpg/result_lovelive.jpg}
  \caption{Fig.\ref{224542_17Jul15}の認識結果 }
  \label{224817_17Jul15}
 \end{figure}
-\begin{figure}[ht]
+\begin{figure}[bt]
  \centering
- \includegraphics[scale = 1.0]{fig/jpg/result_idolmaster.jpg}
+ \includegraphics[width=140mm]{fig/jpg/result_idolmaster.jpg}
  \caption{Fig.\ref{224550_17Jul15}の認識結果 }
  \label{224823_17Jul15}
 \end{figure}
