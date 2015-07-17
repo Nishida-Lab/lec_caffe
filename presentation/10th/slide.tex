@@ -169,82 +169,52 @@
 \end{frame}
 
 %%%% ogata %%%%
-\begin{frame}[fragile]\frametitle{勾配の計算}
-% 層$l$のデルタを$\delta^{(l)}$とし，全結合層に対する勾配計算の式を
-% 形式的に適応したときの層の重み${\bf W}={\bf W}^{(l)}$の勾配
-
- \begin{block}{層$l$の重みの勾配}
-  \begin{equation}
-  \partial{\bf W}= {\bf \delta}^{(l)}{\bf z}^{{(l-1)}^\top}
-  \end{equation}
+\begin{frame}[fragile]\frametitle{誤差関数}
+ \begin{block}{caffe}
+ 多クラス分類：ソフトマックス関数\\
+ 誤差関数：交差エントロピー
  \end{block}
+ 
+ \begin{exampleblock}{事後分布}
+  \begin{equation}
+   p({\bf d}|{\bf x}) = \prod_{k=1}^{K}p(C_k|{\bf x})^{d_k}
+  \end{equation}
+ \end{exampleblock}
 
  \begin{itemize}
-	\item ${\bf \delta}^{(l)}$: 層$l$のデルタ
-	\item ${\bf z}^{(l-1)}$: $l-1$層からの出力
+	\item ${\bf d}$ : 目標出力
+	\item ${\bf x}$ : 入力
+	\item $C_k$ : 正解クラスの組($k=1,...,K$) 
  \end{itemize}
 
-${\bf W}$の多くの成分はもともと0であり．そうで
-ない成分も重み共有により同じ変数(フィルタの係数)に対応する．そこでフィ
-ルタの係数$\bf{h}$についての勾配$\partial{\bf h}$に変形する必要がある．
+\end{frame}
 
- \begin{block}{フィルタ係数についての勾配成分}
-	\begin{equation}
- (\partial{\bf h})_r =\sum_{i,j}^{}({\bf T}_r\odot\partial{\bf W})_{ji}
-	\end{equation}
- \end{block}
+\begin{frame}[fragile]\frametitle{誤差関数}
+ 
+ \begin{exampleblock}{訓練データに対する{\bf w}の尤度}
+  \begin{equation}
+    L({\bf w})=\prod_{n=1}^{N}p({\bf x}_n|{\bf x}_n;{\bf
+	w})=\prod_{n=1}^{N}\prod_{k=1}^{K}p(C_k|{\bf
+	x})^{d_{nk}}=\prod_{n=1}^{N}\prod_{k=1}^{K}(y_k({\bf x};{\bf w}))^{d_{nk}}
+  \end{equation}
+ \end{exampleblock}
+ 
+ \begin{itemize}
+	\item 訓練データ : ${({\bf x}_n|{\bf d}_n)}(n=1,...,N)$
+	\item {\bf w} : ネットワークのパラメータを成分に持つベクトル
+ \end{itemize}
+ 
+この尤度の対数とって符号を反転した次の式を誤差関数として用いる．
 
-\begin{itemize}
- \item $\odot$ : 成分ごとの積
- \item $\sum_{}^{}$: 行列の全成分の和
-\end{itemize}
+ \begin{exampleblock}{交差エントロピー}
+  \begin{equation}
+   E({\bf w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log
+  \end{equation}
+ \end{exampleblock}
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{勾配の計算}
-プーリング層には学習の対象となるパラメータはないので，勾配計算は必要ない
-が，さらに下層に伝えるデルタの逆伝播計算は必要である．
-
-\begin{block}{平均プーリング層の逆伝播計算}
- \begin{equation}
- w_{ji}^{(l+1)} =
-	\begin{cases}
-    \frac{1}{H^2} & (\text {if}  \  i\in{P_j}) \\
-    0 & (\text{otherwise})
-  \end{cases}
- \end{equation}
-\end{block}
-
-\begin{itemize}
- \item $P_{j}$ : 層$l+1$のユニット$j$のサイズ$H \times H$の受容野
- \item 順伝播時のプーリングの結果により重みが変化する
- \item 逆伝播計算では最大値を返したユニットにデルタがそのまま伝えられる
-\end{itemize}
-
-\end{frame}
-% %%%% プーリング 1 %%%%
-% \begin{frame}[fragile]\frametitle{プーリング}
-% \begin{block}{プーリング}
-% プーリング層は通常，畳み込み層の直後に設置され，プーリング層は畳み込み層で抽出された特徴の位置
-% 感度を低下させる働きがある．
-% \end{block}
-% サイズ$W \times W \times K$の入力画像上で画素$(i,j)$を中心とする$H\times H$の正方領域とり，この中に含まれる画素の集合を$P_{ij}$で表す．$P_{ij}$内の画素についてチャネル$k$ごとに独立に，$H^2$個ある画素値を使って1つの画素値$u_{ijk}$を求める．
-
-% \begin{itemize}
-%  \item 最大プーリング(max pooling)
-% 	   \begin{eqnarray}
-% 		u_{ijk} = \max_{(p,q) \in P_{ij}} z_{pqk}
-% 	   \end{eqnarray}
-%  \item 平均プーリング(average pooling)
-% 	   \begin{eqnarray}
-% 		u_{ijk} = \frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}} z_{pq}
-% 	   \end{eqnarray}
-
-% \end{itemize}
-
-% \end{frame}
-
-% %%%% 学習パラメータの設定 1 %%%%
+%%%%% 学習パラメータの設定 1 %%%%
 \begin{frame}[fragile]\frametitle{学習パラメータの設定}
 学習を行う上で必要なパラメータについて説明する．\\この設定が記述されているファイルはcifar10\_quick\_solver.prototxtである．
 
