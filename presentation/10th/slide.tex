@@ -104,14 +104,14 @@
 \lstset{style=mystyle}
 
 %%%%
-\title[略タイトル]{第9回　知能システム学特論レポート}%[略タイトル]{タイトル}
+\title[略タイトル]{第10回　知能システム学特論レポート}%[略タイトル]{タイトル}
 \author[NishidaLab]{
 15344203 & 有田 裕太 \\
 15344206 & 緒形 裕太 \\
 15344209 & 株丹 亮 \\
 12104125 & 宮本 和 }%[略名前]{名前}
 \institute[NishidaLab]{西田研究室，計算力学研究室}%[略所属]{所属}
-\date{2015年\ 7月\ 16日}%日付
+\date{2015年\ 7月\ 21日}%日付
 
 \begin{document}
 
@@ -138,245 +138,123 @@
 \end{exampleblock}
 \end{frame}
 
-%%%%勾配の計算%%%%
-\begin{frame}[fragile]\frametitle{勾配の計算}
-
- \begin{block}{畳み込み層の計算式}
-  \begin{equation}
-   u^{(l)} = W^{(l)} u^{(l-1)} + b^{(l)}
-  \end{equation}
-  \begin{equation}
-   z^{(l)} = f^{(l)} (u)
-  \end{equation}
- \end{block}
-
- \begin{itemize}
-  \item 逆伝播の計算も多層パーセプトロンのときと基本的に同じ
-  \item 同じフィルタの係数が何度も現れてしまう
- \end{itemize}
-
- \begin{block}{重みの計算式}
-  \begin{equation}
-   W_{ji} = t_{ji}^{T} h
-  \end{equation}
- \end{block}
-
- \begin{itemize}
-  \item $h$：フィルタの係数$h_{pqkm}$を適当な順に並べたベクトル
-  \item $t_{ji}$：$h$と同じ長さで，$h$との内積が重み$w_{ji}$を与えるベクトル
- \end{itemize}
-
-\end{frame}
-
-%%%% ogata %%%%
-\begin{frame}[fragile]\frametitle{勾配の計算}
-% 層$l$のデルタを$\delta^{(l)}$とし，全結合層に対する勾配計算の式を
-% 形式的に適応したときの層の重み${\bf W}={\bf W}^{(l)}$の勾配
-
- \begin{block}{層$l$の重みの勾配}
-  \begin{equation}
-  \partial{\bf W}= {\bf \delta}^{(l)}{\bf z}^{{(l-1)}^\top}
-  \end{equation}
- \end{block}
-
- \begin{itemize}
-	\item ${\bf \delta}^{(l)}$: 層$l$のデルタ
-	\item ${\bf z}^{(l-1)}$: $l-1$層からの出力
- \end{itemize}
-
-${\bf W}$の多くの成分はもともと0であり．そうで
-ない成分も重み共有により同じ変数(フィルタの係数)に対応する．そこでフィ
-ルタの係数$\bf{h}$についての勾配$\partial{\bf h}$に変形する必要がある．
-
- \begin{block}{フィルタ係数についての勾配成分}
-	\begin{equation}
- (\partial{\bf h})_r =\sum_{i,j}^{}({\bf T}_r\odot\partial{\bf W})_{ji}
-	\end{equation}
- \end{block}
-
-\begin{itemize}
- \item $\odot$ : 成分ごとの積
- \item $\sum_{}^{}$: 行列の全成分の和
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{勾配の計算}
-プーリング層には学習の対象となるパラメータはないので，勾配計算は必要ない
-が，さらに下層に伝えるデルタの逆伝播計算は必要である．
-
-\begin{block}{平均プーリング層の逆伝播計算}
- \begin{equation}
- w_{ji}^{(l+1)} =
-	\begin{cases}
-    \frac{1}{H^2} & (\text {if}  \  i\in{P_j}) \\
-    0 & (\text{otherwise})
-  \end{cases}
- \end{equation}
-\end{block}
-
-\begin{itemize}
- \item $P_{j}$ : 層$l+1$のユニット$j$のサイズ$H \times H$の受容野
- \item 順伝播時のプーリングの結果により重みが変化する
- \item 逆伝播計算では最大値を返したユニットにデルタがそのまま伝えられる
-\end{itemize}
-
-\end{frame}
-% %%%% プーリング 1 %%%%
-% \begin{frame}[fragile]\frametitle{プーリング}
-% \begin{block}{プーリング}
-% プーリング層は通常，畳み込み層の直後に設置され，プーリング層は畳み込み層で抽出された特徴の位置
-% 感度を低下させる働きがある．
-% \end{block}
-% サイズ$W \times W \times K$の入力画像上で画素$(i,j)$を中心とする$H\times H$の正方領域とり，この中に含まれる画素の集合を$P_{ij}$で表す．$P_{ij}$内の画素についてチャネル$k$ごとに独立に，$H^2$個ある画素値を使って1つの画素値$u_{ijk}$を求める．
-
-% \begin{itemize}
-%  \item 最大プーリング(max pooling)
-% 	   \begin{eqnarray}
-% 		u_{ijk} = \max_{(p,q) \in P_{ij}} z_{pqk}
-% 	   \end{eqnarray}
-%  \item 平均プーリング(average pooling)
-% 	   \begin{eqnarray}
-% 		u_{ijk} = \frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}} z_{pq}
-% 	   \end{eqnarray}
-
-% \end{itemize}
-
-% \end{frame}
-
-% %%%% 学習パラメータの設定 1 %%%%
-\begin{frame}[fragile]\frametitle{学習パラメータの設定}
-学習を行う上で必要なパラメータについて説明する．\\この設定が記述されているファイルはcifar10\_quick\_solver.prototxtである．
-
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, firstnumber=1, numbers=left, breaklines=true]
-net: "examples/cifar10/cifar10_quick_train_test.prototxt"
-test_iter: 100
-test_interval: 500
-base_lr: 0.0001
-momentum: 0.9
-weight_decay: 0.004
-lr_policy: "fixed"
-display: 100
-max_iter: 4000
-snapshot: 4000
-snapshot_prefix: "examples/cifar10/cifar10_quick"
-solver_mode: GPU
-\end{lstlisting}
-\begin{exampleblock}{単位[batch]の定義}
-教師データを一度にいくつ処理するか（バッチサイズ）を決定し，これを1[batch]とする．
-\end{exampleblock}
-\end{frame}
-
-% %%%% 学習パラメータの設定 2 %%%%
-\begin{frame}[fragile]\frametitle{学習パラメータの設定}
-各項目の意味を以下に示す．
-\begin{description}
-  \item[net :]学習用ネットワーク定義ファイルを指定する．
-  \item[test\_iter :]学習中の正答率評価を1回行うのに使う評価セットの\\データ数をバッチ数で指定．
-  \item[test\_interval :]テストデータから正答率評価を行う間隔をバッチ数で指定．
-  \item[base\_lr,\ momentum,\ weight\_decay,\ lr\_policy :]学習率に関する設定．
-  \item[display :]学習中のステータスを出力する回数をバッチ数で指定．
-  \item[max\_iter :]学習の計算を最大どれだけ続けるかを訓練データの\\バッチ数で指定．
-  \item[snapshot,\ snapshot\_prefix :]学習の途中経過を保存する間隔と場所を指定．
-  \item[solver\_mode :]学習をCPUのみ，あるいはGPUを用いるかを指定．
-\end{description}
-\end{frame}
-
-
-
-%%%% Caffeで学習を行うまでの流れ %%%%
-\begin{frame}\frametitle{学習データの用意}
-\begin{figure}[t]
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{eri} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/eri.png} \\
-  \text{1908枚}
- \end{minipage}
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{hanayo} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/hanayo.png}\\
-  \text{2220枚}
- \end{minipage}
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{honoka} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/honoka.png}\\
-  \text{2733枚}
- \end{minipage}
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{kotori} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/kotori.png}\\
-  \text{1722枚}
- \end{minipage}
-\end{figure}
-\begin{figure}[t]
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{maki} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/maki.png}\\
-  \text{1874枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{niko} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/niko.png}\\
-  \text{1910枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{nozomi} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/nozomi.png}\\
-  \text{1489枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{rin} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/rin.png} \\
-  \text{2425枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{umi} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/umi.png}\\
-  \text{1703枚}
- \end{minipage}
- \end{figure}
-他に負例(etc)として7001枚の画像($200\times200\times3$)を用意
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{学習}
- 今回はネットワークモデルにcifar10のモデルを用いて学習を行った．
-\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single, tabsize=2,showtabs,firstnumber=1, numbers=left, breaklines=true]
-build/tools/caffe train --solver examples/cifar10/cifar10_quick_solver.prototxt
-\end{lstlisting}
-\begin{exampleblock}{cifar10\_quick.prototxt}
- 畳込み層３層，プーリング層３層，全結合層２層，活性化関数はSoftmax関数を用いている．
-\end{exampleblock}
-\begin{itemize}
- \item test\_iter : 100
- \item max\_iter : 4000
- \item batch\_size : 100
- \item solver\_mode : CPU
-\end{itemize}
-\end{frame}
-
+%%%%前回のグラフ%%%%
 \begin{frame}[fragile]\frametitle{学習結果}
 \begin{figure}[ht]
  \centering
  \includegraphics[scale=1.0]{fig/eps/result_train_test_graph.eps}
  \caption{損失関数の値と精度 }
+\end{figure}
+\end{frame}
+
+%%%% ogata %%%%
+\begin{frame}[fragile]\frametitle{誤差関数}
+ \begin{block}{caffe}
+ 多クラス分類：ソフトマックス関数\\
+ 誤差関数：交差エントロピー
+ \end{block}
+ 
+ \begin{exampleblock}{事後分布}
+  \begin{equation}
+   p({\bf d}|{\bf x}) = \prod_{k=1}^{K}p(C_k|{\bf x})^{d_k}
+  \end{equation}
+ \end{exampleblock}
+
+ \begin{itemize}
+	\item ${\bf d}$ : 目標出力
+	\item ${\bf x}$ : 入力
+	\item $C_k$ : 正解クラスの組($k=1,...,K$) 
+ \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{誤差関数}
+ 
+ \begin{exampleblock}{訓練データに対する{\bf w}の尤度}
+  \begin{equation}
+    L({\bf w})=\prod_{n=1}^{N}p({\bf x}_n|{\bf x}_n;{\bf
+	w})=\prod_{n=1}^{N}\prod_{k=1}^{K}p(C_k|{\bf
+	x})^{d_{nk}}=\prod_{n=1}^{N}\prod_{k=1}^{K}(y_k({\bf x};{\bf w}))^{d_{nk}}
+  \end{equation}
+ \end{exampleblock}
+ 
+ \begin{itemize}
+	\item 訓練データ : ${({\bf x}_n|{\bf d}_n)}(n=1,...,N)$
+	\item {\bf w} : ネットワークのパラメータを成分に持つベクトル
+ \end{itemize}
+ 
+この尤度の対数とって符号を反転した次の式を誤差関数として用いる．
+
+ \begin{exampleblock}{交差エントロピー}
+  \begin{equation}
+   E({\bf w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log
+  \end{equation}
+ \end{exampleblock}
+
+\end{frame}
+
+
+
+%%%% Caffeで識別 %%%%
+\begin{frame}\frametitle{caffeを使った識別}
+前回の発表で説明した識別器を用いて実際に識別してみる．
+
+\begin{figure}[t]
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \text{ラブライブ！} \\
+  \centering
+  \includegraphics[width=50mm]{./fig/jpg/lovelive.jpg} \\
+  \text{登録されている}
+  \text{アニメキャラクターの画像}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \text{アイドルマスター} \\
+  \centering
+  \includegraphics[width=50mm]{./fig/jpg/idolmaster.jpg}\\
+  \text{登録されていない}
+  \text{アニメキャラクターの画像}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
+%%%% Caffeで識別結果1 %%%%
+\begin{frame}\frametitle{caffeを使った識別結果}
+
+\begin{figure}[t]
+  \centering
+  \text{ラブライブ！} \\
+  \centering
+  \includegraphics[width=100mm]{./fig/jpg/result_lovelive.jpg} \\
+  \text{登録されている}
+  \text{アニメキャラクターの画像}
+\end{figure}
+\end{frame}
+
+%%%% Caffeで識別結果2 %%%%
+\begin{frame}\frametitle{caffeを使った識別結果}
+
+\begin{figure}[t]
+  \centering
+  \text{アイドルマスター} \\
+  \centering
+  \includegraphics[width=100mm]{./fig/jpg/result_idolmaster.jpg} \\
+  \text{登録されていない}
+  \text{アニメキャラクターの画像}
+\end{figure}
+\end{frame}
+
+%%%% Caffeで識別結果3 %%%%
+\begin{frame}\frametitle{caffeを使った識別結果}
+
+\begin{figure}[t]
+  \centering
+  \text{真のラベルとの比較} \\
+  \centering
+  \includegraphics[width=100mm]{./fig/jpg/result_idol_compare.jpg} \\
+  \text{登録されていない}
+  \text{アニメキャラクターの画像}
 \end{figure}
 \end{frame}
 
@@ -389,7 +267,7 @@ CNNの詳細な調査
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミング}
-学習された識別器を用いて実際に識別をしてみる
+学習画像を追加したり、パラメータを変更してみる
 \end{exampleblock}
 \end{frame}
 
