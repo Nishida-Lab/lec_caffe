@@ -195,80 +195,55 @@
 
 
 
-%%%% Caffeで学習を行うまでの流れ %%%%
-\begin{frame}\frametitle{学習データの用意}
+%%%% Caffeで識別 %%%%
+\begin{frame}\frametitle{caffeを使った識別}
+前回の発表で説明した識別器を用いて実際に識別してみる．
+
 \begin{figure}[t]
- \begin{minipage}{0.2\hsize}
+ \begin{minipage}{0.45\hsize}
   \centering
-  \text{eri} \\
+  \text{ラブライブ！} \\
   \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/eri.png} \\
-  \text{1908枚}
+  \includegraphics[width=50mm]{./fig/jpg/lovelive.jpg} \\
+  \text{登録されている}
+  \text{アニメキャラクターの画像}
  \end{minipage}
- \begin{minipage}{0.2\hsize}
+ \begin{minipage}{0.45\hsize}
   \centering
-  \text{hanayo} \\
+  \text{アイドルマスター} \\
   \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/hanayo.png}\\
-  \text{2220枚}
- \end{minipage}
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{honoka} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/honoka.png}\\
-  \text{2733枚}
- \end{minipage}
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{kotori} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/kotori.png}\\
-  \text{1722枚}
+  \includegraphics[width=50mm]{./fig/jpg/idolmaster.jpg}\\
+  \text{登録されていない}
+  \text{アニメキャラクターの画像}
  \end{minipage}
 \end{figure}
-\begin{figure}[t]
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{maki} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/maki.png}\\
-  \text{1874枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{niko} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/niko.png}\\
-  \text{1910枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{nozomi} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/nozomi.png}\\
-  \text{1489枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{rin} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/rin.png} \\
-  \text{2425枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{umi} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/umi.png}\\
-  \text{1703枚}
- \end{minipage}
- \end{figure}
-他に負例(etc)として7001枚の画像($200\times200\times3$)を用意
 \end{frame}
 
+%%%% Caffeで識別結果1 %%%%
+\begin{frame}\frametitle{caffeを使った識別結果}
 
+\begin{figure}[t]
+  \centering
+  \text{ラブライブ！} \\
+  \centering
+  \includegraphics[width=100mm]{./fig/jpg/result_lovelive.jpg} \\
+  \text{登録されている}
+  \text{アニメキャラクターの画像}
+\end{figure}
+\end{frame}
 
+%%%% Caffeで識別結果2 %%%%
+\begin{frame}\frametitle{caffeを使った結果}
+
+\begin{figure}[t]
+  \centering
+  \text{アイドルマスター} \\
+  \centering
+  \includegraphics[width=100mm]{./fig/jpg/result_idolmaster.jpg} \\
+  \text{登録されていない}
+  \text{アニメキャラクターの画像}
+\end{figure}
+\end{frame}
 
 %%%% 今後の課題 %%%%
 \begin{frame}\frametitle{今後の課題}
@@ -279,7 +254,7 @@ CNNの詳細な調査
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミング}
-学習された識別器を用いて実際に識別をしてみる
+学習画像を追加したり、パラメータを変更してみる
 \end{exampleblock}
 \end{frame}
 
