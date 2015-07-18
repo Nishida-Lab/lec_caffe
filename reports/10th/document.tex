@@ -136,6 +136,33 @@ d}_n$によって表現すると，事後分布は次式のようになる．
 
 
 \section{プログラミング}
+\subsection{Pythonを用いたキャラクター識別用プログラムの作成}
+前回までで独自のデータセットを用意して学習を行い，モデルを作成した．
+Caffeでは.caffemodelという形式で保存され，これとCNNがどのように構成されているのかを表す.prototxtファイルを用いてキャラクター識別用プログラムを作成した．
+これらを扱うためのCaffeが提供しているAPIと，画像を読み込んだり入力した画像に識別結果を書き込むためにOpenCVを用いた．
+
+まず.caffemodelと.prototxtを読み込む部分のプログラムを示す．mean\_arrayは平均画像等が格納されているリストである．
+raw\_scaleは読み込まれた入力画像をどのスケールにするかを指定する．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, language=Python, frame=single, firstnumber=1, numbers=left, breaklines=true]
+classifier = caffe.Classifier(
+        'cifar10_full.prototxt',
+        'cifar10_full_150717_iter_60000.caffemodel',
+        mean=mean_array,
+        raw_scale=255)
+\end{lstlisting}
+
+そして，入力画像からOpenCVで実装されているHaar-like特徴量から人の顔を抽出し，これをCaffeの識別器にかける．この部分のプログラムを示す．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, language=Python, frame=single, firstnumber=1, numbers=left, breaklines=true]
+predictions = classifier.predict([image], oversample=False)
+pred = np.argmax(predictions)
+\end{lstlisting}
+
+classifier.predict()で抽出された顔が各ラベルの人の顔である確率がリターンされる．
+そしてnumpyの関数を用いてnp.argmax()によって確率がリストとして代入されたpredictionsから最も高い確率のラベルを取得する．
+この値と関連付けられたキャラクター名と確率の値をOpenCVのAPIを用いて入力画像に書き込む．
+これをHaar-like特徴量から取得された顔の数だけ繰り返す．
 
 \subsection{識別に用意した画像}
 作成した識別器の性能を確認するために用意した画像をFig.\ref{224542_17Jul15}とFig.\ref{224550_17Jul15}に示す．Fig.\ref{224542_17Jul15}は学習したキャラクターしか含まれていないが，Fig.\ref{224550_17Jul15}では学習していないキャラクターしか含まれていない．従って，Fig.\ref{224542_17Jul15}ではキャラクター名それぞれに適切な名前が推定され，Fig.\ref{224550_17Jul15}では全て``etc''と推定されることが望ましい．

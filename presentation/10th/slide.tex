@@ -153,7 +153,7 @@
  多クラス分類：ソフトマックス関数\\
  誤差関数：交差エントロピー
  \end{block}
- 
+
  \begin{exampleblock}{事後分布}
   \begin{equation}
    p({\bf d}|{\bf x}) = \prod_{k=1}^{K}p(C_k|{\bf x})^{d_k}
@@ -163,13 +163,13 @@
  \begin{itemize}
 	\item ${\bf d}$ : 目標出力
 	\item ${\bf x}$ : 入力
-	\item $C_k$ : 正解クラスの組($k=1,...,K$) 
+	\item $C_k$ : 正解クラスの組($k=1,...,K$)
  \end{itemize}
 
 \end{frame}
 
 \begin{frame}[fragile]\frametitle{誤差関数}
- 
+
  \begin{exampleblock}{訓練データに対する{\bf w}の尤度}
   \begin{equation}
     L({\bf w})=\prod_{n=1}^{N}p({\bf x}_n|{\bf x}_n;{\bf
@@ -177,12 +177,12 @@
 	x})^{d_{nk}}=\prod_{n=1}^{N}\prod_{k=1}^{K}(y_k({\bf x};{\bf w}))^{d_{nk}}
   \end{equation}
  \end{exampleblock}
- 
+
  \begin{itemize}
 	\item 訓練データ : ${({\bf x}_n|{\bf d}_n)}(n=1,...,N)$
 	\item {\bf w} : ネットワークのパラメータを成分に持つベクトル
  \end{itemize}
- 
+
 この尤度の対数とって符号を反転した次の式を誤差関数として用いる．
 
  \begin{exampleblock}{交差エントロピー}
@@ -193,6 +193,38 @@
 
 \end{frame}
 
+%%%% Pythonを用いたキャラクター識別用プログラムの作成 %%%%
+\begin{frame}\frametitle{Pythonを用いたキャラクター識別用プログラムの作成}
+\begin{itemize}
+  \item 前回までで独自のデータセットを用意して学習を行い，モデルを作成した．
+  \item Caffeでは.caffemodelという形式で保存され，これとCNNがどのように構成されているのかを表す.prototxtファイルを用いてキャラクター識別用プログラムを作成した．
+  \item これらを扱うためのCaffeが提供しているAPIと，\\画像を読み込んだり入力した画像に識別結果を書き込むためにOpenCVを用いた．
+\end{itemize}
+\end{frame}
+
+%%%% Pythonを用いたキャラクター識別用プログラムの作成 %%%%
+\begin{frame}[fragile]\frametitle{Pythonを用いたキャラクター識別用プログラムの作成}
+まず.caffemodelと.prototxtを読み込む部分のプログラムを示す．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, language=Python, frame=single, firstnumber=1, numbers=left, breaklines=true]
+classifier = caffe.Classifier(
+        'cifar10_full.prototxt',
+        'cifar10_full_150717_iter_60000.caffemodel',
+        mean=mean_array,
+        raw_scale=255)
+\end{lstlisting}
+そして，入力画像からOpenCVで実装されているHaar-like特徴量から人の顔を抽出し，これをCaffeの識別器にかける．
+\\この部分のプログラムを示す．
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, language=Python, frame=single, firstnumber=1, numbers=left, breaklines=true]
+predictions = classifier.predict([image], oversample=False)
+pred = np.argmax(predictions)
+\end{lstlisting}
+
+classifier.predict()で抽出された顔が各ラベルの人の顔である確率がリターンされる．
+この値と関連付けられたキャラクター名をOpenCVのAPIを用いて入力画像に書き込む．
+これをHaar-like特徴量から取得された顔の数だけ繰り返す．
+\end{frame}
 
 
 %%%% Caffeで識別 %%%%
