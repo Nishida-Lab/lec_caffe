@@ -244,6 +244,112 @@
 最終的なテストデータに関する精度は$88\%$と通常のCifar10のモデルを使用した場合よりも精度向上が見られた．
 \end{block}
 \end{frame}
+
+\begin{frame}\frametitle{学習データの強化}
+\begin{figure}[t]
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{eri} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/eri.png} \\
+  \text{1908枚}\\
+  \text{$\rightarrow$ 2816枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{hanayo} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/hanayo.png}\\
+  \text{2220枚}\\
+  \text{$\rightarrow$ 3393枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{honoka} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/honoka.png}\\
+  \text{2733枚}\\
+  \text{$\rightarrow$ 4176枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{kotori} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/kotori.png}\\
+  \text{1722枚}\\
+  \text{$\rightarrow$ 2725枚}
+ \end{minipage}
+\end{figure}
+\begin{figure}[t]
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{maki} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/maki.png}\\
+  \text{1874枚}\\
+  \text{$\rightarrow$ 2768枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{niko} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/niko.png}\\
+  \text{1910枚}\\
+  \text{$\rightarrow$ 3063枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{nozomi} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/nozomi.png}\\
+  \text{1489枚}\\
+  \text{$\rightarrow$ 2144枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{rin} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/rin.png} \\
+  \text{2425枚}\\
+  \text{$\rightarrow$ 3545枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{umi} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/umi.png}\\
+  \text{1703枚}\\
+  \text{$\rightarrow$ 2409枚}
+ \end{minipage}
+ \end{figure}
+負例(etc)7001枚$\rightarrow$9344枚
+\end{frame}
+
+\begin{frame}\frametitle{学習結果}
+ \begin{figure}[ht]
+ \centering
+ \includegraphics[scale=1.0]{fig/eps/result_train_test_lovelive_full.eps}
+ \caption{損失関数の値と精度}
+\end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{識別結果の比較}
+ \begin{figure}[t]
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/jpg/lovelive-quick-result.jpg} \\
+  \text{前回までの識別器を用いた}
+  \text{識別結果}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/jpg/lovelive-full-result.jpg}\\
+  \text{データセットを増やした}
+  \text{識別器を用いた識別結果}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
 %%%% Caffeで識別 %%%%
 % \begin{frame}\frametitle{caffeを使った識別}
 % 前回の発表で説明した識別器を用いて実際に識別してみる．
