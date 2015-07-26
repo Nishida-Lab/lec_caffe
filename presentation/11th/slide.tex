@@ -134,6 +134,7 @@
 \vspace{1cm}
 \begin{exampleblock}{プログラミングの進捗}
 学習器のパラメータ設定について\\
+アニメキャラクター認識時の中間層出力\\
 データセットを作成し，学習を行った結果
 \end{exampleblock}
 \end{frame}
@@ -145,52 +146,6 @@
 %  \includegraphics[scale=1.0]{fig/eps/result_train_test_graph.eps}
 %  \caption{損失関数の値と精度 }
 % \end{figure}
-\end{frame}
-
-%%%% ogata %%%%
-\begin{frame}[fragile]\frametitle{誤差関数}
- \begin{block}{caffe}
- 多クラス分類：ソフトマックス関数\\
- 誤差関数：交差エントロピー
- \end{block}
-
- \begin{exampleblock}{事後分布}
-  \begin{equation}
-   p({\bf d}|{\bf x}) = \prod_{k=1}^{K}p(C_k|{\bf x})^{d_k}
-  \end{equation}
- \end{exampleblock}
-
- \begin{itemize}
-	\item ${\bf d}$ : 目標出力
-	\item ${\bf x}$ : 入力
-	\item $C_k$ : 正解クラスの組($k=1,...,K$)
- \end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{誤差関数}
-
- \begin{exampleblock}{訓練データに対する{\bf w}の尤度}
-  \begin{equation}
-    L({\bf w})=\prod_{n=1}^{N}p({\bf x}_n|{\bf x}_n;{\bf
-	w})=\prod_{n=1}^{N}\prod_{k=1}^{K}p(C_k|{\bf
-	x})^{d_{nk}}=\prod_{n=1}^{N}\prod_{k=1}^{K}(y_k({\bf x};{\bf w}))^{d_{nk}}
-  \end{equation}
- \end{exampleblock}
-
- \begin{itemize}
-	\item 訓練データ : ${({\bf x}_n|{\bf d}_n)}(n=1,...,N)$
-	\item {\bf w} : ネットワークのパラメータを成分に持つベクトル
- \end{itemize}
-
-この尤度の対数とって符号を反転した次の式を誤差関数として用いる．
-
- \begin{exampleblock}{交差エントロピー}
-  \begin{equation}
-   E({\bf w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log
-  \end{equation}
- \end{exampleblock}
-
 \end{frame}
 
 %%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
@@ -243,6 +198,38 @@
 過学習を抑えることに成功．
 最終的なテストデータに関する精度は$88\%$と通常のCifar10のモデルを使用した場合よりも精度向上が見られた．
 \end{block}
+\end{frame}
+
+\begin{frame}\frametitle{アニメキャラクター認識時の中間層出力}
+.prototexファイルを用いてキャラクター識別を行うため，$32\times 32$のサイ
+ズに入力画像を変換する
+\begin{figure}[t]
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/eri.eps} \\
+  \text{認識する画像}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/inputeri.eps}\\
+  \text{入力画像}
+ \end{minipage}
+\end{figure}
+ 
+\end{frame}
+\begin{frame}\frametitle{アニメキャラクター認識時の中間層出力}
+\begin{figure}[t]
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/filtereri.eps} \\
+  \text{フィルタ}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/outputeri.eps}\\
+  \text{第一層目の出力}
+ \end{minipage}
+\end{figure}
 \end{frame}
 
 \begin{frame}\frametitle{学習データの強化}
