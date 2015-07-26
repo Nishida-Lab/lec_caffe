@@ -140,12 +140,44 @@
 \end{frame}
 
 %%%%前回のグラフ%%%%
-\begin{frame}[fragile]\frametitle{学習結果}
+%\begin{frame}[fragile]\frametitle{学習結果}
 % \begin{figure}[ht]
 %  \centering
 %  \includegraphics[scale=1.0]{fig/eps/result_train_test_graph.eps}
 %  \caption{損失関数の値と精度 }
 % \end{figure}
+%\end{frame}
+
+
+
+%%%%Dropout%%%%
+\begin{frame}\frametitle{ドロップアウト}
+ \begin{block}{ドロップアウト}
+  多層ネットワークのユニットを確率的に選別して学習する方法
+ \end{block}
+
+ \begin{itemize}
+  \item 自由度を下げて，過適合を避ける
+  \item 複数のネットワークの平均をとり，精度が向上する
+ \end{itemize}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=7cm]{./fig/eps/dropout1.eps}
+  \end{center}
+  \caption{ドロップアウト（p=0.5程度）}
+  \label{fig: ドロップアウト（p=0.5程度）}
+\end{figure}
+ 〜学習時〜
+ \begin{itemize}
+  \item 中間層の各層と入力層のユニットをある割合pでランダムに選出し，それ以外は無効化 → いつも通り最適化
+ \end{itemize}
+
+ 〜学習終了後〜
+ \begin{itemize}
+  \item 無効化された層の出力をp倍し，すべてのユニットで逆伝播計算
+ \end{itemize}
+
 \end{frame}
 
 %%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
@@ -215,7 +247,7 @@
   \text{入力画像}
  \end{minipage}
 \end{figure}
- 
+
 \end{frame}
 \begin{frame}\frametitle{アニメキャラクター認識時の中間層出力}
 \begin{figure}[t]
