@@ -155,29 +155,26 @@
  \begin{block}{ドロップアウト}
   多層ネットワークのユニットを確率的に選別して学習する方法
  \end{block}
-
  \begin{itemize}
   \item 自由度を下げて，過適合を避ける
   \item 複数のネットワークの平均をとり，精度が向上する
  \end{itemize}
-
 \begin{figure}[tb]
   \begin{center}
     \includegraphics[clip,width=7cm]{./fig/eps/dropout1.eps}
   \end{center}
-  \caption{ドロップアウト（p=0.5程度）}
+  \caption{ドロップアウト（$p$=0.5程度）}
   \label{fig: ドロップアウト（p=0.5程度）}
 \end{figure}
+\vspace{-0.5cm}
  〜学習時〜
  \begin{itemize}
-  \item 中間層の各層と入力層のユニットをある割合pでランダムに選出し，それ以外は無効化 → いつも通り最適化
+  \item 中間層の各層と入力層のユニットをある割合$p$でランダムに選出し，それ以外は無効化 $\rightarrow$ いつも通り最適化
  \end{itemize}
-
  〜学習終了後〜
  \begin{itemize}
-  \item 無効化された層の出力をp倍し，すべてのユニットで逆伝播計算
+  \item 無効化された層の出力を$p$倍し，すべてのユニットで逆伝播計算
  \end{itemize}
-
 \end{frame}
 
 %%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
