@@ -134,63 +134,47 @@
 \vspace{1cm}
 \begin{exampleblock}{プログラミングの進捗}
 学習器のパラメータ設定について\\
+アニメキャラクター認識時の中間層出力\\
 データセットを作成し，学習を行った結果
 \end{exampleblock}
 \end{frame}
 
 %%%%前回のグラフ%%%%
-\begin{frame}[fragile]\frametitle{学習結果}
+%\begin{frame}[fragile]\frametitle{学習結果}
 % \begin{figure}[ht]
 %  \centering
 %  \includegraphics[scale=1.0]{fig/eps/result_train_test_graph.eps}
 %  \caption{損失関数の値と精度 }
 % \end{figure}
-\end{frame}
+%\end{frame}
 
-%%%% ogata %%%%
-\begin{frame}[fragile]\frametitle{誤差関数}
- \begin{block}{caffe}
- 多クラス分類：ソフトマックス関数\\
- 誤差関数：交差エントロピー
+
+
+%%%%Dropout%%%%
+\begin{frame}\frametitle{ドロップアウト}
+ \begin{block}{ドロップアウト}
+  多層ネットワークのユニットを確率的に選別して学習する方法
  \end{block}
-
- \begin{exampleblock}{事後分布}
-  \begin{equation}
-   p({\bf d}|{\bf x}) = \prod_{k=1}^{K}p(C_k|{\bf x})^{d_k}
-  \end{equation}
- \end{exampleblock}
-
  \begin{itemize}
-	\item ${\bf d}$ : 目標出力
-	\item ${\bf x}$ : 入力
-	\item $C_k$ : 正解クラスの組($k=1,...,K$)
+  \item 自由度を下げて，過適合を避ける
+  \item 複数のネットワークの平均をとり，精度が向上する
  \end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{誤差関数}
-
- \begin{exampleblock}{訓練データに対する{\bf w}の尤度}
-  \begin{equation}
-    L({\bf w})=\prod_{n=1}^{N}p({\bf x}_n|{\bf x}_n;{\bf
-	w})=\prod_{n=1}^{N}\prod_{k=1}^{K}p(C_k|{\bf
-	x})^{d_{nk}}=\prod_{n=1}^{N}\prod_{k=1}^{K}(y_k({\bf x};{\bf w}))^{d_{nk}}
-  \end{equation}
- \end{exampleblock}
-
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=7cm]{./fig/eps/dropout1.eps}
+  \end{center}
+  \caption{ドロップアウト（$p$=0.5程度）}
+  \label{fig: ドロップアウト（p=0.5程度）}
+\end{figure}
+\vspace{-0.5cm}
+ 〜学習時〜
  \begin{itemize}
-	\item 訓練データ : ${({\bf x}_n|{\bf d}_n)}(n=1,...,N)$
-	\item {\bf w} : ネットワークのパラメータを成分に持つベクトル
+  \item 中間層の各層と入力層のユニットをある割合$p$でランダムに選出し，それ以外は無効化 $\rightarrow$ いつも通り最適化
  \end{itemize}
-
-この尤度の対数とって符号を反転した次の式を誤差関数として用いる．
-
- \begin{exampleblock}{交差エントロピー}
-  \begin{equation}
-   E({\bf w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log
-  \end{equation}
- \end{exampleblock}
-
+ 〜学習終了後〜
+ \begin{itemize}
+  \item 無効化された層の出力を$p$倍し，すべてのユニットで逆伝播計算
+ \end{itemize}
 \end{frame}
 
 %%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
@@ -244,6 +228,144 @@
 最終的なテストデータに関する精度は$88\%$と通常のCifar10のモデルを使用した場合よりも精度向上が見られた．
 \end{block}
 \end{frame}
+
+\begin{frame}\frametitle{アニメキャラクター認識時の中間層出力}
+.prototexファイルを用いてキャラクター識別を行うため，$32\times 32$のサイ
+ズに入力画像を変換する
+\begin{figure}[t]
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/eri.eps} \\
+  \text{認識する画像}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/inputeri.eps}\\
+  \text{入力画像}
+ \end{minipage}
+\end{figure}
+
+\end{frame}
+\begin{frame}\frametitle{アニメキャラクター認識時の中間層出力}
+\begin{figure}[t]
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/filtereri.eps} \\
+  \text{フィルタ}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/outputeri.eps}\\
+  \text{第一層目の出力}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{学習データの強化}
+\begin{figure}[t]
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{eri} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/eri.png} \\
+  \text{1908枚}\\
+  \text{$\rightarrow$ 2816枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{hanayo} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/hanayo.png}\\
+  \text{2220枚}\\
+  \text{$\rightarrow$ 3393枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{honoka} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/honoka.png}\\
+  \text{2733枚}\\
+  \text{$\rightarrow$ 4176枚}
+ \end{minipage}
+ \begin{minipage}{0.2\hsize}
+  \centering
+  \text{kotori} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/kotori.png}\\
+  \text{1722枚}\\
+  \text{$\rightarrow$ 2725枚}
+ \end{minipage}
+\end{figure}
+\begin{figure}[t]
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{maki} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/maki.png}\\
+  \text{1874枚}\\
+  \text{$\rightarrow$ 2768枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{niko} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/niko.png}\\
+  \text{1910枚}\\
+  \text{$\rightarrow$ 3063枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{nozomi} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/nozomi.png}\\
+  \text{1489枚}\\
+  \text{$\rightarrow$ 2144枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{rin} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/rin.png} \\
+  \text{2425枚}\\
+  \text{$\rightarrow$ 3545枚}
+ \end{minipage}
+ \begin{minipage}{0.17\hsize}
+  \centering
+  \text{umi} \\
+  \centering
+  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/umi.png}\\
+  \text{1703枚}\\
+  \text{$\rightarrow$ 2409枚}
+ \end{minipage}
+ \end{figure}
+負例(etc)7001枚$\rightarrow$9344枚
+\end{frame}
+
+\begin{frame}\frametitle{学習結果}
+ \begin{figure}[ht]
+ \centering
+ \includegraphics[scale=1.0]{fig/eps/result_train_test_lovelive_full.eps}
+ \caption{損失関数の値と精度}
+\end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{識別結果の比較}
+ \begin{figure}[t]
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm,bb=0 0 996 870]{./fig/jpg/lovelive-quick-result.jpg} \\
+  \text{前回までの識別器を用いた}
+  \text{識別結果}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm,bb=0 0 996 870]{./fig/jpg/lovelive-full-result.jpg}\\
+  \text{データセットを増やした}
+  \text{識別器を用いた識別結果}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
 %%%% Caffeで識別 %%%%
 % \begin{frame}\frametitle{caffeを使った識別}
 % 前回の発表で説明した識別器を用いて実際に識別してみる．
@@ -308,17 +430,17 @@
 % \end{frame}
 
 %%%% 今後の課題 %%%%
-\begin{frame}\frametitle{今後の課題}
+% \begin{frame}\frametitle{今後の課題}
 
-\begin{block}{理論研究}
-CNNの詳細な調査
-\end{block}
+% \begin{block}{理論研究}
+% CNNの詳細な調査
+% \end{block}
 
-\vspace{1cm}
-\begin{exampleblock}{プログラミング}
-学習画像を追加したり、パラメータを変更してみる
-\end{exampleblock}
-\end{frame}
+% \vspace{1cm}
+% \begin{exampleblock}{プログラミング}
+% 学習画像を追加したり、パラメータを変更してみる
+% \end{exampleblock}
+% \end{frame}
 
 % \begin{figure}[t]
 %  \begin{minipage}{0.3\hsize}
