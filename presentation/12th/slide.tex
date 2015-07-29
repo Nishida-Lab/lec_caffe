@@ -186,21 +186,6 @@
 \end{frame}
 
 
-%%%% 3.4.4 %%%%
-\begin{frame}[fragile]\frametitle{多クラス分類}
-\begin{block}{多クラス分類}
-入力$\vec{x}$に応じて有限個のクラスに分類する問題である．活性化関数にはソフトマックス関数(softmax function)が良く用いられる．
-\end{block}
-\begin{exampleblock}{活性化関数と評価関数}
-\begin{eqnarray}
- y_{k} \equiv z_{k}^{(L)}= \frac{\exp(u_{k}^{(L)})}{\sum^{K}_{j=1}\exp(u_{j}^{(L)})} \\
-E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\label{000700_27Jun15}
-\end{eqnarray}
-\vspace{0.1cm}
-\end{exampleblock}
-\end{frame}
-
-
 %%%% 畳込みニューラルネットワークの構造 1 %%%%
 \begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
 
@@ -239,41 +224,6 @@ E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\la
 
 \end{frame}
 
-%%%% 畳込みニューラルネットワーク %%%%
-\begin{frame}[fragile]\frametitle{畳込みニューラルネットワーク}
-\begin{itemize}
-\item 畳込みニューラルネットワークは主に画像認識に応用される順伝播型ニューラルネットワークである．
-\item 順伝播型ネットワークは隣接層間のユニットの全てが結合されているのに対し，畳込みニューラルネットワークでは特定のユニットのみが結合を持つ特別な構造を持つ．
-\item 神経細胞はその受容野に刺激が入った場合にのみ反応し、受容野の外側にいくら刺激を与えても、細胞を発火しないという特徴を持つ．
-\end{itemize}
-
-\begin{figure}[htbp]
-  \begin{center}
-   \includegraphics[width=40mm]{fig/eps/network.eps}
-  \end{center}
-  \caption{畳込みニューラルネットワーク}
-  \label{fig:FNN}
-\end{figure}
-\end{frame}
-
-
-%%%% 畳み込みの働き %%%%
-\begin{frame}[fragile]\frametitle{畳み込みの働き}
-
-\begin{figure}[t]
- \centering
- \includegraphics[scale=0.3]{fig/eps/convlena.eps}
-  \caption{画像の畳み込みの例}
-  \label{fig:画像の畳み込みの例}
-\end{figure}
-\begin{itemize}
- \item 入力画像：227×227
- \item フィルタ：11×11
- \item 出力画像：55×55
- \item ストライド：4
-\end{itemize}
-
-\end{frame}
 
 
 %%%% 畳み込み層%%%%
@@ -325,37 +275,13 @@ E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\la
 プーリング層は通常，畳み込み層の直後に設置され，プーリング層は畳み込み層で抽出された特徴の位置
 感度を低下させる働きがある．
 \end{block}
-サイズ$W \times W \times K$の入力画像上で画素$(i,j)$を中心とする$H\times H$の正方領域とり，この中に含まれる画素の集合を$P_{ij}$で表す．$P_{ij}$内の画素についてチャネル$k$ごとに独立に，$H^2$個ある画素値を使って1つの画素値$u_{ijk}$を求める．
-
-\begin{itemize}
- \item 最大プーリング(max pooling)
-	   \begin{eqnarray}
-		u_{ijk} = \max_{(p,q) \in P_{ij}} z_{pqk}
-	   \end{eqnarray}
- \item 平均プーリング(average pooling)
-	   \begin{eqnarray}
-		u_{ijk} = \frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}} z_{pq}
-	   \end{eqnarray}
-
-\end{itemize}
-
-\end{frame}
-
-%%%% プーリング 2 %%%%
-\begin{frame}[fragile]\frametitle{プーリング}
+サイズ$W \times W \times K$の入力画像上で画素$(i,j)$を中心とする$H\times H$の正方領域$P_{ij}$をとり，$P_{ij}$内の画素についてチャネル$k$ごとに独立に，$H^2$個ある画素値を使って1つの画素値$u_{ijk}$を求める． 最大プーリングや平均プーリングなどがある．
 \begin{figure}[bt]
  \centering
  \includegraphics[scale = 0.6]{fig/eps/pooling.eps}
  \caption{プーリングの例．プーリングサイズ$3\times 3$，ストライド$s=3$，ゼロパディングで最大プーリングを行った場合}
 \end{figure}
-平均プーリングや最大プーリングなどのプーリングを含む一般性を持った表記として，次のLpプーリング(Lp pooling)がある．
-\begin{eqnarray}
- u_{ijk} = \left(\frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}}z^{P}_{pqk}\right)^{\frac{1}{P}}
-\end{eqnarray}
-$P=1$で平均プーリング，$P=\infty$で最大プーリングが表現できる．
-
 \end{frame}
-
 
 % %%%% 局所コントラスト正規化%%%%
 % \begin{frame}[fragile]\frametitle{局所コントラスト正規化}
@@ -573,6 +499,38 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 \end{itemize}
 \end{frame}
 
+\begin{frame}\frametitle{学習結果（ラブライブ！）}
+ \begin{figure}[ht]
+ \centering
+ \includegraphics[scale=0.85]{fig/eps/result_train_test_lovelive_full.eps}
+ \caption{損失関数の値と精度}
+\end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{識別結果}
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[clip,width=7cm, bb = 0 0 624 626]{./fig/png/lovelive_classify.png}\\
+  \end{center}
+  \text{識別器を用いた識別結果}
+\end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{アニメキャラクター認識時の中間層出力}
+\begin{figure}[t]
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/filtereri.eps} \\
+  \text{フィルタ}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm]{./fig/eps/outputeri.eps}\\
+  \text{第一層目の出力}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
 \begin{frame}\frametitle{学習結果（少女時代）}
 ドロップアウトのユニットをCaffeの学習に取り込んだ結果
  \begin{figure}[ht]
@@ -593,54 +551,6 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 
 
 
-\begin{frame}\frametitle{学習結果（ラブライブ！）}
- \begin{figure}[ht]
- \centering
- \includegraphics[scale=0.85]{fig/eps/result_train_test_lovelive_full.eps}
- \caption{損失関数の値と精度}
-\end{figure}
-\end{frame}
-
-\begin{frame}\frametitle{識別結果}
-\begin{figure}[t]
-  \begin{center}
-    \includegraphics[clip,width=7cm, bb = 0 0 624 626]{./fig/png/lovelive_classify.png}\\
-  \end{center}
-  \text{識別器を用いた識別結果}
-\end{figure}
-\end{frame}
-
-\begin{frame}\frametitle{アニメキャラクター学習結果}
-.prototexファイルを用いてキャラクター識別を行うため，$32\times 32$のサイ
-ズに入力画像を変換する
-\begin{figure}[t]
- \begin{minipage}{0.45\hsize}
-  \centering
-  \includegraphics[width=50mm]{./fig/eps/eri.eps} \\
-  \text{認識する画像}
- \end{minipage}
- \begin{minipage}{0.45\hsize}
-  \centering
-  \includegraphics[width=50mm]{./fig/eps/inputeri.eps}\\
-  \text{入力画像}
- \end{minipage}
-\end{figure}
-
-\end{frame}
-\begin{frame}\frametitle{アニメキャラクター認識時の中間層出力}
-\begin{figure}[t]
- \begin{minipage}{0.45\hsize}
-  \centering
-  \includegraphics[width=50mm]{./fig/eps/filtereri.eps} \\
-  \text{フィルタ}
- \end{minipage}
- \begin{minipage}{0.45\hsize}
-  \centering
-  \includegraphics[width=50mm]{./fig/eps/outputeri.eps}\\
-  \text{第一層目の出力}
- \end{minipage}
-\end{figure}
-\end{frame}
 
 \begin{frame}\frametitle{学習結果（手書き文字認識）}
  \begin{figure}[ht]
@@ -658,6 +568,12 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
   \end{center}
   \text{識別器を用いた識別結果}
 \end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{DEMO}
+\centering
+\large{手書き文字認識アプリケーション}\\
+\large{動画に対する顔認識}
 \end{frame}
 
 % \begin{figure}[t]
