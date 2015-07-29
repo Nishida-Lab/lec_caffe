@@ -537,7 +537,41 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 % \end{block}
 % \end{frame}
 
-\begin{frame}\frametitle{アニメキャラクター認識時の中間層出力}
+\begin{frame}\frametitle{caffeによる学習と認識}
+\begin{itemize}
+\item アニメキャラクターの認識（ラブライブ！$\cdots$ 9人のキャラクター$+$etc）
+\item アイドルグループの顔認識（少女時代のメンバー$\cdots$ 9人$+$etc）
+\item 手書きひらがな文字認識（ひらがな48文字$+$濁音20文字$+$半濁音5文字$=$73文字）
+\end{itemize}
+\begin{figure}[t]
+ \begin{minipage}{0.3\hsize}
+  \centering
+  \includegraphics[width=30mm]{./fig/jpg/lovelive.jpg} \\
+  \text{ラブライブ！}
+ \end{minipage}
+ \begin{minipage}{0.3\hsize}
+  \centering
+  \includegraphics[width=40mm]{./fig/jpg/snsd.jpg}\\
+  \text{少女時代}
+ \end{minipage}
+ \begin{minipage}{0.3\hsize}
+  \centering
+  \includegraphics[width=20mm]{./fig/jpg/a.jpg}\\
+  \text{手書き文字}
+ \end{minipage}
+\end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{データセット}
+\begin{itemize}
+\item アニメキャラクターの認識\\
+	  各キャラクターに2500枚$\sim$4000枚と負例約9000枚
+\item アイドルグループの顔認識（少女時代のメンバー$\cdots$ 9人$+$etc）
+\item 手書きひらがな文字認識（ひらがな48文字$+$濁音20文字$+$半濁音5文字$=$73文字）
+\end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{アニメキャラクター学習結果}
 .prototexファイルを用いてキャラクター識別を行うため，$32\times 32$のサイ
 ズに入力画像を変換する
 \begin{figure}[t]
