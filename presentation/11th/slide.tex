@@ -128,14 +128,14 @@
 \begin{frame}\frametitle{進捗状況}
 
 \begin{block}{理論研究の進捗}
-畳込みニューラルネットワークの理論について
+\item ドロップアウトの理論について
 \end{block}
 
 \vspace{1cm}
 \begin{exampleblock}{プログラミングの進捗}
-学習器のパラメータ設定について\\
-アニメキャラクター認識時の中間層出力\\
-データセットを作成し，学習を行った結果
+\item Caffeで実装されているドロップアウトを試す
+\item アニメキャラクター画像認識時の中間層の出力
+\item データセットを増やした，学習パラメータの調整
 \end{exampleblock}
 \end{frame}
 
@@ -225,7 +225,7 @@
 \end{figure}
 \begin{block}{工夫の結果}
 過学習を抑えることに成功．
-最終的なテストデータに関する精度は$88\%$と通常のCifar10のモデルを使用した場合よりも精度向上が見られた．
+最終的なテストデータに関する精度は$83\%$と通常のCifar10のモデルを使用した場合よりも精度向上が見られた．
 \end{block}
 \end{frame}
 
@@ -353,13 +353,13 @@
  \begin{figure}[t]
  \begin{minipage}{0.45\hsize}
   \centering
-  \includegraphics[width=50mm]{./fig/jpg/lovelive-quick-result.jpg} \\
+  \includegraphics[width=50mm,bb=0 0 996 870]{./fig/jpg/lovelive-quick-result.jpg} \\
   \text{前回までの識別器を用いた}
   \text{識別結果}
  \end{minipage}
  \begin{minipage}{0.45\hsize}
   \centering
-  \includegraphics[width=50mm]{./fig/jpg/lovelive-full-result.jpg}\\
+  \includegraphics[width=50mm,bb=0 0 996 870]{./fig/jpg/lovelive-full-result.jpg}\\
   \text{データセットを増やした}
   \text{識別器を用いた識別結果}
  \end{minipage}
@@ -430,17 +430,17 @@
 % \end{frame}
 
 %%%% 今後の課題 %%%%
-\begin{frame}\frametitle{今後の課題}
+% \begin{frame}\frametitle{今後の課題}
 
-\begin{block}{理論研究}
-CNNの詳細な調査
-\end{block}
+% \begin{block}{理論研究}
+% CNNの詳細な調査
+% \end{block}
 
-\vspace{1cm}
-\begin{exampleblock}{プログラミング}
-学習画像を追加したり、パラメータを変更してみる
-\end{exampleblock}
-\end{frame}
+% \vspace{1cm}
+% \begin{exampleblock}{プログラミング}
+% 学習画像を追加したり、パラメータを変更してみる
+% \end{exampleblock}
+% \end{frame}
 
 % \begin{figure}[t]
 %  \begin{minipage}{0.3\hsize}
