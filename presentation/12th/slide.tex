@@ -566,8 +566,10 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 \begin{itemize}
 \item アニメキャラクターの認識\\
 	  各キャラクターに2500枚$\sim$4000枚と負例約9000枚
-\item アイドルグループの顔認識（少女時代のメンバー$\cdots$ 9人$+$etc）
-\item 手書きひらがな文字認識（ひらがな48文字$+$濁音20文字$+$半濁音5文字$=$73文字）
+\item アイドルグループの顔認識（少女時代のメンバー$\cdots$ 9人$+$etc）\\
+    各メンバーに1000枚$\sim$2500枚と負例約3500枚
+\item 手書きひらがな文字認識（ひらがな48文字$+$濁音20文字$+$半濁音5文字$=$73文字）\\
+    各文字に180枚
 \end{itemize}
 \end{frame}
 
@@ -603,87 +605,87 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 \end{figure}
 \end{frame}
 
-\begin{frame}\frametitle{学習データの強化}
-\begin{figure}[t]
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{eri} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/eri.png} \\
-  \text{1908枚}\\
-  \text{$\rightarrow$ 2816枚}
- \end{minipage}
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{hanayo} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/hanayo.png}\\
-  \text{2220枚}\\
-  \text{$\rightarrow$ 3393枚}
- \end{minipage}
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{honoka} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/honoka.png}\\
-  \text{2733枚}\\
-  \text{$\rightarrow$ 4176枚}
- \end{minipage}
- \begin{minipage}{0.2\hsize}
-  \centering
-  \text{kotori} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/kotori.png}\\
-  \text{1722枚}\\
-  \text{$\rightarrow$ 2725枚}
- \end{minipage}
-\end{figure}
-\begin{figure}[t]
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{maki} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/maki.png}\\
-  \text{1874枚}\\
-  \text{$\rightarrow$ 2768枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{niko} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/niko.png}\\
-  \text{1910枚}\\
-  \text{$\rightarrow$ 3063枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{nozomi} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/nozomi.png}\\
-  \text{1489枚}\\
-  \text{$\rightarrow$ 2144枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{rin} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/rin.png} \\
-  \text{2425枚}\\
-  \text{$\rightarrow$ 3545枚}
- \end{minipage}
- \begin{minipage}{0.17\hsize}
-  \centering
-  \text{umi} \\
-  \centering
-  \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/umi.png}\\
-  \text{1703枚}\\
-  \text{$\rightarrow$ 2409枚}
- \end{minipage}
- \end{figure}
-負例(etc)7001枚$\rightarrow$9344枚
-\end{frame}
+% \begin{frame}\frametitle{学習データの強化}
+% \begin{figure}[t]
+%  \begin{minipage}{0.2\hsize}
+%   \centering
+%   \text{eri} \\
+%   \centering
+%   \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/eri.png} \\
+%   \text{1908枚}\\
+%   \text{$\rightarrow$ 2816枚}
+%  \end{minipage}
+%  \begin{minipage}{0.2\hsize}
+%   \centering
+%   \text{hanayo} \\
+%   \centering
+%   \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/hanayo.png}\\
+%   \text{2220枚}\\
+%   \text{$\rightarrow$ 3393枚}
+%  \end{minipage}
+%  \begin{minipage}{0.2\hsize}
+%   \centering
+%   \text{honoka} \\
+%   \centering
+%   \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/honoka.png}\\
+%   \text{2733枚}\\
+%   \text{$\rightarrow$ 4176枚}
+%  \end{minipage}
+%  \begin{minipage}{0.2\hsize}
+%   \centering
+%   \text{kotori} \\
+%   \centering
+%   \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/kotori.png}\\
+%   \text{1722枚}\\
+%   \text{$\rightarrow$ 2725枚}
+%  \end{minipage}
+% \end{figure}
+% \begin{figure}[t]
+%  \begin{minipage}{0.17\hsize}
+%   \centering
+%   \text{maki} \\
+%   \centering
+%   \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/maki.png}\\
+%   \text{1874枚}\\
+%   \text{$\rightarrow$ 2768枚}
+%  \end{minipage}
+%  \begin{minipage}{0.17\hsize}
+%   \centering
+%   \text{niko} \\
+%   \centering
+%   \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/niko.png}\\
+%   \text{1910枚}\\
+%   \text{$\rightarrow$ 3063枚}
+%  \end{minipage}
+%  \begin{minipage}{0.17\hsize}
+%   \centering
+%   \text{nozomi} \\
+%   \centering
+%   \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/nozomi.png}\\
+%   \text{1489枚}\\
+%   \text{$\rightarrow$ 2144枚}
+%  \end{minipage}
+%  \begin{minipage}{0.17\hsize}
+%   \centering
+%   \text{rin} \\
+%   \centering
+%   \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/rin.png} \\
+%   \text{2425枚}\\
+%   \text{$\rightarrow$ 3545枚}
+%  \end{minipage}
+%  \begin{minipage}{0.17\hsize}
+%   \centering
+%   \text{umi} \\
+%   \centering
+%   \includegraphics[width=20mm,bb=0 0 200 200]{./fig/png/faces/umi.png}\\
+%   \text{1703枚}\\
+%   \text{$\rightarrow$ 2409枚}
+%  \end{minipage}
+%  \end{figure}
+% 負例(etc)7001枚$\rightarrow$9344枚
+% \end{frame}
 
-\begin{frame}\frametitle{学習結果}
+\begin{frame}\frametitle{学習結果（ラブライブ！）}
  \begin{figure}[ht]
  \centering
  \includegraphics[scale=1.0]{fig/eps/result_train_test_lovelive_full.eps}
@@ -691,24 +693,50 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 \end{figure}
 \end{frame}
 
-\begin{frame}\frametitle{識別結果の比較}
- \begin{figure}[t]
- \begin{minipage}{0.45\hsize}
-  \centering
-  \includegraphics[width=50mm]{./fig/jpg/lovelive-quick-result.jpg} \\
-  \text{前回までの識別器を用いた}
-  \text{識別結果}
- \end{minipage}
- \begin{minipage}{0.45\hsize}
-  \centering
-  \includegraphics[width=50mm]{./fig/jpg/lovelive-full-result.jpg}\\
-  \text{データセットを増やした}
+\begin{frame}\frametitle{識別結果}
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[clip,width=10cm, bb = 0 0 1500 1000]{./fig/jpg/yoona_sooyoung.jpg}\\
+  \end{center}
   \text{識別器を用いた識別結果}
- \end{minipage}
 \end{figure}
 \end{frame}
 
+\begin{frame}\frametitle{学習結果（少女時代）}
+ドロップアウトのユニットをCaffeの学習に取り込んだ結果
+ \begin{figure}[ht]
+ \centering
+ \includegraphics[scale=0.85]{fig/eps/result_dropout_test_graph_snsd.eps}
+ \caption{損失関数の値と精度}
+\end{figure}
+\end{frame}
 
+\begin{frame}\frametitle{識別結果}
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[clip,width=10cm, bb = 0 0 1500 1000]{./fig/jpg/yoona_sooyoung.jpg}\\
+  \end{center}
+  \text{識別器を用いた識別結果}
+\end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{学習結果（手書き文字認識）}
+ \begin{figure}[ht]
+ \centering
+ \includegraphics[scale=1]{fig/eps/result_train_test_tegaki_graph.eps}
+ \caption{損失関数の値と精度}
+\end{figure}
+\end{frame}
+
+\begin{frame}\frametitle{識別結果}
+手書き文字認識用の簡単なアプリケーションの作成
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics[clip,width=10cm, bb = 0 0 724 453]{./fig/png/tegaki_result.png}\\
+  \end{center}
+  \text{識別器を用いた識別結果}
+\end{figure}
+\end{frame}
 
 % \begin{figure}[t]
 %  \begin{minipage}{0.3\hsize}
