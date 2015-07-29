@@ -357,21 +357,21 @@ $P=1$で平均プーリング，$P=\infty$で最大プーリングが表現で�
 \end{frame}
 
 
-%%%% 局所コントラスト正規化%%%%
-\begin{frame}[fragile]\frametitle{局所コントラスト正規化}
+% %%%% 局所コントラスト正規化%%%%
+% \begin{frame}[fragile]\frametitle{局所コントラスト正規化}
 
- \begin{block}{局所コントラスト正規化}
- 画像の中から対象物を捉えるための、画像の濃淡を正規化する方法の一種
- \end{block}
+%  \begin{block}{局所コントラスト正規化}
+%  画像の中から対象物を捉えるための、画像の濃淡を正規化する方法の一種
+%  \end{block}
 
- \begin{itemize}
-  \item 1つの層だけでこの処理が可能
-  \item 畳み込みネットに組み込むことが可能
-  \item 層の重みは固定され,学習の対象となるパラメータはない
-  \item 減算正規化と除算正規化の２種類がある
+%  \begin{itemize}
+%   \item 1つの層だけでこの処理が可能
+%   \item 畳み込みネットに組み込むことが可能
+%   \item 層の重みは固定され,学習の対象となるパラメータはない
+%   \item 減算正規化と除算正規化の２種類がある
 
- \end{itemize}
-\end{frame}
+%  \end{itemize}
+% \end{frame}
 
 %%%%勾配の計算%%%%
 \begin{frame}[fragile]\frametitle{勾配の計算}
@@ -436,27 +436,27 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 
 \end{frame}
 
-\begin{frame}[fragile]\frametitle{勾配の計算}
-プーリング層には学習の対象となるパラメータはないので，勾配計算は必要ない
-が，さらに下層に伝えるデルタの逆伝播計算は必要である．
+% \begin{frame}[fragile]\frametitle{勾配の計算}
+% プーリング層には学習の対象となるパラメータはないので，勾配計算は必要ない
+% が，さらに下層に伝えるデルタの逆伝播計算は必要である．
 
-\begin{block}{平均プーリング層の逆伝播計算}
- \begin{equation}
- w_{ji}^{(l+1)} =
-	\begin{cases}
-    \frac{1}{H^2} & (\text {if}  \  i\in{P_j}) \\
-    0 & (\text{otherwise})
-  \end{cases}
- \end{equation}
-\end{block}
+% \begin{block}{平均プーリング層の逆伝播計算}
+%  \begin{equation}
+%  w_{ji}^{(l+1)} =
+% 	\begin{cases}
+%     \frac{1}{H^2} & (\text {if}  \  i\in{P_j}) \\
+%     0 & (\text{otherwise})
+%   \end{cases}
+%  \end{equation}
+% \end{block}
 
-\begin{itemize}
- \item $P_{j}$ : 層$l+1$のユニット$j$のサイズ$H \times H$の受容野
- \item 順伝播時のプーリングの結果により重みが変化する
- \item 逆伝播計算では最大値を返したユニットにデルタがそのまま伝えられる
-\end{itemize}
+% \begin{itemize}
+%  \item $P_{j}$ : 層$l+1$のユニット$j$のサイズ$H \times H$の受容野
+%  \item 順伝播時のプーリングの結果により重みが変化する
+%  \item 逆伝播計算では最大値を返したユニットにデルタがそのまま伝えられる
+% \end{itemize}
 
-\end{frame}
+% \end{frame}
 
 % %%%%Dropout%%%%
 % \begin{frame}\frametitle{ドロップアウト}
