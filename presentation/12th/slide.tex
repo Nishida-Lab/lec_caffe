@@ -176,11 +176,11 @@
 \centering
 \caption{問題の種別ごとの活性化関数と誤差関数}
 \label{000718_27Jun15}
-\begin{tabular}[bt]{|c|c|c|}\hline
- 問題の種別& 出力層の活性化関数&誤差関数 \\ \hline \hline
- 回帰&正接双曲線関数や恒等写像 & 二乗誤差 式\eqref{000645_27Jun15}\\
- 二値分類& ロジスティック関数& 式\eqref{000654_27Jun15}\\
- 多クラス分類& ソフトマックス関数& 交差エントロピー 式\eqref{000700_27Jun15}\\ \hline
+\begin{tabular}[bt]{|c|c|}\hline
+ 問題の種別 & 出力層の活性化関数 \\ \hline \hline
+ 回帰 & 正接双曲線関数や恒等写像\\
+ 二値分類 & ロジスティック関数\\
+ 多クラス分類 & ソフトマックス関数\\ \hline
 \end{tabular}
 \end{table}
 \end{frame}
@@ -198,25 +198,8 @@ E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\la
 \end{eqnarray}
 \vspace{0.1cm}
 \end{exampleblock}
-
 \end{frame}
 
-%%%% 畳込みニューラルネットワーク %%%%
-\begin{frame}[fragile]\frametitle{畳込みニューラルネットワーク}
-\begin{itemize}
-\item 畳込みニューラルネットワークは主に画像認識に応用される順伝播型ニューラルネットワークである．
-\item 順伝播型ネットワークは隣接層間のユニットの全てが結合されているのに対し，畳込みニューラルネットワークでは特定のユニットのみが結合を持つ特別な構造を持つ．
-\item 神経細胞はその受容野に刺激が入った場合にのみ反応し、受容野の外側にいくら刺激を与えても、細胞を発火しないという特徴を持つ．
-\end{itemize}
-
-\begin{figure}[htbp]
-  \begin{center}
-   \includegraphics[width=70mm]{fig/eps/network.eps}
-  \end{center}
-  \caption{畳込みニューラルネットワーク}
-  \label{fig:FNN}
-\end{figure}
-\end{frame}
 
 %%%% 畳込みニューラルネットワークの構造 1 %%%%
 \begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
@@ -235,7 +218,6 @@ E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\la
 \item 目的がクラス分類であれば最終的な出力はソフトマックスを適用する
 \end{itemize}
 \end{frame}
-
 
 
 %%%% 畳込みニューラルネットワークの構造 2 %%%%
@@ -257,6 +239,22 @@ E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\la
 
 \end{frame}
 
+%%%% 畳込みニューラルネットワーク %%%%
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワーク}
+\begin{itemize}
+\item 畳込みニューラルネットワークは主に画像認識に応用される順伝播型ニューラルネットワークである．
+\item 順伝播型ネットワークは隣接層間のユニットの全てが結合されているのに対し，畳込みニューラルネットワークでは特定のユニットのみが結合を持つ特別な構造を持つ．
+\item 神経細胞はその受容野に刺激が入った場合にのみ反応し、受容野の外側にいくら刺激を与えても、細胞を発火しないという特徴を持つ．
+\end{itemize}
+
+\begin{figure}[htbp]
+  \begin{center}
+   \includegraphics[width=40mm]{fig/eps/network.eps}
+  \end{center}
+  \caption{畳込みニューラルネットワーク}
+  \label{fig:FNN}
+\end{figure}
+\end{frame}
 
 
 %%%% 畳み込みの働き %%%%
@@ -298,28 +296,27 @@ E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\la
 \end{frame}
 
 %%%% ogata %%%%
+% \begin{frame}[fragile]\frametitle{畳み込み層}
+% \begin{block}{活性化関数への適応}
+% \begin{equation}
+%  z_{ijm}=f(u_{ijm})
+% \end{equation}
+% \end{block}
 
-\begin{frame}[fragile]\frametitle{畳み込み層}
-\begin{block}{活性化関数への適応}
-\begin{equation}
- z_{ijm}=f(u_{ijm})
-\end{equation}
-\end{block}
+% 式(1), (2)は，層間に特別な構造を持つ単層ネットワークとして表現できる.
+% \begin{itemize}
+%  \item 入力のユニット数：$W\times W\times K$
+%  \item 出力のユニット数：$W\times W\times M$
+% \end{itemize}
 
-式(1), (2)は，層間に特別な構造を持つ単層ネットワークとして表現できる.
-\begin{itemize}
- \item 入力のユニット数：$W\times W\times K$
- \item 出力のユニット数：$W\times W\times M$
-\end{itemize}
-
-畳み込みの計算の局所性により，出力層のユニット１つは入力層の
-$W\times W\times K$個のユニットとのみ結合する．
-\begin{itemize}
- \item その時の重みがフィルタ係数$h_{pqkm}$
- \item 同一チャネルの全ユニットで共有されるため\\
-			 重み共有(weigh sharing, weight tying)と呼ばれる
-\end{itemize}
-\end{frame}
+% 畳み込みの計算の局所性により，出力層のユニット１つは入力層の
+% $W\times W\times K$個のユニットとのみ結合する．
+% \begin{itemize}
+%  \item その時の重みがフィルタ係数$h_{pqkm}$
+%  \item 同一チャネルの全ユニットで共有されるため\\
+% 			 重み共有(weigh sharing, weight tying)と呼ばれる
+% \end{itemize}
+% \end{frame}
 
 
 %%%% プーリング 1 %%%%
@@ -358,6 +355,7 @@ $W\times W\times K$個のユニットとのみ結合する．
 $P=1$で平均プーリング，$P=\infty$で最大プーリングが表現できる．
 
 \end{frame}
+
 
 %%%% 局所コントラスト正規化%%%%
 \begin{frame}[fragile]\frametitle{局所コントラスト正規化}
@@ -460,84 +458,84 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 
 \end{frame}
 
-%%%%Dropout%%%%
-\begin{frame}\frametitle{ドロップアウト}
- \begin{block}{ドロップアウト}
-  多層ネットワークのユニットを確率的に選別して学習する方法
- \end{block}
- \begin{itemize}
-  \item 自由度を下げて，過適合を避ける
-  \item 複数のネットワークの平均をとり，精度が向上する
- \end{itemize}
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=7cm]{./fig/eps/dropout1.eps}
-  \end{center}
-  \caption{ドロップアウト（$p$=0.5程度）}
-  \label{fig: ドロップアウト（p=0.5程度）}
-\end{figure}
-\vspace{-0.5cm}
- 〜学習時〜
- \begin{itemize}
-  \item 中間層の各層と入力層のユニットをある割合$p$でランダムに選出し，それ以外は無効化 $\rightarrow$ いつも通り最適化
- \end{itemize}
- 〜学習終了後〜
- \begin{itemize}
-  \item 無効化された層の出力を$p$倍し，すべてのユニットで逆伝播計算
- \end{itemize}
-\end{frame}
+% %%%%Dropout%%%%
+% \begin{frame}\frametitle{ドロップアウト}
+%  \begin{block}{ドロップアウト}
+%   多層ネットワークのユニットを確率的に選別して学習する方法
+%  \end{block}
+%  \begin{itemize}
+%   \item 自由度を下げて，過適合を避ける
+%   \item 複数のネットワークの平均をとり，精度が向上する
+%  \end{itemize}
+% \begin{figure}[tb]
+%   \begin{center}
+%     \includegraphics[clip,width=7cm]{./fig/eps/dropout1.eps}
+%   \end{center}
+%   \caption{ドロップアウト（$p$=0.5程度）}
+%   \label{fig: ドロップアウト（p=0.5程度）}
+% \end{figure}
+% \vspace{-0.5cm}
+%  〜学習時〜
+%  \begin{itemize}
+%   \item 中間層の各層と入力層のユニットをある割合$p$でランダムに選出し，それ以外は無効化 $\rightarrow$ いつも通り最適化
+%  \end{itemize}
+%  〜学習終了後〜
+%  \begin{itemize}
+%   \item 無効化された層の出力を$p$倍し，すべてのユニットで逆伝播計算
+%  \end{itemize}
+% \end{frame}
 
-%%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
-\begin{frame}\frametitle{Caffeでドロップアウトを試す}
-\begin{itemize}
-  \item 今まではアニメーション（ラブライブ！）を切り出して学習を行って，性能評価を行った．
-  \item ラブライブ！のキャラクター識別は短い学習時間で高い学習精度を得ることができた．
-  \item 学習の結果を解析したが，過学習の傾向は見られなかった．
-  \item そこで次の課題として実在する人物の識別を行うことを目指し，韓国の女性アイドルグループ（少女時代）のメンバーの識別を試みた．
-\end{itemize}
-\begin{figure}[htbp]
-  \begin{center}
-    \includegraphics[clip,width=9cm,bb=0 0 1654 849]{./fig/jpg/snsd.jpg}
-  \end{center}
-\end{figure}
+% %%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
+% \begin{frame}\frametitle{Caffeでドロップアウトを試す}
+% \begin{itemize}
+%   \item 今まではアニメーション（ラブライブ！）を切り出して学習を行って，性能評価を行った．
+%   \item ラブライブ！のキャラクター識別は短い学習時間で高い学習精度を得ることができた．
+%   \item 学習の結果を解析したが，過学習の傾向は見られなかった．
+%   \item そこで次の課題として実在する人物の識別を行うことを目指し，韓国の女性アイドルグループ（少女時代）のメンバーの識別を試みた．
+% \end{itemize}
+% \begin{figure}[htbp]
+%   \begin{center}
+%     \includegraphics[clip,width=9cm,bb=0 0 1654 849]{./fig/jpg/snsd.jpg}
+%   \end{center}
+% \end{figure}
 
-\end{frame}
+% \end{frame}
 
-%%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
-\begin{frame}[fragile]\frametitle{Caffeでドロップアウトを試す}
-ラブライブ！の学習でも用いた通常のCifar10のモデルで学習を行った結果
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=8cm]{./fig/eps/overtraining.eps}
-  \end{center}
-  \caption{通常のCifar10のモデルで実行した学習結果}
-\end{figure}
-\end{frame}
+% %%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
+% \begin{frame}[fragile]\frametitle{Caffeでドロップアウトを試す}
+% ラブライブ！の学習でも用いた通常のCifar10のモデルで学習を行った結果
+% \begin{figure}[tb]
+%   \begin{center}
+%     \includegraphics[clip,width=8cm]{./fig/eps/overtraining.eps}
+%   \end{center}
+%   \caption{通常のCifar10のモデルで実行した学習結果}
+% \end{figure}
+% \end{frame}
 
-%%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
-\begin{frame}[fragile]\frametitle{Caffeでドロップアウトを試す}
-\begin{alertblock}{結果}
-訓練データに関しての精度は$1$に収束しているが，テストデータに関しては精度は$77\%$程度である．
-\end{alertblock}
-\begin{itemize}
-  \item 理論に関する発表で説明したドロップアウトを導入し，過学習の回避を試みる．
-  \item ドロップアウトのユニットを追加するだけでなく，\\過学習が起きる原因となる学習データの不足が考えられるため単純にデータセットを増やす以外の方法を模索．
-  \item 入力として使うデータセットをランダムにクロップし入力データとして学習を行う方法と，入力データをランダムで左右反転させる方法
-\end{itemize}
-\end{frame}
+% %%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
+% \begin{frame}[fragile]\frametitle{Caffeでドロップアウトを試す}
+% \begin{alertblock}{結果}
+% 訓練データに関しての精度は$1$に収束しているが，テストデータに関しては精度は$77\%$程度である．
+% \end{alertblock}
+% \begin{itemize}
+%   \item 理論に関する発表で説明したドロップアウトを導入し，過学習の回避を試みる．
+%   \item ドロップアウトのユニットを追加するだけでなく，\\過学習が起きる原因となる学習データの不足が考えられるため単純にデータセットを増やす以外の方法を模索．
+%   \item 入力として使うデータセットをランダムにクロップし入力データとして学習を行う方法と，入力データをランダムで左右反転させる方法
+% \end{itemize}
+% \end{frame}
 
-%%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
-\begin{frame}[fragile]\frametitle{Caffeでドロップアウトを試す}
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=8cm]{./fig/eps/dropout.eps}
-  \end{center}
-\end{figure}
-\begin{block}{工夫の結果}
-過学習を抑えることに成功．
-最終的なテストデータに関する精度は$88\%$と通常のCifar10のモデルを使用した場合よりも精度向上が見られた．
-\end{block}
-\end{frame}
+% %%%% 少女時代のメンバー識別でドロップアウトを試す %%%%
+% \begin{frame}[fragile]\frametitle{Caffeでドロップアウトを試す}
+% \begin{figure}[tb]
+%   \begin{center}
+%     \includegraphics[clip,width=8cm]{./fig/eps/dropout.eps}
+%   \end{center}
+% \end{figure}
+% \begin{block}{工夫の結果}
+% 過学習を抑えることに成功．
+% 最終的なテストデータに関する精度は$88\%$と通常のCifar10のモデルを使用した場合よりも精度向上が見られた．
+% \end{block}
+% \end{frame}
 
 \begin{frame}\frametitle{アニメキャラクター認識時の中間層出力}
 .prototexファイルを用いてキャラクター識別を行うため，$32\times 32$のサイ
