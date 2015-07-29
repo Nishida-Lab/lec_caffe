@@ -488,7 +488,7 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 \end{figure}
 \end{frame}
 
-\begin{frame}\frametitle{データセット}
+\begin{frame}\frametitle{データセットと学習器}
 \begin{itemize}
 \item アニメキャラクターの認識\\
 	  各キャラクターに2500枚$\sim$4000枚と負例約9000枚
@@ -497,6 +497,11 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 \item 手書きひらがな文字認識（ひらがな48文字$+$濁音20文字$+$半濁音5文字$=$73文字）\\
     各文字に180枚
 \end{itemize}
+学習器にはcifar10のフルソルバーを使用した．
+\begin{figure}[ht]
+ \centering
+ \includegraphics[scale=0.7]{fig/eps/cifar10Net_structure.eps}
+\end{figure}
 \end{frame}
 
 \begin{frame}\frametitle{学習結果（ラブライブ！）}
