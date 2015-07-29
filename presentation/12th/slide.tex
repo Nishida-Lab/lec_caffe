@@ -2,6 +2,7 @@
 %%%% 和文用 %%%%%
 \usepackage{bxdpx-beamer}
 \usepackage{pxjahyper}
+\usepackage[dvipdfmx]{movie15_dvipdfmx}
 \usepackage{minijs}%和文用
 \usepackage{listings,jlisting} % プログラムの表示用
 \usepackage{type1cm}
@@ -491,7 +492,7 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 \begin{frame}\frametitle{データセットと学習器}
 \begin{itemize}
 \item アニメキャラクターの認識\\
-	  各キャラクターに2500枚$\sim$4000枚と負例約9000枚
+    各キャラクターに2500枚$\sim$4000枚と負例約9000枚
 \item アイドルグループの顔認識（少女時代のメンバー$\cdots$ 9人$+$etc）\\
     各メンバーに1000枚$\sim$2500枚と負例約3500枚
 \item 手書きひらがな文字認識（ひらがな48文字$+$濁音20文字$+$半濁音5文字$=$73文字）\\
@@ -598,8 +599,9 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 
 \begin{frame}\frametitle{DEMO}
 \centering
-\large{手書き文字認識アプリケーション}\\
-\large{動画に対する顔認識}
+\includemovie[label=tegaki, controls, repeat, poster, startat=frame:1]{10mm}{10mm}{movie/tegaki.mp4}\large{手書き文字認識アプリケーション}\\
+
+\includemovie[label=lovelive, controls, repeat, poster, startat=frame:1]{10mm}{10mm}{movie/tegaki.mp4}\large{動画に対する顔認識}
 \end{frame}
 
 % \begin{figure}[t]
