@@ -538,10 +538,10 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 
 \begin{frame}\frametitle{学習結果（少女時代）}
 ドロップアウトのユニットをCaffeの学習に取り込んだ結果
- \begin{figure}[ht]
- \centering
- \includegraphics[scale=0.85]{fig/eps/result_dropout_test_graph_snsd.eps}
- \caption{損失関数の値と精度}
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.85]{fig/eps/result_dropout_test_graph_snsd.eps}
+  \caption{損失関数の値と精度}
 \end{figure}
 \end{frame}
 
@@ -554,7 +554,24 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 \end{figure}
 \end{frame}
 
-
+\begin{frame}\frametitle{認識時の中間層出力}
+\begin{figure}[t]
+  \centering
+  \includegraphics[clip,width=1.5cm, bb = 0 0 128 128]{./fig/png/jessica_0010.jpg}
+\end{figure}
+\begin{figure}[t]
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm, bb = 0 0 588 586]{./fig/png/snsd_filter.png} \\
+  \text{フィルタ}
+ \end{minipage}
+ \begin{minipage}{0.45\hsize}
+  \centering
+  \includegraphics[width=50mm, bb = 0 0 594 590]{./fig/png/snsd_output.png}\\
+  \text{第一層目の出力}
+ \end{minipage}
+\end{figure}
+\end{frame}
 
 
 \begin{frame}\frametitle{学習結果（手書き文字認識）}
@@ -571,7 +588,7 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
   \begin{center}
     \includegraphics[clip,width=10cm, bb = 0 0 724 453]{./fig/png/tegaki_result.png}\\
   \end{center}
-  \text{識別器を用いた識別結果}
+  \caption{Caffeを使った手書き文字認識}
 \end{figure}
 \end{frame}
 
