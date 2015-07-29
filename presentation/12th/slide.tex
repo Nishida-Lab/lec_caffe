@@ -193,7 +193,7 @@
 \end{block}
 \begin{exampleblock}{活性化関数と評価関数}
 \begin{eqnarray}
- y_{k} \equiv z_{k}^{(L)}= \frac{\exp(u_{k}^{(L)})}{\sum^{K}_{j=1}exp(u_{j}^{(L)})} \\
+ y_{k} \equiv z_{k}^{(L)}= \frac{\exp(u_{k}^{(L)})}{\sum^{K}_{j=1}\exp(u_{j}^{(L)})} \\
 E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\label{000700_27Jun15}
 \end{eqnarray}
 \vspace{0.1cm}
@@ -236,16 +236,7 @@ E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\la
 \end{itemize}
 \end{frame}
 
-%%%% 畳込みニューラルネットワークの構造 2 %%%%
-\begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
 
-\begin{figure}[tb]
-  \begin{center}
-    \includegraphics[clip,width=12cm]{fig/eps/conv_pool.eps}
-  \end{center}
-  % \caption{畳込みニューラルネットワークの構造}
-\end{figure}
-\end{frame}
 
 %%%% 畳込みニューラルネットワークの構造 2 %%%%
 \begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
@@ -266,18 +257,7 @@ E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\la
 
 \end{frame}
 
-%%%% 畳み込みの定義 %%%%
-\begin{frame}[fragile]\frametitle{畳み込みの定義}
-\begin{itemize}
-\item 濃淡地を各画素に格納したグレースケールの画像を考える.
-\item 画像サイズを$W\times W$画素,画素をインデックス$(i,j)(i = 0,\cdots,W-1, j = 0,\cdots,W-1)$画素値を$x_{ij}$,\\
-フィルタサイズを$H\times H$画素,画素をインデックス$(p,q)(p=0,\cdots,H-1, q=0,\cdots,H-1)$,画素値を$h_{pq}$とすると,
-\begin{equation}
-  u_{ij} = \sum_{p=0}^{H-1} \sum_{q=0}^{H-1} x_{i+p,j+q} h_{pq}
-\end{equation}
-\item この計算はフィルタが表す特徴的な濃淡構造を，画像から抽出する「特徴抽出」の働きがある.
-\end{itemize}
-\end{frame}
+
 
 %%%% 畳み込みの働き %%%%
 \begin{frame}[fragile]\frametitle{畳み込みの働き}
@@ -393,58 +373,6 @@ $P=1$で平均プーリング，$P=\infty$で最大プーリングが表現で�
   \item 減算正規化と除算正規化の２種類がある
 
  \end{itemize}
-\end{frame}
-
- %%%% ogata %%%%
-\begin{frame}[fragile]\frametitle{減算正規化}
- \begin{block}{減算正規化}
-入力画像の各画素濃淡から平均を差し引く
- \begin{equation}
- z_{ij} = x_{ij}-\bar{x}_{ij}
- \end{equation}
- \end{block}
-濃淡値の平均
- \begin{equation}
- \bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}
- \end{equation}
-
- \begin{itemize}
- \item $i,j$:入力画像の画素
- \item $p,q$:フィルタの画素
- \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{除算正規化}
- \begin{block}{除算正規化}
-同じ局所領域内で画素値の分散を抑える
- \begin{equation}
- z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sigma_{ij}}
- \end{equation}
- \end{block}
-画素値の分散
- \begin{equation}
- \sigma^2_{ij}=\sum_{(p,q)\in{P_{ij}}}^{} w_{pq}(x_{i+p,j+q}-\bar{x}_{ij})^2
- \end{equation}
-
- \begin{itemize}
- \item $w_{pq}$:重み
- \end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]\frametitle{除算正規化}
-以上の計算をそのまま行うと，濃淡変化が少ない局所領域ほど濃淡変化が増幅され，
-ノイズが強調される．そこで，入力画像のコントラストが大きい部分にのみ適用
-するため，ある定数$c$を設定し濃淡の標準偏差がこれを下回る
-($\sigma_{ij}<c$)で除算する
-\begin{equation}
- z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{max(\sigma_{ij}<c)}
-\end{equation}
-や，同様の効果が$\sigma_{ij}$に応じて連続的に変化する
-\begin{equation}
- z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sqrt{\sigma_{ij}+c}}
-\end{equation}
-を用いる.
 \end{frame}
 
 %%%%勾配の計算%%%%
@@ -748,81 +676,7 @@ ${\bf W}$の多くの成分はもともと0であり．そうで
 \end{figure}
 \end{frame}
 
-%%%% Caffeで識別 %%%%
-% \begin{frame}\frametitle{caffeを使った識別}
-% 前回の発表で説明した識別器を用いて実際に識別してみる．
 
-% \begin{figure}[t]
-%  \begin{minipage}{0.45\hsize}
-%   \centering
-%   \text{ラブライブ！} \\
-%   \centering
-%   \includegraphics[width=50mm]{./fig/jpg/lovelive.jpg} \\
-%   \text{登録されている}
-%   \text{アニメキャラクターの画像}
-%  \end{minipage}
-%  \begin{minipage}{0.45\hsize}
-%   \centering
-%   \text{アイドルマスター} \\
-%   \centering
-%   \includegraphics[width=50mm]{./fig/jpg/idolmaster.jpg}\\
-%   \text{登録されていない}
-%   \text{アニメキャラクターの画像}
-%  \end{minipage}
-% \end{figure}
-% \end{frame}
-
-% %%%% Caffeで識別結果1 %%%%
-% \begin{frame}\frametitle{caffeを使った識別結果}
-
-% \begin{figure}[t]
-%   \centering
-%   \text{ラブライブ！} \\
-%   \centering
-%   \includegraphics[width=100mm]{./fig/jpg/result_lovelive.jpg} \\
-%   \text{登録されている}
-%   \text{アニメキャラクターの画像}
-% \end{figure}
-% \end{frame}
-
-% %%%% Caffeで識別結果2 %%%%
-% \begin{frame}\frametitle{caffeを使った識別結果}
-
-% \begin{figure}[t]
-%   \centering
-%   \text{アイドルマスター} \\
-%   \centering
-%   \includegraphics[width=100mm]{./fig/jpg/result_idolmaster.jpg} \\
-%   \text{登録されていない}
-%   \text{アニメキャラクターの画像}
-% \end{figure}
-% \end{frame}
-
-% %%%% Caffeで識別結果3 %%%%
-% \begin{frame}\frametitle{caffeを使った識別結果}
-
-% \begin{figure}[t]
-%   \centering
-%   \text{真のラベルとの比較} \\
-%   \centering
-%   \includegraphics[width=100mm]{./fig/jpg/result_idol_compare.jpg} \\
-%   \text{登録されていない}
-%   \text{アニメキャラクターの画像}
-% \end{figure}
-% \end{frame}
-
-%%%% 今後の課題 %%%%
-\begin{frame}\frametitle{今後の課題}
-
-\begin{block}{理論研究}
-CNNの詳細な調査
-\end{block}
-
-\vspace{1cm}
-\begin{exampleblock}{プログラミング}
-学習画像を追加したり、パラメータを変更してみる
-\end{exampleblock}
-\end{frame}
 
 % \begin{figure}[t]
 %  \begin{minipage}{0.3\hsize}
