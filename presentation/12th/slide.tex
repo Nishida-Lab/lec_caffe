@@ -124,31 +124,413 @@
 % \tableofcontents %目次
 % \end{frame}
 
-%%%% 進捗状況 %%%%
-\begin{frame}\frametitle{進捗状況}
-
-\begin{block}{理論研究の進捗}
-畳込みニューラルネットワークの理論について
+\begin{frame}[fragile]\frametitle{人工ニューラルネットワーク}
+\begin{block}{誤差逆伝搬法}
+80年から90年代，誤差逆伝搬法（back propagation）が多層ニューラルネットワークの学習方法として確立
 \end{block}
 
-\vspace{1cm}
-\begin{exampleblock}{プログラミングの進捗}
-学習器のパラメータ設定について\\
-アニメキャラクター認識時の中間層出力\\
-データセットを作成し，学習を行った結果
-\end{exampleblock}
+しかし，誤差逆伝搬法で学習可能なのは２層程度\\
+
+\begin{block}{問題点}
+多い層をもつニューラルネットワークの学習では様々な問題により上手く学習することが出来ない
+\end{block}
+\begin{itemize}
+\item 単層ネットワークに分解し，入力層に近い側から順番に教師なしで学習する
+\item 目的とするニューラルネットワークの学習前に層ごとに学習を行うことで良い初期値パラメータを求めておくやり方を事前学習（pretraining）という
+\end{itemize}
 \end{frame}
 
-%%%%前回のグラフ%%%%
-%\begin{frame}[fragile]\frametitle{学習結果}
-% \begin{figure}[ht]
-%  \centering
-%  \includegraphics[scale=1.0]{fig/eps/result_train_test_graph.eps}
-%  \caption{損失関数の値と精度 }
-% \end{figure}
-%\end{frame}
+\begin{frame}[fragile]\frametitle{人工ニューラルネットワーク}
+ディープビリーフネットワーク（deep belief network, DBN）を制約ボルツマン
+ マシンに単層ごとに分解後，それぞれ学習する手法が提案
+ される
+\begin{block}{自己符号化器（autoencoder）}
+入力に対し，計算される出力が入力になるべく近くなる用に訓練されるニューラ
+ ルネットワーク．
+\end{block}
+
+自己符号化器を用いて単層毎に教師なしで学習．
+
+\vspace{1cm}
+
+単層ごとに学習を行うことで初期パラメータを決定後，ニューラルネットワーク
+ 全体を学習すると上手く学習できる．
+
+\end{frame}
 
 
+
+\begin{frame}[fragile]\frametitle{出力層の設計と誤差関数}
+
+順伝播型ネットワークが表現する関数$\vec{y}(\vec{x};\vec{w})$をネットワークのパラメータ$\vec{w}$を変えることで変化させ，望みの関数を与える．
+\begin{eqnarray}
+ \{(\vec{x}_{1},\mathrm{d}_{1}),(\vec{x}_{1},\mathrm{d}_{1}),...,(\vec{x}_{N},\mathrm{d}_{N})\}
+\end{eqnarray}
+これらのペア$(\vec{x},\mathrm{d})$１つ１つを訓練サンプル(training samples)といい，その集合を訓練データ(training data)という．
+学習とはネットワーク$\vec{w}$を調整することで訓練データの入出力ペアをで
+ きるだけ再現すること．
+
+ネットワークが表す関数と訓練データとの近さ$(\vec{y}(\vec{x}_{n};\vec{w}))$を誤差関数(error function)で定義する．誤差関数は問題の種別や活性化関数によって異なる．
+
+\begin{table}[htb]
+\centering
+\caption{問題の種別ごとの活性化関数と誤差関数}
+\label{000718_27Jun15}
+\begin{tabular}[bt]{|c|c|c|}\hline
+ 問題の種別& 出力層の活性化関数&誤差関数 \\ \hline \hline
+ 回帰&正接双曲線関数や恒等写像 & 二乗誤差 式\eqref{000645_27Jun15}\\
+ 二値分類& ロジスティック関数& 式\eqref{000654_27Jun15}\\
+ 多クラス分類& ソフトマックス関数& 交差エントロピー 式\eqref{000700_27Jun15}\\ \hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+%%%% 3.4.4 %%%%
+\begin{frame}[fragile]\frametitle{多クラス分類}
+\begin{block}{多クラス分類}
+入力$\vec{x}$に応じて有限個のクラスに分類する問題である．活性化関数にはソフトマックス関数(softmax function)が良く用いられる．
+\end{block}
+\begin{exampleblock}{活性化関数と評価関数}
+\begin{eqnarray}
+ y_{k} \equiv z_{k}^{(L)}= \frac{\exp(u_{k}^{(L)})}{\sum^{K}_{j=1}exp(u_{j}^{(L)})} \\
+E(\vec{w})=-\sum^{N}_{n=1}\sum^{N}_{k=1}d_{nk}\log y_{k}(\vec{x}_{n};\vec{w})\label{000700_27Jun15}
+\end{eqnarray}
+\vspace{0.1cm}
+\end{exampleblock}
+
+\end{frame}
+
+%%%% 畳込みニューラルネットワーク %%%%
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワーク}
+\begin{itemize}
+\item 畳込みニューラルネットワークは主に画像認識に応用される順伝播型ニューラルネットワークである．
+\item 順伝播型ネットワークは隣接層間のユニットの全てが結合されているのに対し，畳込みニューラルネットワークでは特定のユニットのみが結合を持つ特別な構造を持つ．
+\item 神経細胞はその受容野に刺激が入った場合にのみ反応し、受容野の外側にいくら刺激を与えても、細胞を発火しないという特徴を持つ．
+\end{itemize}
+
+\begin{figure}[htbp]
+  \begin{center}
+   \includegraphics[width=70mm]{fig/eps/network.eps}
+  \end{center}
+  \caption{畳込みニューラルネットワーク}
+  \label{fig:FNN}
+\end{figure}
+\end{frame}
+
+%%%% 畳込みニューラルネットワークの構造 1 %%%%
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=9cm]{fig/eps/structure.eps}
+  \end{center}
+  \caption{畳込みニューラルネットワークの構造}
+\end{figure}
+
+\begin{itemize}
+\item 畳込み層（convolution layer）とプーリング層（pooling layer）が\\ペアでこの順に並び，このペアが複数回繰り返される
+\item 畳込み層とプーリング層の後に，局所コントラスト正規化\\（local contrast normalization, LCN）層を挿入する場合がある
+\item 畳込み層とプーリング層の繰り返しの後には，隣接層間ユニットが\\全結合した層が配置される
+\item 目的がクラス分類であれば最終的な出力はソフトマックスを適用する
+\end{itemize}
+\end{frame}
+
+%%%% 畳込みニューラルネットワークの構造 2 %%%%
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=12cm]{fig/eps/conv_pool.eps}
+  \end{center}
+  % \caption{畳込みニューラルネットワークの構造}
+\end{figure}
+\end{frame}
+
+%%%% 畳込みニューラルネットワークの構造 2 %%%%
+\begin{frame}[fragile]\frametitle{畳込みニューラルネットワークの構造}
+
+\begin{figure}[tb]
+  \begin{center}
+    \includegraphics[clip,width=10cm]{fig/eps/conv_pool.eps}
+  \end{center}
+  % \caption{畳込みニューラルネットワークの構造}
+\end{figure}
+
+\begin{block}{二層の働き}
+\begin{itemize}
+\item 畳込み層はフィルタが表す特徴を入力から抽出する
+\item プーリング層は抽出された特徴の位置感度を低下させる
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+%%%% 畳み込みの定義 %%%%
+\begin{frame}[fragile]\frametitle{畳み込みの定義}
+\begin{itemize}
+\item 濃淡地を各画素に格納したグレースケールの画像を考える.
+\item 画像サイズを$W\times W$画素,画素をインデックス$(i,j)(i = 0,\cdots,W-1, j = 0,\cdots,W-1)$画素値を$x_{ij}$,\\
+フィルタサイズを$H\times H$画素,画素をインデックス$(p,q)(p=0,\cdots,H-1, q=0,\cdots,H-1)$,画素値を$h_{pq}$とすると,
+\begin{equation}
+  u_{ij} = \sum_{p=0}^{H-1} \sum_{q=0}^{H-1} x_{i+p,j+q} h_{pq}
+\end{equation}
+\item この計算はフィルタが表す特徴的な濃淡構造を，画像から抽出する「特徴抽出」の働きがある.
+\end{itemize}
+\end{frame}
+
+%%%% 畳み込みの働き %%%%
+\begin{frame}[fragile]\frametitle{畳み込みの働き}
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.3]{fig/eps/convlena.eps}
+  \caption{画像の畳み込みの例}
+  \label{fig:画像の畳み込みの例}
+\end{figure}
+\begin{itemize}
+ \item 入力画像：227×227
+ \item フィルタ：11×11
+ \item 出力画像：55×55
+ \item ストライド：4
+\end{itemize}
+
+\end{frame}
+
+
+%%%% 畳み込み層%%%%
+\begin{frame}[fragile]\frametitle{畳み込み層}
+
+\begin{figure}[t]
+ \centering
+ \includegraphics[scale=0.25]{fig/eps/dl67.eps}
+\end{figure}
+
+\begin{itemize}
+\item 各フィルタについて並列に計算され,$u_{ijm}$が出力される.
+各チャンネルについて並列に画像とフィルタの畳み込みを行い全チャンネルにわたり加算する.
+
+\begin{equation}
+  u_{ijm} = \sum_{p=0}^{K-1} \sum_{q=0}^{H-1} \sum_{q=0}^{H-1} z_{i+p,j+q,k}^{(l-1)} h_{pqkm}+b_{ijm}
+\end{equation}
+
+\end{itemize}
+\end{frame}
+
+%%%% ogata %%%%
+
+\begin{frame}[fragile]\frametitle{畳み込み層}
+\begin{block}{活性化関数への適応}
+\begin{equation}
+ z_{ijm}=f(u_{ijm})
+\end{equation}
+\end{block}
+
+式(1), (2)は，層間に特別な構造を持つ単層ネットワークとして表現できる.
+\begin{itemize}
+ \item 入力のユニット数：$W\times W\times K$
+ \item 出力のユニット数：$W\times W\times M$
+\end{itemize}
+
+畳み込みの計算の局所性により，出力層のユニット１つは入力層の
+$W\times W\times K$個のユニットとのみ結合する．
+\begin{itemize}
+ \item その時の重みがフィルタ係数$h_{pqkm}$
+ \item 同一チャネルの全ユニットで共有されるため\\
+			 重み共有(weigh sharing, weight tying)と呼ばれる
+\end{itemize}
+\end{frame}
+
+
+%%%% プーリング 1 %%%%
+\begin{frame}[fragile]\frametitle{プーリング}
+\begin{block}{プーリング}
+プーリング層は通常，畳み込み層の直後に設置され，プーリング層は畳み込み層で抽出された特徴の位置
+感度を低下させる働きがある．
+\end{block}
+サイズ$W \times W \times K$の入力画像上で画素$(i,j)$を中心とする$H\times H$の正方領域とり，この中に含まれる画素の集合を$P_{ij}$で表す．$P_{ij}$内の画素についてチャネル$k$ごとに独立に，$H^2$個ある画素値を使って1つの画素値$u_{ijk}$を求める．
+
+\begin{itemize}
+ \item 最大プーリング(max pooling)
+	   \begin{eqnarray}
+		u_{ijk} = \max_{(p,q) \in P_{ij}} z_{pqk}
+	   \end{eqnarray}
+ \item 平均プーリング(average pooling)
+	   \begin{eqnarray}
+		u_{ijk} = \frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}} z_{pq}
+	   \end{eqnarray}
+
+\end{itemize}
+
+\end{frame}
+
+%%%% プーリング 2 %%%%
+\begin{frame}[fragile]\frametitle{プーリング}
+\begin{figure}[bt]
+ \centering
+ \includegraphics[scale = 0.6]{fig/eps/pooling.eps}
+ \caption{プーリングの例．プーリングサイズ$3\times 3$，ストライド$s=3$，ゼロパディングで最大プーリングを行った場合}
+\end{figure}
+平均プーリングや最大プーリングなどのプーリングを含む一般性を持った表記として，次のLpプーリング(Lp pooling)がある．
+\begin{eqnarray}
+ u_{ijk} = \left(\frac{1}{H^{2}}\sum_{(p,q) \in P_{ij}}z^{P}_{pqk}\right)^{\frac{1}{P}}
+\end{eqnarray}
+$P=1$で平均プーリング，$P=\infty$で最大プーリングが表現できる．
+
+\end{frame}
+
+%%%% 局所コントラスト正規化%%%%
+\begin{frame}[fragile]\frametitle{局所コントラスト正規化}
+
+ \begin{block}{局所コントラスト正規化}
+ 画像の中から対象物を捉えるための、画像の濃淡を正規化する方法の一種
+ \end{block}
+
+ \begin{itemize}
+  \item 1つの層だけでこの処理が可能
+  \item 畳み込みネットに組み込むことが可能
+  \item 層の重みは固定され,学習の対象となるパラメータはない
+  \item 減算正規化と除算正規化の２種類がある
+
+ \end{itemize}
+\end{frame}
+
+ %%%% ogata %%%%
+\begin{frame}[fragile]\frametitle{減算正規化}
+ \begin{block}{減算正規化}
+入力画像の各画素濃淡から平均を差し引く
+ \begin{equation}
+ z_{ij} = x_{ij}-\bar{x}_{ij}
+ \end{equation}
+ \end{block}
+濃淡値の平均
+ \begin{equation}
+ \bar{x}_{ij}= \sum_{(p,q)\in{P_{ij}}}^{} x_{i+p,j+q}
+ \end{equation}
+
+ \begin{itemize}
+ \item $i,j$:入力画像の画素
+ \item $p,q$:フィルタの画素
+ \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{除算正規化}
+ \begin{block}{除算正規化}
+同じ局所領域内で画素値の分散を抑える
+ \begin{equation}
+ z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sigma_{ij}}
+ \end{equation}
+ \end{block}
+画素値の分散
+ \begin{equation}
+ \sigma^2_{ij}=\sum_{(p,q)\in{P_{ij}}}^{} w_{pq}(x_{i+p,j+q}-\bar{x}_{ij})^2
+ \end{equation}
+
+ \begin{itemize}
+ \item $w_{pq}$:重み
+ \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{除算正規化}
+以上の計算をそのまま行うと，濃淡変化が少ない局所領域ほど濃淡変化が増幅され，
+ノイズが強調される．そこで，入力画像のコントラストが大きい部分にのみ適用
+するため，ある定数$c$を設定し濃淡の標準偏差がこれを下回る
+($\sigma_{ij}<c$)で除算する
+\begin{equation}
+ z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{max(\sigma_{ij}<c)}
+\end{equation}
+や，同様の効果が$\sigma_{ij}$に応じて連続的に変化する
+\begin{equation}
+ z_{ij}=\frac{x_{ij}-\bar{x}_{ij}}{\sqrt{\sigma_{ij}+c}}
+\end{equation}
+を用いる.
+\end{frame}
+
+%%%%勾配の計算%%%%
+\begin{frame}[fragile]\frametitle{勾配の計算}
+
+ \begin{block}{畳み込み層の計算式}
+  \begin{equation}
+   u^{(l)} = W^{(l)} u^{(l-1)} + b^{(l)}
+  \end{equation}
+  \begin{equation}
+   z^{(l)} = f^{(l)} (u)
+  \end{equation}
+ \end{block}
+
+ \begin{itemize}
+  \item 逆伝播の計算も多層パーセプトロンのときと基本的に同じ
+  \item 同じフィルタの係数が何度も現れてしまう
+ \end{itemize}
+
+ \begin{block}{重みの計算式}
+  \begin{equation}
+   W_{ji} = t_{ji}^{T} h
+  \end{equation}
+ \end{block}
+
+ \begin{itemize}
+  \item $h$：フィルタの係数$h_{pqkm}$を適当な順に並べたベクトル
+  \item $t_{ji}$：$h$と同じ長さで，$h$との内積が重み$w_{ji}$を与えるベクトル
+ \end{itemize}
+
+\end{frame}
+
+%%%% ogata %%%%
+\begin{frame}[fragile]\frametitle{勾配の計算}
+% 層$l$のデルタを$\delta^{(l)}$とし，全結合層に対する勾配計算の式を
+% 形式的に適応したときの層の重み${\bf W}={\bf W}^{(l)}$の勾配
+
+ \begin{block}{層$l$の重みの勾配}
+  \begin{equation}
+  \partial{\bf W}= {\bf \delta}^{(l)}{\bf z}^{{(l-1)}^\top}
+  \end{equation}
+ \end{block}
+
+ \begin{itemize}
+	\item ${\bf \delta}^{(l)}$: 層$l$のデルタ
+	\item ${\bf z}^{(l-1)}$: $l-1$層からの出力
+ \end{itemize}
+
+${\bf W}$の多くの成分はもともと0であり．そうで
+ない成分も重み共有により同じ変数(フィルタの係数)に対応する．そこでフィ
+ルタの係数$\bf{h}$についての勾配$\partial{\bf h}$に変形する必要がある．
+
+ \begin{block}{フィルタ係数についての勾配成分}
+	\begin{equation}
+ (\partial{\bf h})_r =\sum_{i,j}^{}({\bf T}_r\odot\partial{\bf W})_{ji}
+	\end{equation}
+ \end{block}
+
+\begin{itemize}
+ \item $\odot$ : 成分ごとの積
+ \item $\sum_{}^{}$: 行列の全成分の和
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]\frametitle{勾配の計算}
+プーリング層には学習の対象となるパラメータはないので，勾配計算は必要ない
+が，さらに下層に伝えるデルタの逆伝播計算は必要である．
+
+\begin{block}{平均プーリング層の逆伝播計算}
+ \begin{equation}
+ w_{ji}^{(l+1)} =
+	\begin{cases}
+    \frac{1}{H^2} & (\text {if}  \  i\in{P_j}) \\
+    0 & (\text{otherwise})
+  \end{cases}
+ \end{equation}
+\end{block}
+
+\begin{itemize}
+ \item $P_{j}$ : 層$l+1$のユニット$j$のサイズ$H \times H$の受容野
+ \item 順伝播時のプーリングの結果により重みが変化する
+ \item 逆伝播計算では最大値を返したユニットにデルタがそのまま伝えられる
+\end{itemize}
+
+\end{frame}
 
 %%%%Dropout%%%%
 \begin{frame}\frametitle{ドロップアウト}
