@@ -1,0 +1,133 @@
+\documentclass[a4paper,10pt]{jsarticle}
+
+% レイアウト
+\setlength{\textwidth}{\fullwidth}
+\setlength{\textheight}{39\baselineskip}
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.5in}
+\setlength{\headsep}{0.3in}
+\pagestyle{myheadings}
+
+% パッケージ
+\usepackage[dvipdfmx]{graphicx}
+% \usepackage[hypertex]{hyperref}
+\usepackage{amsmath,amssymb,epsfig}
+\usepackage{bm}
+\usepackage{ascmac}
+\usepackage{pifont}
+\usepackage{multirow}
+\usepackage{enumerate}
+\usepackage{cases}
+\usepackage{type1cm}
+\usepackage{cancel}
+\usepackage{url}
+\usepackage[dvipdfmx]{color}
+\usepackage{listings,jlisting}
+\usepackage{here}
+% 大きな中括弧
+\usepackage{cases}
+
+% 定義
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\def\vec#1{\mbox{\boldmath$#1$}}
+\def\R{{\Bbb R}}
+
+% カウンタの設定
+\setcounter{section}{0}
+\setcounter{subsection}{0}
+\setcounter{subsubsection}{0}
+\setcounter{equation}{0}
+
+% キャプションの図をFigに変更
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Tab.}
+
+% 式番号を式(章番号.番号)に
+% \makeatletter
+% \renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+% \@addtoreset{equation}{section}
+% \makeatother
+
+% プログラムに色をつける
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% 表紙
+\title{知能システム学特論\ 最終レポート}
+\author{
+DL2班\hspace{5mm}学籍番号 \hspace{5mm}氏名 \\
+}
+\date{2015年\ 8月\ 27日}
+
+% ドキュメントの開始
+\begin{document}
+\maketitle
+
+\section{テーマ}
+\label{sec:テーマ}
+
+% section テーマ (end)
+
+\section{概要}
+\label{sec:概要}
+
+% section 概要 (end)
+
+\section{自分の担当範囲}
+\label{sec:自分の担当範囲}
+
+% section 自分の担当範囲 (end)
+
+\section{感想}
+\label{sec:感想}
+
+% section 感想 (end)
+
+\section{評価}
+\label{sec:評価}
+\begin{table}[H]
+  \begin{center}
+    \begin{tabular}{l|p{12cm}} \hline
+      名前 & 評価 \\ \hline \hline
+      自分 & あああ \\ \hline
+      有田 裕太 & あああ \\ \hline
+      緒形 裕太 & あああ \\ \hline
+      株丹 亮 & あああ\\ \hline
+    \end{tabular}
+  \end{center}
+\end{table}
+% section 評価 (end)
+
+
+\begin{thebibliography}{99}
+  \addcontentsline{toc}{section}{参考文献}
+ \bibitem{okatani} 岡谷貴之，``機械学習プロフェッショナルシリーズ　深層学習''，講談社，2015．
+ \bibitem{SIG2D} SIG2D，``SIG2D' 14 Proceedings of the 3rd Interdimensional Conference on 2D Information Processing ''，\url{http://sig2d.org/publications/}，2014．
+ \end{thebibliography}
+\end{document}
